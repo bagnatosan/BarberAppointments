@@ -4,43 +4,8 @@ Creacion de la carpeta data para poner el db context.
 
 Creacion carpeta models con 3 archivos. User, Hairdresser y Appointment
 
-User n --- 1 Appointment
-Hairdresser n --- 1 Appointment
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+User 1 --- n Appointment
+Hairdresser 1 --- n Appointment
 
 
 
