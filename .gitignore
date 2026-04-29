@@ -1,0 +1,12 @@
+# Mi diario personal (no subir a GitHub)
+resumen.txt
+devlog.txt
+
+# Archivos de configuración personal de Rider
+.idea/
+*.user
+*.sln.dotSettings.user
+
+# Archivos de base de datos local (para que no se suba tu DB real)
+*.mdf
+*.ldf
