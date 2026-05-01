@@ -1,11 +1,27 @@
 29/04
 
-Creacion de la carpeta data para poner el db context.
+* Creacion de la carpeta data para poner el db context.
 
-Creacion carpeta models con 3 archivos. User, Hairdresser y Appointment
+* Creacion carpeta models con 3 archivos. User, Hairdresser y Appointment
 
 User 1 --- n Appointment
 Hairdresser 1 --- n Appointment
+
+01/05
+
+* Sincronizacion de DbContext y migracion.
+    dotnet ef migrations add InitialCreate // Hace el plano
+    dotnet ef database update              // Construye la base de datos
+
+
+*El required es un contrato de compilación.
+    * Impide que el código "corra" si intentas crear un objeto sin ese dato.
+    * Evita que olvides asignar valores esenciales en tu lógica de negocio.
+    * Al ejecutar Add-Migration, EF marcará esa columna como nullable: false en SQL.
+
+* Complicacion con el IDE( mas de hora y media solucionando imcompatibilidades con Zorin OS) .
+
+
 
 
 
