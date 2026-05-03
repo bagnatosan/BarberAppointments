@@ -35,4 +35,6 @@ Hairdresser 1 --- n Appointment
 * Se diseñó la vista Index utilizando Bootstrap, logrando que la información de la base de datos se 
     renderice automáticamente en una tabla.
     
+* Correccion email en git, no me tomo que lo hice yo estos 3 dias.
+    
 --------------------------------------------------------------------------------------------------------------
