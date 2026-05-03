@@ -7,6 +7,7 @@
 User 1 --- n Appointment
 Hairdresser 1 --- n Appointment
 
+--------------------------------------------------------------------------------------------------------------
 01/05
 
 * Sincronizacion de DbContext y migracion.
@@ -21,7 +22,17 @@ Hairdresser 1 --- n Appointment
 
 * Complicacion con el IDE( mas de hora y media solucionando imcompatibilidades con Zorin OS) .
 
+--------------------------------------------------------------------------------------------------------------
+03/05
 
+*Se le asignaron datos a la base de datos con el objetivo de ir probandola, en un futuro
+    se van a eliminar por obvias razones, mediante la query console (lo mismo que en pl/sql).
 
+*Creacion de HairdresserController con inyeccion de dependencias de DbContext para peluqueros
+    con el objetivo de mostrarlos mediante la herencia de  controller 
+    (clase de asp que resuelve funciones para devolver html y demas ).
 
-
+* Se diseñó la vista Index utilizando Bootstrap, logrando que la información de la base de datos se 
+    renderice automáticamente en una tabla.
+    
+--------------------------------------------------------------------------------------------------------------
