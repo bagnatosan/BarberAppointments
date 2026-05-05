@@ -1,8 +1,23 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-black rounded shadow-sm mb-4" style="background-color: #050505 !important;">
+</nav>
+
+<div class="text-center my-5 py-5 px-3 card border-0 shadow-lg" style="background-color: rgba(15, 15, 15, 0.85); backdrop-filter: blur(10px);">
+    <h1 class="display-4 fw-bold text-white mb-3">Caporale Barbería</h1>
+    <p class="lead text-light mb-5">Estilo clásico, actitud moderna. Reserva tu lugar hoy.</p>
+    <div>
+        <a href="#" class="btn btn-primary btn-lg px-5 py-3 shadow">Agregar turno</a>
+    </div>
 </div>
+
+<footer class="text-center mt-5 bg-black text-light py-4 rounded shadow-sm" style="background-color: #050505 !important;">
+    <p class="mb-2 text-white-50">&copy; @DateTime.Now.Year - Todos los derechos reservados Caporale Barberia</p>
+    <div class="fs-4">
+        <a href="#" class="text-light me-3 text-decoration-none"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="text-light me-3 text-decoration-none"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-light text-decoration-none"><i class="fab fa-tiktok"></i></a>
+    </div>
+</footer>
