@@ -71,3 +71,29 @@ body {
 .form-floating>.form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Mobile offcanvas nav */
+.offcanvas-nav {
+  background-color: #050505;
+  color: #e0e0e0;
+  width: 260px;
+}
+
+.offcanvas-nav .offcanvas-body {
+  padding-top: 1rem;
+}
+
+.offcanvas-link {
+  color: #e0e0e0;
+  font-size: 1.05rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.offcanvas-link:hover {
+  color: #d4af37;
+  padding-left: 1rem;
+}

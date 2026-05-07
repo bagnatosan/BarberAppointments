@@ -1,0 +1,24 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer double ring -->
+  <circle cx="100" cy="100" r="92" fill="none" stroke="white" stroke-width="2" />
+  <circle cx="100" cy="100" r="85" fill="none" stroke="white" stroke-width="1" />
+
+  <!-- "BARBERIA" Text - Simplified without textPath for better compatibility -->
+  <text x="100" y="45" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="white" font-weight="bold" letter-spacing="4">BARBERIA</text>
+
+  <!-- "Caporale" Script - Using a more common font stack -->
+  <text x="100" y="105" text-anchor="middle" font-family="'Brush Script MT', cursive, 'Apple Chancery', 'Segoe Script', serif" font-size="52" fill="white">Caporale</text>
+
+  <!-- SINCE 2011 with lines -->
+  <line x1="55" y1="130" x2="80" y2="130" stroke="white" stroke-width="1.5" />
+  <text x="100" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">SINCE 2011</text>
+  <line x1="120" y1="130" x2="145" y2="130" stroke="white" stroke-width="1.5" />
+
+  <!-- Crossed Razors - More robust path data -->
+  <g transform="translate(100, 165) scale(0.8)">
+    <!-- Razor Left -->
+    <path d="M -30,-5 L 5,5 L -25,10 Z" fill="white" transform="rotate(-15)" />
+    <!-- Razor Right -->
+    <path d="M 30,-5 L -5,5 L 25,10 Z" fill="white" transform="rotate(15)" />
+  </g>
+</svg>

@@ -44,3 +44,11 @@ Se estuvo estudiando como funcionan todo lo que es el apartado de views.
 
 Para la proxima poner el footer y el nav en el layout asi lo tienen todos los archivos y el main de cada uno
 va en el archivo aparte que corresponda.
+
+--------------------------------------------------------------------------------------------------------------
+07/05
+
+Se estuvo jugueteando con el index.cshtml. Queda pendiente corregir error que se muestran dos imagenes en vez de
+una y al costado.
+
+--------------------------------------------------------------------------------------------------------------
