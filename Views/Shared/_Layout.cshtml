@@ -60,7 +60,7 @@
     </div>
 </div>
 
-<div class="container mt-4">
+<div class="container">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
@@ -68,7 +68,18 @@
 
 <footer class="border-top border-secondary footer text-light bg-black py-3 mt-auto">
     <div class="container text-center">
-        <p class="mb-0">&copy; @DateTime.Now.Year - Caporale Barberia - Elegancia y Tradición</p>
+        <div class="d-flex align-items-center justify-content-center gap-3">
+            <a href="https://www.instagram.com/caporalebarberia/" aria-label="Instagram">
+                <img id="InstagramIcon" src="img/instagram.svg"/>
+            </a>
+            
+            <p class="mb-0">&copy; @DateTime.Now.Year - Caporale Barberia - Elegancia y Tradición</p>
+            
+            <a href="https://wa.me/5491157549974" aria-label="WhatsApp" 
+               rel="noopener noreferrer" target="_blank">
+                <img src="~/img/whatsapp.svg" width="20" height="20" alt="WhatsApp" id="WhatsappIcon" />
+            </a>
+        </div>
     </div>
 </footer>
 

@@ -1,0 +1,13 @@
+@model IEnumerable<Barber.Models.Hairdresser>
+
+@{
+    ViewData["Title"] = "Elegí tu Peluquero";
+}
+<h1>HOLA</h1>
+
+<ul>
+    @foreach (var item in Model)
+{
+    <li>@item.Name</li>
+}
+</ul>

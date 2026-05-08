@@ -2,165 +2,17 @@
     ViewData["Title"] = "Home Page";
 }
 
-<style>
-    .full-bleed {
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    /* Hero */
-    .hero-section {
-        background-image: url(img/barbershop_bg.png);
-        background-size: cover;
-        background-position: center;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: sticky;
-        top: 0;
-        z-index: 0;
-    }
-
-    .hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.52);
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 1;
-        text-align: center;
-        padding: 2rem 1rem;
-    }
-
-    .hero-logo {
-        width: min(340px, 72vw);
-        filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.8));
-    }
-
-    .btn-agendar {
-        background-color: #d4af37;
-        color: #000;
-        font-weight: 700;
-        border: none;
-        border-radius: 50px;
-        padding: 14px 42px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    .btn-agendar:hover {
-        background-color: #b5952f;
-        box-shadow: 0 6px 24px rgba(212, 175, 55, 0.45);
-        transform: translateY(-2px);
-    }
-
-    @@keyframes btn-pulse {
-        0%   { transform: scale(1); }
-        35%  { transform: scale(1.2); }
-        65%  { transform: scale(0.93); }
-        100% { transform: scale(1); }
-    }
-
-    .btn-agendar.pulse {
-        animation: btn-pulse 0.38s ease forwards;
-    }
-
-    /* Barbers section */
-    .barbers-section {
-        background-color: #050505;
-        padding: 90px 0;
-        text-align: center;
-        position: relative;
-        z-index: 1;
-    }
-
-    .barbers-section .section-title {
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-        font-style: italic;
-        color: #d4af37;
-        font-size: 2.2rem;
-        letter-spacing: 2px;
-    }
-
-    .barbers-section .gold-divider {
-        width: 60px;
-        height: 2px;
-        background-color: #d4af37;
-        margin: 16px auto 24px;
-        opacity: 0.7;
-    }
-
-    .barbers-section .section-body {
-        color: #c0c0c0;
-        font-size: 1.05rem;
-        max-width: 620px;
-        margin: 0 auto;
-        line-height: 1.85;
-    }
-
-    .btn-equipo {
-        border: 1.5px solid #d4af37;
-        color: #d4af37;
-        background: transparent;
-        border-radius: 50px;
-        padding: 10px 32px;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        font-size: 0.88rem;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 28px;
-        transition: background-color 0.2s ease, color 0.2s ease;
-    }
-
-    .btn-equipo:hover {
-        background-color: #d4af37;
-        color: #000;
-    }
-
-    /* Map section */
-    .map-section {
-        padding-bottom: 70px;
-        background-color: #050505;
-        position: relative;
-        z-index: 1;
-    }
-
-    .map-section iframe {
-        width: 100%;
-        height: 400px;
-        border: none;
-        display: block;
-        filter: grayscale(20%) contrast(1.05);
-    }
-
-    .map-address {
-        text-align: center;
-        color: #999;
-        font-size: 0.88rem;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        margin-top: 18px;
-        padding: 0 1rem;
-    }
-</style>
 
 <!-- Hero -->
 <section class="hero-section full-bleed">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <img src="~/img/caporale_logo.svg" alt="Caporale Barberia" class="hero-logo mb-5" />
+        <img src="/img/caporale_logo.svg" alt="Caporale Barberia" class="hero-logo mb-5" />
         <div>
-            <button class="btn-agendar" id="btnAgendar">Agendar Turno</button>
+            <a class="btn-agendar" id="btnAgendar"
+               asp-controller="Booking" asp-action="SelectHairdresser">
+                Agendar Turno
+            </a>
         </div>
     </div>
 </section>
@@ -180,24 +32,16 @@
 
 <!-- Mapa -->
 <section class="map-section full-bleed">
-    <iframe
-        src="https://maps.google.com/maps?q=Saavedra+240,+Ramos+Mejia,+Buenos+Aires,+Argentina&output=embed&z=16"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Ubicación Caporale Barbería">
-    </iframe>
+    <div class="map-wrapper">
+        <iframe
+            src="https://maps.google.com/maps?q=Saavedra+240,+Ramos+Mejia,+Buenos+Aires,+Argentina&output=embed&z=16"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Ubicación Caporale Barbería">
+        </iframe>
+    </div>
     <p class="map-address">Saavedra 240 — Ramos Mejía, Provincia de Buenos Aires</p>
 </section>
 
-@section Scripts {
-<script>
-    const btn = document.getElementById('btnAgendar');
-    btn.addEventListener('click', function () {
-        btn.classList.remove('pulse');
-        void btn.offsetWidth;
-        btn.classList.add('pulse');
-        btn.addEventListener('animationend', () => btn.classList.remove('pulse'), { once: true });
-    });
-</script>
-}
+

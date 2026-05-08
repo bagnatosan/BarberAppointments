@@ -52,3 +52,21 @@ Se estuvo jugueteando con el index.cshtml. Queda pendiente corregir error que se
 una y al costado.
 
 --------------------------------------------------------------------------------------------------------------
+08/05
+
+* Se corrigió el error de las múltiples imágenes en el Index.
+    * Se eliminó el fondo duplicado en el body (site.css).
+    * Se aseguró que la sección hero no repita la imagen y use el path correcto.
+    * Se cambió el posicionamiento de sticky a relative para evitar solapamientos extraños.
+    
+--------------------------------------------------------------------------------------------------------------
+08/05
+
+asp-controller="Booking" -> apunta al controlador en la carpeta controllers y no hace falta poner controller en el controlador
+
+asp-action="SelectHairdresser" -> Apunta al metodo que vive dentro de ese controlador.
+
+Se pulio index. Foto del main sigue mal.
+
+Creacion de controlador booking para traer peluqueros y que aparezcan en selecthairdresser. Todavia no se armo la 
+funcionalidad para elegirlos
