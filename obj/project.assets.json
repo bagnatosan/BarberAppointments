@@ -5954,13 +5954,7 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "10.0.200"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -5992,15 +5986,7 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.26, 8.0.26]"
-          },
-          {
             "name": "Microsoft.NETCore.App.Host.linux-x64",
-            "version": "[8.0.26, 8.0.26]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
             "version": "[8.0.26, 8.0.26]"
           }
         ],
@@ -6012,7 +5998,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/bantiago/.dotnet/sdk/10.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.126/PortableRuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

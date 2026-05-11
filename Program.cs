@@ -1,4 +1,5 @@
 using Barber.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlite("Data Source=Barber.db"));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/Account/Login"; // A dónde mandarlo si no está logueado
+    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.Cookie.Name = "BarberiaCookie"; // El nombre del "sello"
+    options.ExpireTimeSpan = TimeSpan.FromDays( 90 ); // Duración (Persistencia)
+    options.SlidingExpiration = true; // Si la usa, se renueva el tiempo
+
+});
 
 var app = builder.Build();
 
@@ -20,6 +31,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseAuthentication(); //cookies
 
 app.UseAuthorization();
 

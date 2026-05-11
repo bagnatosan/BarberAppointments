@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "AoFrH0F5uWU=",
+  "dgSpecHash": "AUPxO2jT3YL2YnWgr5HRvxagNNytm1a5WjKlAv/OOyBnci0Aa77N/zaFtOvg8Mjl6Jbdmgw60PvlM65G0uzr6Q==",
   "success": true,
   "projectFilePath": "/home/bantiago/Documentos/C#/Barber/Barber/Barber.csproj",
   "expectedPackageFiles": [
@@ -91,8 +91,6 @@
     "/home/bantiago/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
     "/home/bantiago/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/home/bantiago/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
-    "/home/bantiago/.nuget/packages/microsoft.netcore.app.ref/8.0.26/microsoft.netcore.app.ref.8.0.26.nupkg.sha512",
-    "/home/bantiago/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.26/microsoft.aspnetcore.app.ref.8.0.26.nupkg.sha512",
     "/home/bantiago/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.26/microsoft.netcore.app.host.linux-x64.8.0.26.nupkg.sha512"
   ],
   "logs": []
