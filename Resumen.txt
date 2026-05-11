@@ -11,14 +11,6 @@ Hairdresser 1 --- n Appointment
 01/05
 
 * Sincronizacion de DbContext y migracion.
-    dotnet ef migrations add InitialCreate // Hace el plano
-    dotnet ef database update              // Construye la base de datos
-
-
-*El required es un contrato de compilación.
-    * Impide que el código "corra" si intentas crear un objeto sin ese dato.
-    * Evita que olvides asignar valores esenciales en tu lógica de negocio.
-    * Al ejecutar Add-Migration, EF marcará esa columna como nullable: false en SQL.
 
 * Complicacion con el IDE( mas de hora y media solucionando imcompatibilidades con Zorin OS) .
 
@@ -40,7 +32,7 @@ Hairdresser 1 --- n Appointment
 --------------------------------------------------------------------------------------------------------------
 05/05
 
-Se estuvo estudiando como funcionan todo lo que es el apartado de views. 
+Se estuvo estudiando como funcionan el apartado de views.
 
 Para la proxima poner el footer y el nav en el layout asi lo tienen todos los archivos y el main de cada uno
 va en el archivo aparte que corresponda.
@@ -62,10 +54,6 @@ una y al costado.
 --------------------------------------------------------------------------------------------------------------
 08/05
 
-asp-controller="Booking" -> apunta al controlador en la carpeta controllers y no hace falta poner controller en el controlador
-
-asp-action="SelectHairdresser" -> Apunta al metodo que vive dentro de ese controlador.
-
 Se pulio index. Foto del main sigue mal.
 
 Creacion de controlador booking para traer peluqueros y que aparezcan en selecthairdresser. Todavia no se armo la 
@@ -76,53 +64,8 @@ funcionalidad para elegirlos
 
 * Se pauso todas las actividades para hacer el login. Lo mas importante asi ya queda.
 
-* ¿Cómo funciona el flujo técnico en .NET?
-Para implementar esto, hay tres conceptos que tenés que entender antes de tocar una sola tecla:
-
-1. Claims (Las Declaraciones)
-Un Claim es un pedacito de información sobre vos. Por ejemplo:
-
-"Mi nombre es Santiago"
-
-"Mi ID de usuario es 45"
-
-"Soy un Cliente" (Rol)
-
-"Mi mail es santiago@ejemplo.com"
-
-2. ClaimsIdentity & ClaimsPrincipal
-ClaimsIdentity: Es el "Pasaporte". Es el conjunto de todos tus Claims agrupados en un documento oficial.
-
-ClaimsPrincipal: Es el "Dueño del Pasaporte". Es el objeto que representa al usuario logueado en el código de C#.
- Vos le preguntás al User: "¿Che, tenés el claim de Nombre?".
-
-Middleware de autenticacion:
-Es un guardia que se para en la entrada de tu aplicación (Program.cs). 
-Cada vez que llega una solicitud del navegador, este guardia busca si hay una cookie.
-Si la hay, la desencripta, arma el ClaimsPrincipal y te lo deja servido en el controlador para que lo uses.
-
-Persistencia:Cuando generamos la cookie, podemos configurar una propiedad llamada IsPersistent.
-Si es False: La cookie muere cuando cerrás el navegador (sesión volátil).
-Si es True: La cookie se guarda en el disco duro del usuario con una fecha de vencimiento (ej. 30 días). 
-Aunque apagues la compu, cuando vuelvas a entrar, el navegador le mandará la cookie al servidor y seguirás logueado.
-
-
-
 * No se va a usar contrase;as para la aplicacion, ya que no se toman datos sencibles y para que el usuario
 no tenga que para sacar un turno poner 20 mil datos.
-
-
-* Los Data Annotations son, básicamente,
-"etiquetas" que le pegás a las propiedades de tus clases para decirle al framework cómo deben comportarse.
-
-Validación de datos: Evitan que entre basura. Si le ponés [EmailAddress], el sistema se encarga de que tenga un @ y un .com.
-
-Configuración de la Base de Datos: Le dicen a Entity Framework cómo crear las tablas. [Required] se traduce en un NOT NULL en SQL.
-
-
-[Required]
-[EmailAddress]
-public required string Email { get; set; }
 
 * En program.cs se agrego el middleware de autenticacion.
 

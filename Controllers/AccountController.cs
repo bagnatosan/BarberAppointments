@@ -1,5 +1,7 @@
 using System.Security.Claims;
 using Barber.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,12 +28,12 @@ public class AccountController : Controller
 
         if (user == null) //NO EXISTE EL USUARIO EN LA BASE DE DATOS
         {
-            RedirectToAction()
+            RedirectToAction("Register","Home");        //Cambiar variables
         }
             
         else              //SI EXISTE EL USUARIO EN LA BASE DE DATOS
         {
-            var claims = new List<Claim>
+            var claims = new List<Claim>                //Lista de declaraciones. Datos sueltos sobre el usuario
             {
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
@@ -39,13 +41,21 @@ public class AccountController : Controller
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
             
-            var ClaimsIdentity = new ClaimsIdentity(claims, "Login");
+            var ClaimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);   //Agrupa todas las etiqueras
+            ClaimsPrincipal principal = new ClaimsPrincipal(ClaimsIdentity);            //comando que manda ordenes al navegador. objeto final
+
             
-            ClaimsPrincipal principal = new ClaimsPrincipal(ClaimsIdentity);
+            var properties = new AuthenticationProperties();
+            properties.IsPersistent = true;     //Para que se guarden las cookies asi cuando se cierra el navegador la sesion sigue activa
             
-            
+           await HttpContext.SignInAsync
+               (CookieAuthenticationDefaults.AuthenticationScheme, principal, properties); //Lo manda hacia el navegador
+           
+           return RedirectToAction("Index", "Home");                        //Cambiar variables
+
+
         }
-            
+
         return View();
     }
 

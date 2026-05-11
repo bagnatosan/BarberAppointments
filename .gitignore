@@ -6,6 +6,7 @@ devlog.txt
 .idea/
 *.user
 *.sln.dotSettings.user
+Machete.txt
 
 # Archivos de base de datos local (para que no se suba tu DB real)
 *.mdf
