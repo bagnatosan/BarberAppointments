@@ -268,8 +268,51 @@ body {
 
 #WhatsappIcon, #InstagramIcon
 {
-    color: #d4af37; 
-    line-height: 0; 
-    opacity: 0.85; 
+    color: #d4af37;
+    line-height: 0;
+    opacity: 0.85;
     transition: opacity 0.2s;
+}
+
+/* Session status */
+#SessionIsActive {
+    margin: 0;
+    color: #d4af37;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+#SessionIsActive::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.75);
+    flex-shrink: 0;
+}
+
+#SessionIsUnactive {
+    color: #d4af37;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid #d4af37;
+    border-radius: 50px;
+    padding: 6px 18px;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#SessionIsUnactive:hover {
+    background-color: #d4af37;
+    color: #000;
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
 }

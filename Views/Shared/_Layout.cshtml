@@ -38,24 +38,6 @@
     </nav>
 </header>
 
-<!-- Offcanvas Mobile Nav -->
-<div class="offcanvas offcanvas-end offcanvas-nav" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-    <div class="offcanvas-header border-bottom border-secondary">
-        <h5 class="offcanvas-title text-white" id="offcanvasNavbarLabel" style="font-family: 'Playfair Display', serif; font-weight: 900; font-style: italic; letter-spacing: -1px;">
-            Caporale <span style="font-weight: 400; font-style: normal; letter-spacing: 4px; font-size: 0.6em; display: block; margin-top: -4px; color: #aaa;">Barberia</span>
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <ul class="navbar-nav flex-column gap-2 mt-2">
-            <li class="nav-item"><a class="nav-link offcanvas-link" href="#">Servicios</a></li>
-            <li class="nav-item"><a class="nav-link offcanvas-link" asp-controller="Hairdresser" asp-action="Index">Peluqueros</a></li>
-            <li class="nav-item"><a class="nav-link offcanvas-link" href="#">Contacto</a></li>
-            <li class="nav-item"><a class="nav-link offcanvas-link" href="#">Ubicación</a></li>
-        </ul>
-    </div>
-</div>
-
 <div class="container">
     <main role="main" class="pb-3">
         @RenderBody()
