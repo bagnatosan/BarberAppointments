@@ -1,5 +1,98 @@
-@model IEnumerable<Barber.Models.User>
+@model Barber.Models.User
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Registro";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card bg-black border border-secondary shadow-lg" style="width: 100%; max-width: 420px;">
+
+        <div class="card-body px-4 py-5">
+            <h2 class="text-center mb-1" style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;">
+                Crear Cuenta
+            </h2>
+            <p class="text-center text-secondary mb-4" style="font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">
+                Caporale Barberia
+            </p>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger border-0 py-2 px-3" style="font-size: 0.875rem;">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <form asp-controller="Account" asp-action="Register" method="post">
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                        Nombre
+                    </label>
+                    <input asp-for="FirstName"
+                           class="form-control bg-dark text-light border-secondary"
+                           placeholder="Juan" />
+                    <span asp-validation-for="FirstName" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                        Apellido
+                    </label>
+                    <input asp-for="LastName"
+                           class="form-control bg-dark text-light border-secondary"
+                           placeholder="Pérez" />
+                    <span asp-validation-for="LastName" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                        Correo electrónico
+                    </label>
+                    <input asp-for="Email"
+                           type="email"
+                           class="form-control bg-dark text-light border-secondary"
+                           placeholder="ejemplo@mail.com"
+                           autocomplete="email" />
+                    <span asp-validation-for="Email" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Phone" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                        Teléfono
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="prefix">54911</span>
+                        <input asp-for="Phone"
+                               type="tel"
+                               class="form-control bg-dark text-light border-secondary"
+                               placeholder="+54 11 1234-5678"/>
+                        <span asp-validation-for="Phone" class="text-danger" style="font-size: 0.8rem;"></span>
+                    </div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit"
+                            class="btn text-dark fw-bold"
+                            style="background-color: #c9a96e; letter-spacing: 1px;">
+                        Registrarse
+                    </button>
+                </div>
+            </form>
+
+            <hr class="border-secondary my-4" />
+
+            <p class="text-center text-secondary mb-0" style="font-size: 0.85rem;">
+                ¿Ya tenés cuenta?
+                <a asp-controller="Account" asp-action="Login"
+                   class="text-decoration-none fw-semibold"
+                   style="color: #c9a96e;">
+                    Iniciá sesión
+                </a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

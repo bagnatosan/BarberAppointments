@@ -23,7 +23,7 @@
                 </h1>
             </a>
 
-            @if (User.Identity?.IsAuthenticated == true)            //? Operador de condicion nula
+            @if(User.Identity?.IsAuthenticated == true)            //? Operador de condicion nula
             {
                 <p id="SessionIsActive">@User.Identity.Name</p>
                 
@@ -31,7 +31,7 @@
             
             else 
             {
-                <a id="SessionIsUnactive" href="">Iniciar Sesion</a>
+                <a id="SessionIsUnactive" asp-controller="Account" asp-action="Login">Iniciar Sesion</a>
             }
 
         </div>

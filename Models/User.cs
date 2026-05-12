@@ -7,7 +7,10 @@ public class User
     public int Id { get; set; }
     
     [Required]
-    public required string Username { get; set; }
+    public required string FirstName { get; set; }
+    
+    [Required]
+    public required string LastName { get; set; }
     
     [Required]
     public required string Phone { get; set; }
@@ -18,5 +21,5 @@ public class User
 
 
     public string Role { get; set; } = "Customer";
-    public List<Appointment> Appointments { get; set; }
+    public List<Appointment> Appointments { get; set; } = new();
 }
