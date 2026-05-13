@@ -24,7 +24,14 @@
 
             @if(User.Identity?.IsAuthenticated == true)            //? Operador de condicion nula
             {
-                <p id="SessionIsActive">@User.Identity.Name</p>
+                <div class="user-menu-container">
+                    <p id="SessionIsActive" class="user-menu-toggle">@User.Identity.Name</p>
+                    <div id="UserDropdown" class="user-dropdown-menu">
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
+                            <button type="submit" class="dropdown-item-custom">Cerrar Sesión</button>
+                        </form>
+                    </div>
+                </div>
             }
             
             else 

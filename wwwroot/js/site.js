@@ -20,3 +20,17 @@ if (btn) {
         // la página de la barbería se queda abierta y la animación se ve igual.
     });
 }
+
+// User dropdown toggle
+document.addEventListener('click', function (e) {
+    const toggle = document.querySelector('.user-menu-toggle');
+    const menu = document.getElementById('UserDropdown');
+    
+    if (toggle && menu) {
+        if (toggle.contains(e.target)) {
+            menu.classList.toggle('show');
+        } else if (!menu.contains(e.target)) {
+            menu.classList.remove('show');
+        }
+    }
+});

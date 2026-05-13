@@ -32,7 +32,6 @@
                     <input asp-for="Email"
                            type="email"
                            class="form-control bg-dark text-light border-secondary"
-                           placeholder="ejemplo@mail.com"
                            autocomplete="email" />
                     <span asp-validation-for="Email" class="text-danger" style="font-size: 0.8rem;"></span>
                 </div>
@@ -42,8 +41,7 @@
                         Nombre
                     </label>
                     <input asp-for="FirstName"
-                           class="form-control bg-dark text-light border-secondary"
-                           placeholder="Juan"/>
+                           class="form-control bg-dark text-light border-secondary"/>
                     <span asp-validation-for="FirstName" class="text-danger" style="font-size: 0.8rem;"></span>
                 </div>
 
@@ -53,7 +51,7 @@
                     </label>
                     <input asp-for="LastName"
                            class="form-control bg-dark text-light border-secondary"
-                           placeholder="Pérez"/>
+                           type="text"/>
                     <span asp-validation-for="LastName" class="text-danger" style="font-size: 0.8rem;"></span>
                 </div>
 
@@ -63,13 +61,17 @@
                         Teléfono
                     </label>
                     <div class="input-group">
-                        <span class="input-group-text" id="prefix">54911</span>
                         <input asp-for="Phone"
                                type="tel"
                                class="form-control bg-dark text-light border-secondary"
-                               placeholder="+54 11 1234-5678"/>
-                        <span asp-validation-for="Phone" class="text-danger" style="font-size: 0.8rem;"></span>
+                               maxlength="8"
+                               minlength="8"
+                               placeholder="34214561"/>
                     </div>
+                    <span asp-validation-for="Phone" class="text-danger" style="font-size: 0.8rem;"></span>
+                    <p class="text-center text-secondary mt-2 mb-0" style="font-size: 0.75rem;">
+                        Ingresa solo los últimos 8 dígitos (sin prefijos ni código de área)
+                    </p>
                 </div>
 
                 <div class="d-grid">

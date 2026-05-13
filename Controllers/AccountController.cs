@@ -78,7 +78,7 @@ public class AccountController : Controller
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
             
-            var ClaimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);   //Agrupa todas las etiqueras
+            var ClaimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);   //Agrupa todas las etiquetas
             ClaimsPrincipal principal = new ClaimsPrincipal(ClaimsIdentity);            //comando que manda ordenes al navegador. objeto final
 
             
@@ -94,6 +94,13 @@ public class AccountController : Controller
         }
 
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Index", "Home");
     }
 
 }
