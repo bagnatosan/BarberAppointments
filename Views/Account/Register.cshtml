@@ -41,7 +41,9 @@
                         Nombre
                     </label>
                     <input asp-for="FirstName"
-                           class="form-control bg-dark text-light border-secondary"/>
+                           class="form-control bg-dark text-light border-secondary" 
+                           type="text" 
+                           onkeypress="return /[a-z]/i.test(event.key)"/>
                     <span asp-validation-for="FirstName" class="text-danger" style="font-size: 0.8rem;"></span>
                 </div>
 
@@ -51,7 +53,8 @@
                     </label>
                     <input asp-for="LastName"
                            class="form-control bg-dark text-light border-secondary"
-                           type="text"/>
+                           type="text" 
+                           onkeypress="return /[a-z]/i.test(event.key)"/>
                     <span asp-validation-for="LastName" class="text-danger" style="font-size: 0.8rem;"></span>
                 </div>
 
@@ -66,7 +69,9 @@
                                class="form-control bg-dark text-light border-secondary"
                                maxlength="8"
                                minlength="8"
-                               placeholder="34214561"/>
+                               placeholder="34214561"
+                               type="text" 
+                               onkeypress="return /[0-9]/i.test(event.key)"/>
                     </div>
                     <span asp-validation-for="Phone" class="text-danger" style="font-size: 0.8rem;"></span>
                     <p class="text-center text-secondary mt-2 mb-0" style="font-size: 0.75rem;">
