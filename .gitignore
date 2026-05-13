@@ -12,3 +12,5 @@ Machete.txt
 *.mdf
 *.ldf
 barber.db
+Barber.db-shm
+Barber.db-wal
