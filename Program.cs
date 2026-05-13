@@ -1,4 +1,6 @@
 using Barber.Data;
+using Barber.Models;
+using Barber.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlite("Data Source=Barber.db"));
+builder.Services.AddScoped<IUserService , UserService>();
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {

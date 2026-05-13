@@ -21,28 +21,10 @@
                     @ViewBag.Error
                 </div>
             }
+            
 
             <form asp-controller="Account" asp-action="Register" method="post">
-                <div class="mb-3">
-                    <label asp-for="FirstName" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
-                        Nombre
-                    </label>
-                    <input asp-for="FirstName"
-                           class="form-control bg-dark text-light border-secondary"
-                           placeholder="Juan" />
-                    <span asp-validation-for="FirstName" class="text-danger" style="font-size: 0.8rem;"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="LastName" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
-                        Apellido
-                    </label>
-                    <input asp-for="LastName"
-                           class="form-control bg-dark text-light border-secondary"
-                           placeholder="Pérez" />
-                    <span asp-validation-for="LastName" class="text-danger" style="font-size: 0.8rem;"></span>
-                </div>
-
+                
                 <div class="mb-3">
                     <label asp-for="Email" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
                         Correo electrónico
@@ -54,6 +36,27 @@
                            autocomplete="email" />
                     <span asp-validation-for="Email" class="text-danger" style="font-size: 0.8rem;"></span>
                 </div>
+                
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                        Nombre
+                    </label>
+                    <input asp-for="FirstName"
+                           class="form-control bg-dark text-light border-secondary"
+                           placeholder="Juan"/>
+                    <span asp-validation-for="FirstName" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                        Apellido
+                    </label>
+                    <input asp-for="LastName"
+                           class="form-control bg-dark text-light border-secondary"
+                           placeholder="Pérez"/>
+                    <span asp-validation-for="LastName" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
 
                 <div class="mb-4">
                     <label asp-for="Phone" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">

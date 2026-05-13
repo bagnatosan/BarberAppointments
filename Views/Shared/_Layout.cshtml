@@ -7,7 +7,6 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/Barber.styles.css" asp-append-version="true"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
@@ -26,7 +25,6 @@
             @if(User.Identity?.IsAuthenticated == true)            //? Operador de condicion nula
             {
                 <p id="SessionIsActive">@User.Identity.Name</p>
-                
             }
             
             else 
@@ -48,7 +46,7 @@
     <div class="container text-center">
         <div class="d-flex align-items-center justify-content-center gap-3">
             <a href="https://www.instagram.com/caporalebarberia/" aria-label="Instagram">
-                <img id="InstagramIcon" src="img/instagram.svg"/>
+                <img alt="InstagramIcon" id="InstagramIcon" src="img/instagram.svg"/>
             </a>
             
             <p class="mb-0">&copy; @DateTime.Now.Year - Caporale Barberia - Elegancia y Tradición</p>

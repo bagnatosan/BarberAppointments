@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Barber.Data;
 using Barber.Models;
+using Barber.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,31 @@ namespace Barber.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IUserService _userService;
 
-    public AccountController(ApplicationDbContext context)
+    public AccountController(IUserService userService)
     {
-        _context = context;
+        _userService = userService;
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> Register(User user)
+    {
+        if (!ModelState.IsValid) return View(user);
+        
+        var result = await _userService.RegisterUserAsync(user);
+
+        if (result.Success)
+        {
+            return RedirectToAction("Login");
+        }
+
+        ModelState.AddModelError(result.Field ,result.ErrorMessage);
+        
+        return View(user);
+        
+    }
+    
 
     [HttpGet]
     public IActionResult Register(string email)
@@ -30,42 +50,29 @@ public class AccountController : Controller
         return View(NewUser);
     }
     
-    [HttpPost]
-    public async Task<IActionResult> Register(User user)
-    {
-        if (ModelState.IsValid)
-        {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Login");
-        }
-        return View(user);
-    }
-    
-    
     
     [HttpGet]
-    public IActionResult Login() //Sirve solo para mostra el archivo .cshtml en el formulario
+    public IActionResult Login() //SOLO MUESTRA EL FORMULARIO
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(string email) // es async y devuelve un task ya que es una operacion que lleva tiempo y no queremos que se trabe la app
+    public async Task<IActionResult> Login(string email) // es async y devuelve un task ya que es una operacion que lleva tiempo
+                                                         // y no queremos que se trabe la app
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        var user = await _userService.GetUserByEmailAsync(email);
 
-        if (user == null) //NO EXISTE EL USUARIO EN LA BASE DE DATOS
+        if (user == null) 
         {
-            RedirectToAction("Register",new {email = email});        //Cambiar variables
+            return RedirectToAction("Register",new {email = email});        
         }
             
-        else              //SI EXISTE EL USUARIO EN LA BASE DE DATOS
+        else             
         {
             var claims = new List<Claim>                //Lista de declaraciones. Datos sueltos sobre el usuario
             {
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
