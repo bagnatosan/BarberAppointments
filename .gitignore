@@ -11,6 +11,6 @@ Machete.txt
 # Archivos de base de datos local (para que no se suba tu DB real)
 *.mdf
 *.ldf
-barber.db
+Barber.db
 Barber.db-shm
 Barber.db-wal
