@@ -2,13 +2,7 @@ html {
   font-size: 14px;
 }
 
-/* ── Home page ── */
-.full-bleed {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-}
+
 
 .hero-section {
     background-image: url('../img/barbershop_bg.png');
@@ -195,7 +189,6 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
   background-color: #050505;
   color: #e0e0e0;
   font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;

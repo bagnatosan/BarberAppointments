@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-dark text-light">
+<body class="bg-dark text-light d-flex flex-column min-vh-100">
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-secondary py-2">
         <div class="container-fluid px-4">
@@ -43,17 +43,17 @@
     </nav>
 </header>
 
-<div class="container">
-    <main role="main" class="pb-3">
+<div class="container-fluid p-0 flex-grow-1 d-flex flex-column">
+    <main role="main" class="flex-grow-1 d-flex flex-column">
         @RenderBody()
     </main>
 </div>
 
-<footer class="border-top border-secondary footer text-light bg-black py-3 mt-auto">
+<footer class="border-top border-secondary text-light bg-black py-3 mt-auto">
     <div class="container text-center">
         <div class="d-flex align-items-center justify-content-center gap-3">
             <a href="https://www.instagram.com/caporalebarberia/" aria-label="Instagram">
-                <img alt="InstagramIcon" id="InstagramIcon" src="img/instagram.svg"/>
+                <img alt="Instagram" id="InstagramIcon" src="~/img/instagram.svg" width="20" height="20" />
             </a>
             
             <p class="mb-0">&copy; @DateTime.Now.Year - Caporale Barberia - Elegancia y Tradición</p>
