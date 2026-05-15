@@ -21,8 +21,13 @@ public class UserService : IUserService
         if (userExists != null)
         {
             if (userExists.Email == user.Email)
-                return (false, "El email ya esta en uso", "Email");             //mail
-                return (false, "El numero de telefono ya existe" , "Phone");  //telefono
+            {
+                return (false, "El email ya esta en uso", "Email");
+            }
+            else
+            {
+                return (false, "El numero de telefono ya existe" , "Phone");
+            }
         }
         
         user.Phone = $"54911{user.Phone}";

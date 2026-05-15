@@ -1,11 +1,9 @@
 using System.Security.Claims;
-using Barber.Data;
 using Barber.Models;
 using Barber.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Barber.Controllers;
 
@@ -30,7 +28,8 @@ public class AccountController : Controller
             return RedirectToAction("Login");
         }
 
-        ModelState.AddModelError(result.Field ,result.ErrorMessage);
+        ModelState.AddModelError(result.Field ?? string.Empty /*Si esto es nulo, usa este otro*/
+            ,result.ErrorMessage);
         
         return View(user);
         
@@ -40,14 +39,14 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Register(string email)
     {
-        var NewUser = new User
+        var newUser = new User
         {
             FirstName = "",
             LastName = "",
             Phone = "",
             Email = email
         };
-        return View(NewUser);
+        return View(newUser);
     }
     
     
@@ -58,14 +57,13 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(string email) // es async y devuelve un task ya que es una operacion que lleva tiempo
-                                                         // y no queremos que se trabe la app
+    public async Task<IActionResult> Login(string email) // es async y devuelve un task ya que es una operacion que lleva tiempo// y no queremos que se trabe la app
     {
         var user = await _userService.GetUserByEmailAsync(email);
 
         if (user == null) 
         {
-            return RedirectToAction("Register",new {email = email});        
+            return RedirectToAction("Register",new {email});        
         }
             
         else             
@@ -78,8 +76,8 @@ public class AccountController : Controller
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
             
-            var ClaimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);   //Agrupa todas las etiquetas
-            ClaimsPrincipal principal = new ClaimsPrincipal(ClaimsIdentity);            //comando que manda ordenes al navegador. objeto final
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);   //Agrupa todas las etiquetas
+            ClaimsPrincipal principal = new ClaimsPrincipal(claimsIdentity);            //comando que manda ordenes al navegador. objeto final
 
             
             var properties = new AuthenticationProperties();
@@ -92,8 +90,6 @@ public class AccountController : Controller
 
 
         }
-
-        return View();
     }
 
     [HttpPost]
