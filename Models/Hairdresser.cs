@@ -12,6 +12,5 @@ public class Hairdresser
     [Required]
     public required string LastName { get; set; }
     
-    [Required]
-    public required List<Appointment> Appointments { get; set; }
+    public List<Appointment>? Appointments{ get; set; }
 }

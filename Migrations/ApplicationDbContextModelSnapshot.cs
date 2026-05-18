@@ -33,7 +33,6 @@ namespace Barber.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Time")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")

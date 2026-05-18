@@ -84,3 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+///////////practica//////////////

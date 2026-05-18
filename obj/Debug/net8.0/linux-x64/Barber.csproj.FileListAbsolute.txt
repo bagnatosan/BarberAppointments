@@ -130,6 +130,8 @@
 /home/bantiago/Documentos/C#/Barber/Barber/obj/Debug/net8.0/linux-x64/Barber.pdb
 /home/bantiago/Documentos/C#/Barber/Barber/obj/Debug/net8.0/linux-x64/Barber.genruntimeconfig.cache
 /home/bantiago/Documentos/C#/Barber/Barber/obj/Debug/net8.0/linux-x64/ref/Barber.dll
+/home/bantiago/Documentos/C#/Barber/Barber/bin/Debug/net8.0/linux-x64/MySqlConnector.dll
+/home/bantiago/Documentos/C#/Barber/Barber/bin/Debug/net8.0/linux-x64/Pomelo.EntityFrameworkCore.MySql.dll
 /home/bantiago/Documentos/C#/Barber/Barber/bin/Debug/net8.0/linux-x64/Barber.staticwebassets.endpoints.json
 /home/bantiago/Documentos/C#/Barber/Barber/obj/Debug/net8.0/linux-x64/rpswa.dswa.cache.json
 /home/bantiago/Documentos/C#/Barber/Barber/obj/Debug/net8.0/linux-x64/rjimswa.dswa.cache.json

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Barber.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260515121502_FourthMigration")]
-    partial class FourthMigration
+    [Migration("20260518190426_AddLastName3")]
+    partial class AddLastName3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,6 @@ namespace Barber.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Time")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")
