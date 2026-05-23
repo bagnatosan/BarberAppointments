@@ -19,4 +19,8 @@
       <Folder Include="wwwroot\img\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <TypeScriptCompile Include="wwwroot\js\site.ts" />
+    </ItemGroup>
+
 </Project>
