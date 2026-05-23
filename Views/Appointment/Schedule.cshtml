@@ -4,6 +4,11 @@
     ViewData["Title"] = "ScheduleAppoinment";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+}
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 mb-4">
@@ -37,12 +42,5 @@
 
 
 @section Scripts {
-
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    
-    <script src="~/js/site.js" asp-append-version="true"></script>
 }
