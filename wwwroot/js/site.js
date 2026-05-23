@@ -4,7 +4,7 @@
 // Usamos querySelector para agarrar la clase .a-agendar
 const btn = document.getElementById('btnAgendar');
 if (btn) {
-    btn.addEventListener('click', function (e) {
+    btn.addEventListener('click', function () {
         // La animación de pulso
         btn.classList.remove('pulse');
         void btn.offsetWidth; // Truco para resetear la animación
@@ -31,3 +31,55 @@ document.addEventListener('click', function (e) {
         }
     }
 });
+//agendar turno
+//Captura de eventos 1
+const barberSelect = document.getElementById('barber-select');
+const stepCalendar = document.getElementById('step-calendar');
+const hoursContainer = document.getElementById('hours-container');
+//Escucha del select 2
+barberSelect.addEventListener('change', () => {
+    if (barberSelect.value !== '') {
+        stepCalendar.style.display = 'flex';
+    }
+    else {
+        stepCalendar.style.display = 'none';
+        hoursContainer.style.display = 'none';
+    }
+});
+//Inicializacion de flatpickr 3
+flatpickr("#calendar-inline", {
+    inline: true,
+    minDate: "today",
+    locale: {
+        firstDayOfWeek: 1,
+    },
+    onChange: function (selectedDates, dateStr) {
+        const hairdresserId = barberSelect.value;
+        if (hairdresserId && dateStr) {
+            hoursContainer.style.display = 'block';
+            LoadAvailableSlots(hairdresserId, dateStr);
+        }
+    }
+});
+async function LoadAvailableSlots(hairdresserId, date) {
+    const slotsList = document.getElementById('slots-list');
+    if (!slotsList)
+        return;
+    try {
+        const response = await fetch(`/Appointment/GetAvailableSlots?hairdresserId=${hairdresserId}&date=${date}`);
+        const data = await response.json();
+        slotsList.innerHTML = '';
+        data.forEach((time) => {
+            let button = document.createElement('button');
+            button.className = 'btn btn-hour mt-2';
+            button.innerText = time;
+            slotsList.appendChild(button);
+            button.addEventListener('click', (event) => {
+                console.log(`Hora seleccionada: ${time}`);
+            });
+        });
+    }
+    catch (error) {
+        console.error('Error al cargar los horarios disponibles:', error);
+    }
+}

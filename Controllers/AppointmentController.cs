@@ -1,6 +1,5 @@
-using Barber.Data;
-using Barber.Models;
 using Barber.Services;
+using Barber.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Barber.Controllers;
@@ -15,9 +14,12 @@ public class AppointmentController : Controller
     }
     
     [HttpGet]
-    public IActionResult Schedule() 
-    { 
-        return View();
+    public async Task<IActionResult> Schedule() 
+    {
+        var hairdressers = await _appointmentService.GetHairdressers();
+        var viewModel = new AppointmentViewModel();
+        viewModel.Hairdressers = hairdressers;
+        return View(viewModel);
     }
 
     [HttpGet]

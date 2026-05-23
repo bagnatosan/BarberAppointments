@@ -1,4 +1,5 @@
 using Barber.Data;
+using Barber.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,13 @@ public class AppointmentService : IAppointmentService
     public AppointmentService(ApplicationDbContext context)
     {
         _context = context;
+    }
+
+    public async Task<List<Hairdresser>> GetHairdressers()
+    {
+        var hairdressers = await _context.Hairdressers.ToListAsync();
+
+        return hairdressers;
     }
 
     [HttpGet]
@@ -68,5 +76,6 @@ public class AppointmentService : IAppointmentService
         return availableSlots;
 
     }
+    
    
 }

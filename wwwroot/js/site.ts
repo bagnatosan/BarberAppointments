@@ -5,7 +5,7 @@
 const btn = document.getElementById('btnAgendar') as HTMLButtonElement | null;
 
 if (btn) {
-    btn.addEventListener('click', function (e: MouseEvent) {
+    btn.addEventListener('click', function () {
         // La animación de pulso
         btn.classList.remove('pulse');
         void btn.offsetWidth; // Truco para resetear la animación
@@ -42,13 +42,12 @@ document.addEventListener('click', function (e: MouseEvent) {
 const barberSelect = document.getElementById('barber-select') as HTMLSelectElement;
 const stepCalendar = document.getElementById('step-calendar') as HTMLDivElement;
 const hoursContainer = document.getElementById('hours-container') as HTMLDivElement;
-const calendarInline = document.getElementById('calendar-inline') as HTMLDivElement;
 
 declare var flatpickr: any;
 
 //Escucha del select 2
 barberSelect.addEventListener('change' , () => {
-    if(barberSelect.value === '')
+    if(barberSelect.value !== '')
     {
         stepCalendar.style.display = 'flex';
     }
@@ -61,11 +60,11 @@ barberSelect.addEventListener('change' , () => {
 
 //Inicializacion de flatpickr 3
 
-flatpickr("#Calendar-inline" , {
+flatpickr("#calendar-inline" , {
     inline: true,
     minDate: "today",
     locale: {
-        firstDayOfWeek: 1,
+        firstDayOfWeek: 1, 
     },
     onChange: function(selectedDates: Date[], dateStr: string) {
         const hairdresserId = barberSelect.value;
@@ -87,6 +86,20 @@ async function LoadAvailableSlots(hairdresserId: string, date: string) : Promise
         const response = await fetch(`/Appointment/GetAvailableSlots?hairdresserId=${hairdresserId}&date=${date}`);
         const data = await response.json();
         slotsList.innerHTML = '';
+        
+        
+        data.forEach((time:string) => {
+            let button = document.createElement('button');
+            button.className = 'btn btn-hour mt-2';
+            button.innerText = time;
+            slotsList.appendChild(button);
+            
+            
+            button.addEventListener('click', (event: MouseEvent) => {
+                console.log(`Hora seleccionada: ${time}`); 
+            });
+        })
+        
     }
     catch (error) {
         console.error('Error al cargar los horarios disponibles:', error);

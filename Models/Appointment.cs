@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Barber.Models;
 
 public class Appointment
@@ -5,6 +7,7 @@ public class Appointment
     public int Id { get; set; }
     
     public DateTime Date { get; set; }
+    [MaxLength(8)]
     public string? Time { get; set; }
     
     public int UserId { get; set; }

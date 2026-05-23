@@ -30,12 +30,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/bantiago/Documentos/C\#/Barber/Barber/Views/Appoinment/Schedule.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXBwb2lubWVudC9TY2hlZHVsZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/home/bantiago/Documentos/C\#/Barber/Barber/Views/Booking/SelectHairdresser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9va2luZy9TZWxlY3RIYWlyZHJlc3Nlci5jc2h0bWw=
+[/home/bantiago/Documentos/C\#/Barber/Barber/Views/Appointment/Schedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXBwb2ludG1lbnQvU2NoZWR1bGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/bantiago/Documentos/C\#/Barber/Barber/Views/Hairdresser/Index.cshtml]
