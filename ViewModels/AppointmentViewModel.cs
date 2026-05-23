@@ -2,7 +2,7 @@ using Barber.Models;
 
 namespace Barber.ViewModels;
 
-public class AppoinmentViewModel
+public class AppointmentViewModel
 {
     public List<Hairdresser> Hairdressers { get; set; } = new();
     

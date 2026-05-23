@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlite("Data Source=Barber.db"));
 builder.Services.AddScoped<IUserService , UserService>();
-builder.Services.AddScoped<IAppoinmentService , AppoinmentService>();
+builder.Services.AddScoped<IAppointmentService , AppointmentService>();
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>

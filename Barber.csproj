@@ -23,4 +23,8 @@
       <TypeScriptCompile Include="wwwroot\js\site.ts" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Booking\SelectHairdresser.cshtml" />
+    </ItemGroup>
+
 </Project>

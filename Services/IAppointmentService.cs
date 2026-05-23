@@ -1,6 +1,6 @@
 namespace Barber.Services;
 
-public interface IAppoinmentService
+public interface IAppointmentService
 {
     Task<List<string>> GetAvailableSlots(int hairdresserId, string date);
 }

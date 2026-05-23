@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Barber.Services;
 
-public class AppoinmentService : IAppoinmentService
+public class AppointmentService : IAppointmentService
 {
     private readonly ApplicationDbContext _context;
 
-    public AppoinmentService(ApplicationDbContext context)
+    public AppointmentService(ApplicationDbContext context)
     {
         _context = context;
     }

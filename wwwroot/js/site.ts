@@ -68,21 +68,28 @@ flatpickr("#Calendar-inline" , {
         firstDayOfWeek: 1,
     },
     onChange: function(selectedDates: Date[], dateStr: string) {
-        const barberId = barberSelect.value;
+        const hairdresserId = barberSelect.value;
         
-        if (barberId && dateStr) {
+        if (hairdresserId && dateStr) {
             hoursContainer.style.display = 'block';
-            LoadAvailableSlots(barberId, dateStr);
+            LoadAvailableSlots(hairdresserId, dateStr);
         }
     }
 })
 
 
-async function LoadAvailableSlots(barberId: string, date: string) : Promise<void> {
+async function LoadAvailableSlots(hairdresserId: string, date: string) : Promise<void> {
     const slotsList = document.getElementById('slots-list') as HTMLDivElement;
    
     if (!slotsList) return;
     
-   
+    try {
+        const response = await fetch(`/Appointment/GetAvailableSlots?hairdresserId=${hairdresserId}&date=${date}`);
+        const data = await response.json();
+        slotsList.innerHTML = '';
+    }
+    catch (error) {
+        console.error('Error al cargar los horarios disponibles:', error);
+    }
     
 }

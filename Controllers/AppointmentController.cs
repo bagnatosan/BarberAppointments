@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Barber.Controllers;
 
-public class AppoinmentController : Controller
+public class AppointmentController : Controller
 { 
-    private readonly IAppoinmentService _appoinmentService;
+    private readonly IAppointmentService _appointmentService;
 
-    public AppoinmentController(IAppoinmentService appoinmentService)
+    public AppointmentController(IAppointmentService appointmentService)
     {
-        _appoinmentService = appoinmentService;
+        _appointmentService = appointmentService;
     }
     
     [HttpGet]
@@ -23,7 +23,7 @@ public class AppoinmentController : Controller
     [HttpGet]
     public async Task<IActionResult> GetAvailableSlots(int hairdresserId, string date)
     {
-        var availableSlots = await _appoinmentService.GetAvailableSlots(hairdresserId, date);
+        var availableSlots = await _appointmentService.GetAvailableSlots(hairdresserId, date);
         return Json(availableSlots);
     }
     
