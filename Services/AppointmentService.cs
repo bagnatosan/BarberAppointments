@@ -1,6 +1,6 @@
 using Barber.Data;
+using Barber.Dto;
 using Barber.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Barber.Services;
@@ -34,7 +34,22 @@ public class AppointmentService : IAppointmentService
         
         return GenerateTimeSlots(selectedDate, hourStart, hourEnd, occupiedAppointments);
     }
+    
+    public async Task<bool> InsertAppointmentAsync(AppointmentDto appointmentdto)
+    {
+        DateTime mergedTime = MergeTime(appointmentdto);
 
+        if(await AppointmentExistsAsync(appointmentdto.SelectedHairdresserId , mergedTime))
+            return false;
+        
+        var appointment = new Appointment();
+        
+        
+    }
+    
+    //Private
+
+    
     private async Task<List<DateTime>> GetOccuppiedAppointmentsAsync(int hairdresserId, DateTime date)
     {
         var occupiedAppointments = await _context.Appointments
@@ -75,5 +90,22 @@ public class AppointmentService : IAppointmentService
         
         return availableSlots;       
     }
+
+    private DateTime MergeTime(AppointmentDto appointment)
+    {
+        var selectedDate = appointment.SelectedDate.Date;
+        var selectedTime = TimeSpan.Parse(appointment.SelectedTime);
+        selectedDate = selectedDate.Add(selectedTime);
+        
+        return selectedDate;
+    }
+
+    private async Task<bool> AppointmentExistsAsync(int hairdresserId, DateTime date)
+    {
+        return await _context.Appointments
+            .AnyAsync(a => a.HairdresserId == hairdresserId && a.Date == date);
+    }
+    
+    
     
 }

@@ -1,5 +1,5 @@
 using Barber.Services;
-using Barber.ViewModels;
+using Barber.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Barber.Controllers;
@@ -17,7 +17,7 @@ public class AppointmentController : Controller
     public async Task<IActionResult> Schedule() 
     {
         var hairdressers = await _appointmentService.GetHairdressers();
-        var viewModel = new AppointmentViewModel();
+        var viewModel = new AppointmentDto();
         viewModel.Hairdressers = hairdressers;
         return View(viewModel);
     }
@@ -34,5 +34,15 @@ public class AppointmentController : Controller
     { 
         return View(); 
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Insert ([FromBody]AppointmentDto appointment)
+    {
+        var result = await _appointmentService.InsertAppointmentAsync(appointment);
+        
+        return Json(result);//provisorio para que no tire error
+    }
+    
+  
      
 }

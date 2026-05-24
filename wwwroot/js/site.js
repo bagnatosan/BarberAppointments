@@ -75,7 +75,7 @@ async function LoadAvailableSlots(hairdresserId, date) {
             button.innerText = time;
             slotsList.appendChild(button);
             button.addEventListener('click', (event) => {
-                console.log(`Hora seleccionada: ${time}`);
+                fetch(`/Appointment/Insert/`);
             });
         });
     }

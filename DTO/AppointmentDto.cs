@@ -1,8 +1,8 @@
 using Barber.Models;
 
-namespace Barber.ViewModels;
+namespace Barber.Dto;
 
-public class AppointmentViewModel
+public class AppointmentDto
 {
     public List<Hairdresser> Hairdressers { get; set; } = new();
 

@@ -94,9 +94,8 @@ async function LoadAvailableSlots(hairdresserId: string, date: string) : Promise
             button.innerText = time;
             slotsList.appendChild(button);
             
-            
             button.addEventListener('click', (event: MouseEvent) => {
-                console.log(`Hora seleccionada: ${time}`); 
+            fetch(`/Appointment/Insert/`)
             });
         })
         
