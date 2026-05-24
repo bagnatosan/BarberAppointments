@@ -25,7 +25,7 @@ public class AppointmentController : Controller
     [HttpGet]
     public async Task<IActionResult> GetAvailableSlots(int hairdresserId, string date)
     {
-        var availableSlots = await _appointmentService.GetAvailableSlots(hairdresserId, date);
+        var availableSlots = await _appointmentService.GetAvailableSlotsAsync(hairdresserId, date);
         return Json(availableSlots);
     }
     

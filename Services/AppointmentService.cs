@@ -21,61 +21,59 @@ public class AppointmentService : IAppointmentService
         return hairdressers;
     }
 
-    [HttpGet]
-    public async Task<List<string>> GetAvailableSlots(int hairdresserId, string date)
+
+    public async Task<List<string>> GetAvailableSlotsAsync(int hairdresserId, string date)
     {
-        byte timeOfCutting = 40;
-        byte hourStart = 0;
-        byte hourEnd = 0;
-        
-        DateTime pointer;
-        DateTime lastHour;
         var selectedDate = DateTime.Parse(date);
-        var dayOfWeek = selectedDate.DayOfWeek;
         
-        var availableSlots = new List<string>();
+        var occupiedAppointments = await GetOccuppiedAppointmentsAsync(hairdresserId, selectedDate);
+
+        var (hourStart, hourEnd) = GetBussinessHours(selectedDate.DayOfWeek);
+
+        if (hourStart == 0 && hourEnd == 0) return new List<string>();          //Si es domingo, devuelve lista vacia
         
+        return GenerateTimeSlots(selectedDate, hourStart, hourEnd, occupiedAppointments);
+    }
+
+    private async Task<List<DateTime>> GetOccuppiedAppointmentsAsync(int hairdresserId, DateTime date)
+    {
         var occupiedAppointments = await _context.Appointments
-            .Where(a => a.Hairdresser.Id == hairdresserId && a.Date == selectedDate.Date)
+            .Where(a => a.Hairdresser.Id == hairdresserId && a.Date == date.Date)
             .Select(a => a.Date)            //Da solo los dias que no estan ocupados
             .ToListAsync();
-
-
-        if (dayOfWeek == DayOfWeek.Saturday)
-        {
-            hourStart = 10;
-            hourEnd = 14;
-        }
-        else if (dayOfWeek == DayOfWeek.Sunday)
-        {
-            return availableSlots;
-        }
-        else
-        {
-            hourStart = 10;
-            hourEnd = 18;
-        }
-
-        pointer = selectedDate.Date.AddHours(hourStart);
-        lastHour = selectedDate.Date.AddHours(hourEnd);
-
         
+        return occupiedAppointments;
+    }
+    
+    private (byte start, byte end) GetBussinessHours(DayOfWeek dayOfWeek)
+    {
+        if (dayOfWeek == DayOfWeek.Saturday)
+            return (10, 14);
+        else if (dayOfWeek == DayOfWeek.Sunday)
+            return (0, 0);              //Cerrado
+        else
+            return (10, 18);            //Lunes a viernes
+    }
+
+    private List<string> GenerateTimeSlots(DateTime selectedDate, byte hourStart, byte hourEnd,
+        List<DateTime> occupiedAppointments)
+    {
+        byte timeOfCutting = 40;
+        
+        var availableSlots = new List<string>();
+
+        var pointer = selectedDate.Date.AddHours(hourStart);
+        var lastHour = selectedDate.Date.AddHours(hourEnd);
 
         while (pointer.AddMinutes(timeOfCutting) <= lastHour)
         {
-
-            foreach (var appointment in occupiedAppointments)
-            {
-                if (appointment.Date != pointer)        //No esta ocupado el turno
-                    availableSlots.Add(pointer.ToString("HH:mm"));
-            }
+            if(!occupiedAppointments.Contains(pointer))
+                availableSlots.Add(pointer.ToString("HH:mm"));
             
             pointer = pointer.AddMinutes(timeOfCutting);
         }
-
-        return availableSlots;
-
+        
+        return availableSlots;       
     }
     
-   
 }
