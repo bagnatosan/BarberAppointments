@@ -74,8 +74,26 @@ async function LoadAvailableSlots(hairdresserId, date) {
             button.className = 'btn btn-hour mt-2';
             button.innerText = time;
             slotsList.appendChild(button);
-            button.addEventListener('click', (event) => {
-                fetch(`/Appointment/Insert/`);
+            button.addEventListener('click', async (event) => {
+                if (confirm("¿Estás seguro de reservar este turno?")) {
+                    const insertPost = await fetch(`/Appointment/Insert`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            SelectedHairdresserId: hairdresserId,
+                            SelectedDate: date,
+                            SelectedTime: time
+                        })
+                    });
+                    if (insertPost.ok)
+                        alert("El turno se ha registrado correctamente");
+                    else {
+                        const badRequest = await insertPost.text();
+                        alert(badRequest);
+                    }
+                }
             });
         });
     }
