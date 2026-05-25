@@ -87,8 +87,10 @@ async function LoadAvailableSlots(hairdresserId, date) {
                             SelectedTime: time
                         })
                     });
-                    if (insertPost.ok)
+                    if (insertPost.ok) {
                         alert("El turno se ha registrado correctamente");
+                        window.location.href = '/';
+                    }
                     else {
                         const badRequest = await insertPost.text();
                         alert(badRequest);

@@ -109,7 +109,11 @@ async function LoadAvailableSlots(hairdresserId: string, date: string) : Promise
                         })})
                     
                     if(insertPost.ok)
-                        alert("El turno se ha registrado correctamente")
+                    {
+                        alert("El turno se ha registrado correctamente");
+                        window.location.href = '/';
+                    }
+                        
                     else
                     {
                         const badRequest = await insertPost.text();

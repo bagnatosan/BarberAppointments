@@ -77,8 +77,8 @@ public class AppointmentService : IAppointmentService
     private async Task<List<DateTime>> GetOccuppiedAppointmentsAsync(int hairdresserId, DateTime date)
     {
         var occupiedAppointments = await _context.Appointments
-            .Where(a => a.Hairdresser.Id == hairdresserId && a.Date == date.Date)
-            .Select(a => a.Date)            //Da solo los dias que no estan ocupados
+            .Where(a => a.Hairdresser.Id == hairdresserId && a.Date.Date == date.Date)
+            .Select(a => a.Date)            //Da solo los dias que estan ocupados
             .ToListAsync();
         
         return occupiedAppointments;

@@ -1,3 +1,5 @@
+@using System.Security.Claims
+@model IEnumerable<DateTime>;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,6 +15,35 @@
                asp-controller="Appointment" asp-action="Schedule">
                 Agendar Turno
             </a>
+        </div>
+        <div>
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    No tenés turnos reservados para los próximos días.
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow-sm border-primary">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Turno Confirmado</h5>
+                                    <p class="card-text">
+                                        📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
+                                        ⏰ <strong>Hora:</strong> @item.ToString("HH:mm") hs
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            
+
         </div>
     </div>
 </section>
