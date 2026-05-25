@@ -38,9 +38,14 @@ public class AppointmentController : Controller
     [HttpPost]
     public async Task<IActionResult> Insert ([FromBody]AppointmentDto appointment)
     {
-        var result = await _appointmentService.InsertAppointmentAsync(appointment);
+        var success = await _appointmentService.InsertAppointmentAsync(appointment);
+
+        if (success)
+            return Ok();            //le manda un estado 200 al JavaScript
         
-        return Json(result);//provisorio para que no tire error
+        else
+            return BadRequest("No se pudo agendar el turno correctamente");
+        
     }
     
   

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Barber.Data;
 using Barber.Dto;
 using Barber.Models;
@@ -8,10 +9,12 @@ namespace Barber.Services;
 public class AppointmentService : IAppointmentService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AppointmentService(ApplicationDbContext context)
+    public AppointmentService(ApplicationDbContext context , IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<List<Hairdresser>> GetHairdressers()
@@ -39,10 +42,31 @@ public class AppointmentService : IAppointmentService
     {
         DateTime mergedTime = MergeTime(appointmentdto);
 
-        if(await AppointmentExistsAsync(appointmentdto.SelectedHairdresserId , mergedTime))
-            return false;
+        var userId = GetUserId();
         
-        var appointment = new Appointment();
+        if (userId == 0) return false;
+
+        if(await AppointmentExistsAsync(appointmentdto.SelectedHairdresserId , mergedTime)) return false;
+
+
+        var appointment = new Appointment()
+        {
+            Date = mergedTime,
+            UserId = userId,
+            HairdresserId = appointmentdto.SelectedHairdresserId
+        };
+
+        try
+        {
+            _context.Appointments.Add(appointment);
+            await _context.SaveChangesAsync();
+            
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
         
         
     }
@@ -105,7 +129,19 @@ public class AppointmentService : IAppointmentService
         return await _context.Appointments
             .AnyAsync(a => a.HairdresserId == hairdresserId && a.Date == date);
     }
-    
-    
+
+    private int GetUserId()
+    {
+        var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userIdClaim))
+        {
+            return 0;
+        }
+        
+        var userId = int.Parse(userIdClaim);
+        
+        return userId;
+    }
     
 }

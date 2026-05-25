@@ -95,7 +95,7 @@ async function LoadAvailableSlots(hairdresserId: string, date: string) : Promise
             slotsList.appendChild(button);
             
             button.addEventListener('click', (event: MouseEvent) => {
-            fetch(`/Appointment/Insert/`)
+            fetch(`/Appointment/Insert/vam`)
             });
         })
         

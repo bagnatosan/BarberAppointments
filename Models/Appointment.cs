@@ -14,5 +14,4 @@ public class Appointment
     public int HairdresserId { get; set; }
     public Hairdresser? Hairdresser { get; set; }
     
-    public bool IsDone { get; set; }
 }

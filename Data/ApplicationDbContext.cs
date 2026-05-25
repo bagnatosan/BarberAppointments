@@ -11,5 +11,13 @@ public class ApplicationDbContext : DbContext
     public DbSet<User>  Users { get; set; }
     public DbSet<Appointment>  Appointments { get; set; }
     public DbSet<Hairdresser>  Hairdressers { get; set; }
-    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<Appointment>()
+            .HasIndex(a => new { a.HairdresserId, a.Date })
+            .IsUnique();
+    }
 }

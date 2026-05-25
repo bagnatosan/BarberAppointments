@@ -10,5 +10,5 @@ public class AppointmentDto
     
     public DateTime SelectedDate { get; set; } = DateTime.Today;
 
-    public string? SelectedTime { get; set; } = "00:00";
+    public string SelectedTime { get; set; } = "00:00";
 }
