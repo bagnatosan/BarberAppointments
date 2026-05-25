@@ -16,34 +16,29 @@
                 Agendar Turno
             </a>
         </div>
-        <div>
-            @if (!Model.Any())
+        
+        <div class="proximos-turnos-container">
+            @if (Model.Any())
             {
-                <div class="alert alert-info">
-                    No tenés turnos reservados para los próximos días.
-                </div>
-            }
-            else
-            {
-                <div class="row">
+                <div class="turnos-grid">
                     @foreach (var item in Model)
                     {
-                        <div class="col-md-4 mb-3">
-                            <div class="card shadow-sm border-primary">
-                                <div class="card-body">
-                                    <h5 class="card-title text-primary">Turno Confirmado</h5>
-                                    <p class="card-text">
-                                        📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
-                                        ⏰ <strong>Hora:</strong> @item.ToString("HH:mm") hs
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="turno-card">
+                            <h5 class="turno-card-title">Turno Confirmado</h5>
+                            <p class="turno-card-text">
+                                📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
+                                ⏰ <strong>Hora:</strong> @item.ToString("HH:mm") hs
+                            </p>
                         </div>
                     }
                 </div>
             }
-            
-
+            else
+            {
+                <div class="no-turnos-alert">
+                    No tenés turnos reservados para los próximos días.
+                </div>
+            }
         </div>
     </div>
 </section>
@@ -74,5 +69,3 @@
     </div>
     <p class="map-address">Saavedra 240 — Ramos Mejía, Provincia de Buenos Aires</p>
 </section>
-
-

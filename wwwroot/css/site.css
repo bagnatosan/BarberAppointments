@@ -73,6 +73,78 @@ html {
     animation: btn-pulse 0.38s ease forwards;
 }
 
+/* Próximos Turnos Section */
+.proximos-turnos-container {
+    margin-top: 2.5rem;
+    width: 100%;
+    max-width: 900px; /* Aumentado para dar más espacio */
+    padding: 0 15px;
+}
+
+.proximos-turnos-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    color: #d4af37;
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+}
+
+.turnos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.turno-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1.5px solid #d4af37;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.turno-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.3);
+}
+
+.turno-card-title {
+    color: #d4af37;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 0.75rem;
+}
+
+.turno-card-text {
+    color: #c0c0c0;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.turno-card-text strong {
+    color: #e0e0e0;
+}
+
+.no-turnos-alert {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1.5px solid #d4af37;
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: #c0c0c0;
+    font-size: 1rem;
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+
 .barbers-section {
     background-color: #050505;
     padding: 90px 0;
@@ -377,28 +449,205 @@ body {
     }
 }
 
-/* Personalización de Flatpickr para que sea oscuro */
-.flatpickr-calendar {
-    background: #1a1a1a !important;
-    border: 1px solid #d4af37 !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+/* --- Schedule Page Styles --- */
+
+.schedule-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
 }
 
-.flatpickr-day.selected {
+.schedule-step-label {
+    color: #999;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+}
+
+.schedule-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    color: #d4af37;
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Custom Select */
+.custom-select-wrapper {
+    position: relative;
+}
+
+.custom-select-wrapper::after {
+    content: '▼';
+    font-size: 1rem;
+    color: #d4af37;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: transform 0.2s ease;
+}
+
+.form-select-custom {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1.5px solid #d4af37;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-select-custom:focus {
+    outline: none;
+    border-color: #b5952f;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+/* Calendar and Hours */
+#step-calendar {
+    margin-top: 2.5rem;
+    width: 100%;
+}
+
+#calendar-inline {
+    background: #1a1a1a;
+    border: 1.5px solid #d4af37;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+}
+
+#hours-container {
+    margin-top: 2.5rem;
+}
+
+#slots-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.btn-hour {
+    background-color: transparent;
+    color: #d4af37;
+    border: 1.5px solid #d4af37;
+    border-radius: 8px;
+    padding: 0.7rem 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-hour:hover, .btn-hour.selected {
+    background-color: #d4af37;
+    color: #000;
+    cursor: pointer;
+}
+
+.btn-hour:disabled {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments for Schedule Page */
+@media (max-width: 767px) {
+    #slots-list {
+        grid-template-columns: repeat(3, 1fr); /* More columns on smaller screens if space allows */
+    }
+
+    #hours-container {
+        margin-top: 2rem;
+    }
+    
+    .schedule-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #slots-list {
+        grid-template-columns: repeat(2, 1fr); /* Fewer columns on very small screens */
+    }
+}
+
+
+/* Personalización de Flatpickr para que sea oscuro */
+.flatpickr-calendar {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.flatpickr-months .flatpickr-month {
+    color: #d4af37;
+    fill: #d4af37;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.flatpickr-weekdays {
+    background: transparent;
+}
+
+span.flatpickr-weekday {
+    color: #888;
+    font-weight: 600;
+}
+
+.flatpickr-day {
+    color: #000000;
+    border: 1px solid transparent;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.flatpickr-day:hover {
+    background: #2a2a2a;
+}
+
+.flatpickr-day.today {
+    border-color: #d4af37;
+}
+
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
     background: #d4af37 !important;
     border-color: #d4af37 !important;
     color: #000 !important;
 }
 
-.btn-hour {
-    background-color: #000000;
-    color: #d4af37; /* Dorado Caporale */
-    border: 1px solid #d4af37;
-    transition: all 0.3s ease; /* Para que el cambio de color sea suave */
+.flatpickr-day.flatpickr-disabled, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay {
+    color: #444;
+    cursor: not-allowed;
 }
 
-.btn-hour:hover {
-    background-color: #d4af37;
-    color: #000;
-    cursor: pointer;
+.flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay {
+    visibility: hidden; /* Oculta los días de otros meses */
+}
+
+.flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month {
+    fill: #d4af37;
+    color: #d4af37;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg, .flatpickr-months .flatpickr-next-month:hover svg {
+    fill: #b5952f;
 }
