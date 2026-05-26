@@ -44,18 +44,24 @@ barberSelect.addEventListener('change', () => {
     else {
         stepCalendar.style.display = 'none';
         hoursContainer.style.display = 'none';
+        const step3Label = document.getElementById('step-3-label');
+        if (step3Label) {
+            step3Label.style.display = 'none';
+        }
     }
 });
 //Inicializacion de flatpickr 3
 flatpickr("#calendar-inline", {
     inline: true,
     minDate: "today",
-    locale: {
-        firstDayOfWeek: 1,
-    },
+    locale: "es",
     onChange: function (selectedDates, dateStr) {
         const hairdresserId = barberSelect.value;
         if (hairdresserId && dateStr) {
+            const step3Label = document.getElementById('step-3-label');
+            if (step3Label) {
+                step3Label.style.display = 'block';
+            }
             hoursContainer.style.display = 'block';
             LoadAvailableSlots(hairdresserId, dateStr);
         }

@@ -51,6 +51,10 @@ barberSelect.addEventListener('change', () => {
     } else {
         stepCalendar.style.display = 'none';
         hoursContainer.style.display = 'none';
+        const step3Label = document.getElementById('step-3-label');
+        if (step3Label) {
+            step3Label.style.display = 'none';
+        }
     }
 });
 
@@ -65,6 +69,10 @@ flatpickr("#calendar-inline", {
         const hairdresserId = barberSelect.value;
 
         if (hairdresserId && dateStr) {
+            const step3Label = document.getElementById('step-3-label');
+            if (step3Label) {
+                step3Label.style.display = 'block';
+            }
             hoursContainer.style.display = 'block';
             LoadAvailableSlots(hairdresserId, dateStr);
         }

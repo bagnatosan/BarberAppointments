@@ -112,6 +112,7 @@ html {
 .turno-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 30px rgba(212, 175, 55, 0.3);
+    cursor: pointer;
 }
 
 .turno-card-title {
@@ -614,14 +615,15 @@ span.flatpickr-weekday {
     font-weight: 600;
 }
 
-.flatpickr-day {
-    color: #000000;
+.flatpickr-calendar .flatpickr-day {
+    color: #ffffff;
     border: 1px solid transparent;
     transition: background-color 0.2s, border-color 0.2s;
 }
 
 .flatpickr-day:hover {
     background: #2a2a2a;
+    color: #000000;
 }
 
 .flatpickr-day.today {
