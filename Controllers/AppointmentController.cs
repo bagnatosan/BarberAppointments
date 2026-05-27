@@ -1,5 +1,6 @@
 using Barber.Services;
 using Barber.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Barber.Controllers;
@@ -14,6 +15,7 @@ public class AppointmentController : Controller
     }
     
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> Schedule() 
     {
         var hairdressers = await _appointmentService.GetHairdressers();
