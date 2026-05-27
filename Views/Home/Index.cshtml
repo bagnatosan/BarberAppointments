@@ -11,7 +11,7 @@
     <div class="hero-content">
         <img src="/img/caporale_logo.svg" alt="Caporale Barberia" class="hero-logo mb-5" />
         
-        @if (Model.Any())
+        @if (Model.Any() && User.IsInRole("Customer"))
         {
             <div class="proximos-turnos-container">
                 <div class="turnos-grid">
@@ -23,9 +23,30 @@
                                 📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
                                 ⏰ <strong>Hora:</strong> @item.ToString("HH:mm") hs
                             </p>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <span class="btn-cancelar-trigger" style="cursor: pointer; text-decoration: underline; color: #ffc107; font-size: 0.85em; display: block;">
+                                    (toque para cancelar)
+                                </span>
+                            </div>
+                            <div class="cancelar-confirmacion" style="display: none; text-align: center; margin-top: 15px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 12px;">
+                                <p style="margin-bottom: 10px; font-size: 0.9rem; color: #c0c0c0;">¿Estás seguro?</p>
+                                <div style="display: flex; justify-content: center; gap: 15px;">
+                                    <button class="btn-confirmar-si" data-date="@item.ToString("yyyy-MM-ddTHH:mm:ss")" style="background-color: #dc3545; color: white; border: none; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; transition: background-color 0.2s;">Sí</button>
+                                    <button class="btn-confirmar-no" style="background-color: #6c757d; color: white; border: none; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; transition: background-color 0.2s;">No</button>
+                                </div>
+                            </div>
                         </div>
                     }
                 </div>
+            </div>
+        }
+        else if (User.IsInRole("admin"))
+        {
+            <div>
+                <a class="btn-agendar" id="btnAdmin"
+                   asp-controller="Admin" asp-action="">
+                    Administrador
+                </a>
             </div>
         }
         else
