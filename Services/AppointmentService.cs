@@ -19,7 +19,9 @@ public class AppointmentService : IAppointmentService
 
     public async Task<List<Hairdresser>> GetHairdressers()
     {
-        var hairdressers = await _context.Hairdressers.ToListAsync();
+        var hairdressers = await _context.Hairdressers
+            .Include(u => u.User)
+            .ToListAsync();
 
         return hairdressers;
     }

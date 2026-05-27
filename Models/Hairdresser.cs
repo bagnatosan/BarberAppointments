@@ -7,10 +7,8 @@ public class Hairdresser
     public int Id { get; set; }
     
     [Required]
-    public required string Name { get; set; }
-    
-    [Required]
-    public required string LastName { get; set; }
+    public int UserId { get; set; }
+    public User? User { get; set; }
     
     public List<Appointment>? Appointments{ get; set; }
 }

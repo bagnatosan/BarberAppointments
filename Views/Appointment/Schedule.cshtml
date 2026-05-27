@@ -17,7 +17,7 @@
                         <option value="">Seleccionar un profesional...</option>
                         @foreach (var h in Model.Hairdressers)
                         {
-                            <option value="@h.Id">@h.Name</option>
+                            <option value="@h.Id">@h.User?.FirstName</option>
                         }
                     </select>
                 </div>
