@@ -20,6 +20,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="wwwroot\js\appointment.ts" />
+      <TypeScriptCompile Include="wwwroot\js\index.ts" />
+      <TypeScriptCompile Include="wwwroot\js\login.ts" />
       <TypeScriptCompile Include="wwwroot\js\site.ts" />
     </ItemGroup>
 

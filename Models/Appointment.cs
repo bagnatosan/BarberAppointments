@@ -12,6 +12,8 @@ public class Appointment
     public User? User { get; set; }
     
     public int HairdresserId { get; set; }
+    
+    public bool IsCanceled { get; set; }
     public Hairdresser? Hairdresser { get; set; }
     
 }

@@ -55,7 +55,8 @@ public class AppointmentService : IAppointmentService
         {
             Date = mergedTime,
             UserId = userId,
-            HairdresserId = appointmentdto.SelectedHairdresserId
+            HairdresserId = appointmentdto.SelectedHairdresserId,
+            IsCanceled =  false
         };
 
         try
