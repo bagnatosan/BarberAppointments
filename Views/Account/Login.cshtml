@@ -22,7 +22,7 @@
                 </div>
             }
 
-            <form asp-controller="Account" asp-action="Login" method="post">
+            <form asp-controller="Account" asp-action="Login" method="post" id="form-login">
                 <div class="mb-3">
                     <label asp-for="Email" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
                         Correo electrónico
@@ -30,10 +30,21 @@
                     <input asp-for="Email"
                            type="email"
                            class="form-control bg-dark text-light border-secondary"
-                           autocomplete="email" />
+                           autocomplete="email" 
+                           id="input-login"/>
                     <span asp-validation-for="Email" class="text-danger" style="font-size: 0.8rem;"></span>
                 </div>
-                
+                <div class="mb-3" id="password-hide" style="display: none">
+                    <label asp-for="Password" class="form-label text-secondary" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                        Contraseña
+                    </label>
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control bg-dark text-light border-secondary"
+                           autocomplete="password" 
+                           id="input-password"/>
+                </div>
+                <span asp-validation-for="Password" class="text-danger" style="font-size: 0.8rem;"></span>
 
                 <div class="d-grid">
                     <button type="submit"

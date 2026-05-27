@@ -17,6 +17,28 @@ if (btn) {
         // la página de la barbería se queda abierta y la animación se ve igual.
     });
 }
+//login role
+async function login() {
+    const formLogin = document.getElementById('form-login');
+    const passwordForm = document.getElementById('password-hide');
+    formLogin.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('input-login');
+        const emailTarget = email.value;
+        const response = await fetch(`/Account/GetRole?email=${emailTarget}`);
+        const data = await response.json();
+        if (data == 'Customer' || data == "NotFound") {
+            formLogin.submit();
+        }
+        else {
+            if (passwordForm.style.display === 'none')
+                passwordForm.style.display = 'block';
+            else
+                formLogin.submit();
+        }
+    });
+}
+login();
 // User dropdown toggle
 document.addEventListener('click', function (e) {
     const toggle = document.querySelector('.user-menu-toggle');
@@ -50,11 +72,10 @@ barberSelect.addEventListener('change', () => {
         }
     }
 });
-//Inicializacion de flatpickr 3
 flatpickr("#calendar-inline", {
     inline: true,
     minDate: "today",
-    locale: "es",
+    locale: "es", // Aquí establecemos el idioma español
     onChange: function (selectedDates, dateStr) {
         const hairdresserId = barberSelect.value;
         if (hairdresserId && dateStr) {

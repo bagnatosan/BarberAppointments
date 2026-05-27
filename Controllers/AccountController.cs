@@ -48,7 +48,21 @@ public class AccountController : Controller
         };
         return View(newUser);
     }
-    
+
+    [HttpGet]
+    public async Task<IActionResult> GetRole(string email)
+    {
+        var user = await _userService.GetUserByEmailAsync(email);
+
+        if (user == null)
+            return Json("NotFound");
+        else
+        {
+            var role = user.Role;
+            return Json(role);
+        }
+        
+    }
     
     [HttpGet]
     public IActionResult Login() //SOLO MUESTRA EL FORMULARIO
@@ -57,16 +71,22 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(string email) // es async y devuelve un task ya que es una operacion que lleva tiempo// y no queremos que se trabe la app
+    public async Task<IActionResult> Login(string email , string? password) // es async y devuelve un task ya que es una operacion que lleva tiempo// y no queremos que se trabe la app
     {
         var user = await _userService.GetUserByEmailAsync(email);
 
         if (user == null) 
         {
-            return RedirectToAction("Register",new {email});        
+            return RedirectToAction("Register",new {email});   
+        }
+        
+        else if (user.Password != password && user.Role != "Customer")
+        {
+            ModelState.AddModelError("Password","Contraseña incorrecta");
+            return View();
         }
             
-        else             
+        else           
         {
             var claims = new List<Claim>                //Lista de declaraciones. Datos sueltos sobre el usuario
             {
