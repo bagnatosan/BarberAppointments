@@ -16,3 +16,7 @@ Barber.db-shm
 Barber.db-wal
 context.md
 scrum_planificacion_caporale.pdf
+
+# Archivos de compilación de .NET
+bin/
+obj/
