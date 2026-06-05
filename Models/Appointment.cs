@@ -11,9 +11,13 @@ public class Appointment
     public int UserId { get; set; }
     public User? User { get; set; }
     
-    public int HairdresserId { get; set; }
+    public int HairdresserId { get; set; } 
+    public Hairdresser? Hairdresser { get; set; }
+    
+    public int? HaircutId { get; set; }
+    public Haircut? Haircut { get; set; }
     
     public bool IsCanceled { get; set; }
-    public Hairdresser? Hairdresser { get; set; }
+    
     
 }
