@@ -14,13 +14,41 @@ if (btnAgendar) {
     });
 }
 //cancelar turno
-const turnoCard = document.querySelector('.turno-card');
-const cuadroCancelar = document.querySelector('.cancelar-confirmacion');
-const btnSi = document.querySelector('.btn-confirmar-si');
-const btnNo = document.querySelector('.btn-confirmar-no');
-turnoCard.addEventListener('click', () => {
-    cuadroCancelar.style.display = 'block';
-    btnNo.addEventListener('click', () => {
-        cuadroCancelar.style.display = 'none';
+const turnoCards = document.querySelectorAll('.turno-card');
+turnoCards.forEach((tarjeta) => {
+    const cuadroCancelar = tarjeta.querySelector('.cancelar-confirmacion');
+    const btnSi = tarjeta.querySelector('.btn-confirmar-si');
+    const btnNo = tarjeta.querySelector('.btn-confirmar-no');
+    const date = tarjeta.dataset['fecha'];
+    const userId = tarjeta.dataset['userid'];
+    tarjeta.addEventListener('click', () => {
+        if (cuadroCancelar) {
+            cuadroCancelar.style.display = 'block';
+        }
     });
+    if (btnNo && cuadroCancelar) {
+        btnNo.addEventListener('click', (e) => {
+            e.stopPropagation(); // frena burbujeo
+            cuadroCancelar.style.display = 'none';
+        });
+    }
+    if (btnSi) {
+        btnSi.addEventListener('click', (e) => {
+            e.stopPropagation();
+            CancelAppointment(date || '', userId || '');
+        });
+    }
 });
+async function CancelAppointment(date, userId) {
+    const response = await fetch(`/Appointment/CancelAppointment?date=${date}&userId=${userId}`, {
+        method: 'POST',
+    });
+    const data = await response.json();
+    if (response.ok) {
+        alert(data.message);
+        window.location.reload();
+    }
+    else {
+        alert(data.message);
+    }
+}

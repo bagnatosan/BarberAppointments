@@ -26,6 +26,24 @@ public class AppointmentService : IAppointmentService
         return hairdressers;
     }
 
+    public async Task<List<Haircut>> GetHaircutsAsync()
+    {
+        var haircuts = await _context.Haircuts.AsNoTracking().ToListAsync();
+        return haircuts;
+    }
+
+    public async Task<bool> CancelAppointmentAsync(DateTime date, int userId)
+    {
+        var appointment = await _context.Appointments
+            .SingleOrDefaultAsync(a => a.Date == date && a.UserId == userId && a.IsCanceled == false);
+
+        if (appointment == null) return false;
+
+        appointment.IsCanceled = true;
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
 
     public async Task<List<string>> GetAvailableSlotsAsync(int hairdresserId, string date)
     {
@@ -48,30 +66,39 @@ public class AppointmentService : IAppointmentService
         
         if (userId == 0) return false;
 
-        if(await AppointmentExistsAsync(appointmentdto.SelectedHairdresserId , mergedTime)) return false;
+        var existingAppointment = await _context.Appointments.FirstOrDefaultAsync(a =>
+            a.HairdresserId == appointmentdto.SelectedHairdresserId && a.Date == mergedTime);
 
-
-        var appointment = new Appointment()
+        if (existingAppointment != null)
         {
-            Date = mergedTime,
-            UserId = userId,
-            HairdresserId = appointmentdto.SelectedHairdresserId,
-            IsCanceled =  false
-        };
+            if (!existingAppointment.IsCanceled) return false;
+
+            existingAppointment.IsCanceled = false;
+            existingAppointment.UserId = userId;
+            existingAppointment.HaircutId = appointmentdto.SelectedHaircutId;
+        }
+        else
+        {
+            var appointment = new Appointment()
+            {
+                Date = mergedTime,
+                UserId = userId,
+                HairdresserId = appointmentdto.SelectedHairdresserId,
+                HaircutId = appointmentdto.SelectedHaircutId,
+                IsCanceled = false
+            };
+            _context.Appointments.Add(appointment);
+        }
 
         try
         {
-            _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
-            
             return true;
         }
         catch (DbUpdateException)
         {
             return false;
         }
-        
-        
     }
     
     //Private
@@ -80,7 +107,7 @@ public class AppointmentService : IAppointmentService
     private async Task<List<DateTime>> GetOccuppiedAppointmentsAsync(int hairdresserId, DateTime date)
     {
         var occupiedAppointments = await _context.Appointments
-            .Where(a => a.Hairdresser.Id == hairdresserId && a.Date.Date == date.Date)
+            .Where(a => a.Hairdresser.Id == hairdresserId && a.Date.Date == date.Date && a.IsCanceled == false)
             .Select(a => a.Date)            //Da solo los dias que estan ocupados
             .ToListAsync();
         

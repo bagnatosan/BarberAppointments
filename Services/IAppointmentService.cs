@@ -9,4 +9,7 @@ public interface IAppointmentService
     Task<List<Hairdresser>> GetHairdressers();
     
     Task<bool>InsertAppointmentAsync(AppointmentDto appointment);
+
+    Task<List<Haircut>> GetHaircutsAsync();
+    Task<bool> CancelAppointmentAsync(DateTime date, int userId);
 }

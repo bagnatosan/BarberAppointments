@@ -11,4 +11,8 @@ public class AppointmentDto
     public DateTime SelectedDate { get; set; } = DateTime.Today;
 
     public string SelectedTime { get; set; } = "00:00";
+    
+    public int SelectedHaircutId { get; set; } = 0;
+
+    public List<Haircut> Haircuts { get; set; } = new();
 }

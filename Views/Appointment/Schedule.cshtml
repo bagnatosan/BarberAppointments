@@ -9,17 +9,30 @@
         <div class="col-lg-10 col-xl-8">
             
             <!-- Step 1: Select Barber -->
-            <div class="mb-4">
-                
+            <div class="mb-5 text-center">
                 <h2 class="schedule-title">Elegí tu Barbero</h2>
-                <div class="custom-select-wrapper">
-                    <select id="barber-select" class="form-select-custom" asp-for="SelectedHairdresserId">
-                        <option value="">Seleccionar un profesional...</option>
-                        @foreach (var h in Model.Hairdressers)
-                        {
-                            <option value="@h.Id">@h.User?.FirstName</option>
-                        }
-                    </select>
+                <input type="hidden" id="selected-barber-id" asp-for="SelectedHairdresserId" value="" />
+                <div id="barber-buttons-list" class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+                    @foreach (var h in Model.Hairdressers)
+                    {
+                        <button type="button" class="btn btn-select-custom btn-barber" data-id="@h.Id">
+                            @h.User?.FirstName
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <!-- Step 2: Select Service/Price -->
+            <div id="step-service" class="mb-5 text-center" style="display: none;">
+                <h2 class="schedule-title">Elegí el Servicio</h2>
+                <input type="hidden" id="selected-haircut-id" name="SelectedHaircutId" value="" />
+                <div id="service-buttons-list" class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+                    @foreach (var h in Model.Haircuts)
+                    {
+                        <button type="button" class="btn btn-select-custom btn-service" data-id="@h.Id">
+                            @h.Name - $@h.Price
+                        </button>
+                    }
                 </div>
             </div>
 

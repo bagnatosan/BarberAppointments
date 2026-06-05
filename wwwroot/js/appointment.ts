@@ -1,29 +1,54 @@
-//Captura de eventos 1
-const barberSelect = document.getElementById('barber-select') as HTMLSelectElement;
+// Captura de eventos 1
+const barberSelect = document.getElementById('selected-barber-id') as HTMLInputElement;
+const stepService = document.getElementById('step-service') as HTMLElement;
+const selectedHaircutInput = document.getElementById('selected-haircut-id') as HTMLInputElement;
 const stepCalendar = document.getElementById('step-calendar') as HTMLElement;
 const hoursContainer = document.getElementById('hours-container') as HTMLElement;
+const btnBarber = document.querySelectorAll('.btn-barber') as NodeListOf<HTMLButtonElement>;
+const btnService = document.querySelectorAll('.btn-service') as NodeListOf<HTMLButtonElement>;
 
-//Escucha del select 2
-barberSelect.addEventListener('change', () => {
-    if (barberSelect.value !== '') {
-        stepCalendar.style.display = 'flex';
-    } else {
-        stepCalendar.style.display = 'none';
-        hoursContainer.style.display = 'none';
-        const step3Label = document.getElementById('step-3-label');
-        if (step3Label) {
-            step3Label.style.display = 'none';
+// Escucha del click en los barberos 2
+btnBarber.forEach(el => {
+    el.addEventListener('click', () => {
+        barberSelect.value = el.getAttribute('data-id') || '';
+        
+        // Mostrar el paso de servicios
+        if (stepService) {
+            stepService.style.display = 'block';
         }
-    }
+        
+        // Resetear selección visual de barberos
+        btnBarber.forEach(e => {
+            e.classList.remove('selected');
+        });
+        el.classList.add('selected');
+    });
 });
 
+// Escucha del click en los servicios 2.5
+btnService.forEach(el => {
+    el.addEventListener('click', () => {
+        selectedHaircutInput.value = el.getAttribute('data-id') || '';
+        
+        // Mostrar el calendario (Paso 3)
+        if (stepCalendar) {
+            stepCalendar.style.display = 'flex';
+        }
+        
+        // Resetear selección visual de servicios
+        btnService.forEach(e => {
+            e.classList.remove('selected');
+        });
+        el.classList.add('selected');
+    });
+});
 
-//Inicializacion de flatpickr 3
+// Inicialización de flatpickr 3
 declare var flatpickr: any;
 flatpickr("#calendar-inline", {
     inline: true,
     minDate: "today",
-    locale: "es", // Aquí establecemos el idioma español
+    locale: "es",
     onChange: function (selectedDates: Date[], dateStr: string) {
         const hairdresserId = barberSelect.value;
 
@@ -37,8 +62,6 @@ flatpickr("#calendar-inline", {
         }
     }
 });
-
-
 
 async function LoadAvailableSlots(hairdresserId: string, date: string) {
     const slotsList = document.getElementById('slots-list');
@@ -65,6 +88,7 @@ async function LoadAvailableSlots(hairdresserId: string, date: string) {
                         },
                         body: JSON.stringify({
                             SelectedHairdresserId: hairdresserId,
+                            SelectedHaircutId: selectedHaircutInput.value,
                             SelectedDate: date,
                             SelectedTime: time
                         })

@@ -11,6 +11,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<User>  Users { get; set; }
     public DbSet<Appointment>  Appointments { get; set; }
     public DbSet<Hairdresser>  Hairdressers { get; set; }
+    
+    public DbSet<Haircut> Haircuts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,5 +21,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Appointment>()
             .HasIndex(a => new { a.HairdresserId, a.Date })
             .IsUnique();
+        
+        modelBuilder.Entity<Haircut>().ToTable("Haircut");
     }
 }

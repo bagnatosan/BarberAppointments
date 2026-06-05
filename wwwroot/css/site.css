@@ -714,3 +714,30 @@ span.flatpickr-weekday {
 .flatpickr-months .flatpickr-prev-month:hover svg, .flatpickr-months .flatpickr-next-month:hover svg {
     fill: #b5952f;
 }
+
+/* Custom Selection Buttons (Barber & Services) */
+.btn-select-custom {
+    background-color: transparent;
+    color: #d4af37;
+    border: 1.5px solid #d4af37;
+    border-radius: 8px;
+    padding: 0.9rem 2rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    min-width: 160px;
+}
+
+.btn-select-custom:hover, .btn-select-custom.selected {
+    background-color: #d4af37;
+    color: #000;
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-select-custom:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.4);
+}

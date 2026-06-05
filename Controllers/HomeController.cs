@@ -22,7 +22,7 @@ public class HomeController : Controller
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0");
         var appointments = await _context.Appointments
-            .Where(u => u.UserId == userId && u.Date >= DateTime.Now)
+            .Where(u => u.UserId == userId && u.Date >= DateTime.Now && u.IsCanceled == false)
             .Select( u => u.Date)
             .ToListAsync();
         

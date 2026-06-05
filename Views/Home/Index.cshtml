@@ -17,7 +17,9 @@
                 <div class="turnos-grid">
                     @foreach (var item in Model)
                     {
-                        <div class="turno-card">
+                        <div class="turno-card"
+                             data-fecha="@(item.ToString("yyyy-MM-ddTHH:mm:ss"))"
+                             data-userid="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
                             <h5 class="turno-card-title">Turno Confirmado</h5>
                             <p class="turno-card-text">
                                 📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
