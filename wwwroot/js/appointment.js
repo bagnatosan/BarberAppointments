@@ -37,9 +37,13 @@ btnService.forEach(el => {
         el.classList.add('selected');
     });
 });
+const maxDate = new Date();
+maxDate.setDate(maxDate.getDate() + 14);
+
 flatpickr("#calendar-inline", {
     inline: true,
     minDate: "today",
+    maxDate: maxDate,
     locale: "es",
     onChange: function (selectedDates, dateStr) {
         const hairdresserId = barberSelect.value;

@@ -45,9 +45,13 @@ btnService.forEach(el => {
 
 // Inicialización de flatpickr 3
 declare var flatpickr: any;
+const maxDate = new Date();
+maxDate.setDate(maxDate.getDate() + 14);
+
 flatpickr("#calendar-inline", {
     inline: true,
     minDate: "today",
+    maxDate: maxDate,
     locale: "es",
     onChange: function (selectedDates: Date[], dateStr: string) {
         const hairdresserId = barberSelect.value;
@@ -73,10 +77,16 @@ async function LoadAvailableSlots(hairdresserId: string, date: string) {
 
         slotsList.innerHTML = '';
         data.forEach((time: string) => {
+            const now = new Date(); //js con new Date te da la fecha y hora actual
+            const slotDateTime = new Date (`${date}T${time}`);
             let button = document.createElement('button');
             button.className = 'btn btn-hour mt-2';
             button.innerText = time;
-            slotsList.appendChild(button);
+            
+            if(slotDateTime > now )
+            {
+                slotsList.appendChild(button);
+            }
 
             button.addEventListener('click', async (event) => {
                 if(confirm("¿Estás seguro de reservar este turno?")){
