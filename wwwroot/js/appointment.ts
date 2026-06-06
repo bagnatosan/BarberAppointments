@@ -6,7 +6,6 @@ const stepCalendar = document.getElementById('step-calendar') as HTMLElement;
 const hoursContainer = document.getElementById('hours-container') as HTMLElement;
 const btnBarber = document.querySelectorAll('.btn-barber') as NodeListOf<HTMLButtonElement>;
 const btnService = document.querySelectorAll('.btn-service') as NodeListOf<HTMLButtonElement>;
-
 // Escucha del click en los barberos 2
 btnBarber.forEach(el => {
     el.addEventListener('click', () => {
@@ -67,7 +66,42 @@ flatpickr("#calendar-inline", {
     }
 });
 
-async function LoadAvailableSlots(hairdresserId: string, date: string) {
+
+    let selectedTime: string = '';
+    async function LoadAvailableSlots(hairdresserId: string, date: string) {
+        const slotsList = document.getElementById('slots-list');
+        if (!slotsList) return;
+    
+        try {
+            const response = await fetch(`/Appointment/GetAvailableSlots?hairdresserId=${hairdresserId}&date=${date}`);
+            const data = await response.json();
+    
+            slotsList.innerHTML = '';
+            data.forEach((time: string) => {
+                const now = new Date(); //js con new Date te da la fecha y hora actual
+                const slotDateTime = new Date (`${date}T${time}`);
+                let button = document.createElement('button');
+                button.className = 'btn btn-hour mt-2';
+                button.innerText = time;
+                button.classList.remove('selected');
+                
+                if(slotDateTime > now )
+                {
+                    slotsList.appendChild(button);
+                }
+    
+                button.addEventListener('click', async (event) => {
+                    const stepRecurrence = document.getElementById('step-recurrence');
+                    button.classList.add('selected');
+                })
+            });
+    
+        } catch (error) {
+            console.error('Error al cargar los horarios disponibles:', error);
+        }
+    }
+/*
+* async function LoadAvailableSlots(hairdresserId: string, date: string) {
     const slotsList = document.getElementById('slots-list');
     if (!slotsList) return;
 
@@ -119,3 +153,7 @@ async function LoadAvailableSlots(hairdresserId: string, date: string) {
         console.error('Error al cargar los horarios disponibles:', error);
     }
 }
+* */
+
+
+

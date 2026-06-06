@@ -64,6 +64,7 @@ flatpickr("#calendar-inline", {
         }
     }
 });
+let selectedTime = '';
 function LoadAvailableSlots(hairdresserId, date) {
     return __awaiter(this, void 0, void 0, function* () {
         const slotsList = document.getElementById('slots-list');
@@ -79,32 +80,13 @@ function LoadAvailableSlots(hairdresserId, date) {
                 let button = document.createElement('button');
                 button.className = 'btn btn-hour mt-2';
                 button.innerText = time;
+                button.classList.remove('selected');
                 if (slotDateTime > now) {
                     slotsList.appendChild(button);
                 }
                 button.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
-                    if (confirm("¿Estás seguro de reservar este turno?")) {
-                        const insertPost = yield fetch(`/Appointment/Insert`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                SelectedHairdresserId: hairdresserId,
-                                SelectedHaircutId: selectedHaircutInput.value,
-                                SelectedDate: date,
-                                SelectedTime: time
-                            })
-                        });
-                        if (insertPost.ok) {
-                            alert("El turno se ha registrado correctamente");
-                            window.location.href = '/';
-                        }
-                        else {
-                            const badRequest = yield insertPost.text();
-                            alert(badRequest);
-                        }
-                    }
+                    const stepRecurrence = document.getElementById('step-recurrence');
+                    button.classList.add('selected');
                 }));
             });
         }
@@ -113,4 +95,58 @@ function LoadAvailableSlots(hairdresserId, date) {
         }
     });
 }
+/*
+* async function LoadAvailableSlots(hairdresserId: string, date: string) {
+    const slotsList = document.getElementById('slots-list');
+    if (!slotsList) return;
+
+    try {
+        const response = await fetch(`/Appointment/GetAvailableSlots?hairdresserId=${hairdresserId}&date=${date}`);
+        const data = await response.json();
+
+        slotsList.innerHTML = '';
+        data.forEach((time: string) => {
+            const now = new Date(); //js con new Date te da la fecha y hora actual
+            const slotDateTime = new Date (`${date}T${time}`);
+            let button = document.createElement('button');
+            button.className = 'btn btn-hour mt-2';
+            button.innerText = time;
+            
+            if(slotDateTime > now )
+            {
+                slotsList.appendChild(button);
+            }
+
+            button.addEventListener('click', async (event) => {
+                if(confirm("¿Estás seguro de reservar este turno?")){
+
+                    const insertPost = await fetch(`/Appointment/Insert`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            SelectedHairdresserId: hairdresserId,
+                            SelectedHaircutId: selectedHaircutInput.value,
+                            SelectedDate: date,
+                            SelectedTime: time
+                        })
+                    });
+                    if (insertPost.ok) {
+                        alert("El turno se ha registrado correctamente");
+                        window.location.href = '/';
+                    }
+                    else {
+                        const badRequest = await insertPost.text();
+                        alert(badRequest);
+                    }
+                }
+            })
+        });
+
+    } catch (error) {
+        console.error('Error al cargar los horarios disponibles:', error);
+    }
+}
+* */
 //# sourceMappingURL=appointment.js.map

@@ -13,6 +13,10 @@ public class Appointment
     
     public int HairdresserId { get; set; } 
     public Hairdresser? Hairdresser { get; set; }
+
+
+    public Guid ?RecurrentSchedulesId { get; set; }
+    public RecurrentSchedule ? RecurrentSchedules { get; set; }
     
     public int? HaircutId { get; set; }
     public Haircut? Haircut { get; set; }

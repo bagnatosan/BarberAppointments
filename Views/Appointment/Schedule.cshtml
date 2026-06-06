@@ -57,6 +57,40 @@
                 </div>
                 
             </div>
+
+            <!-- Step 4: Recurrence and Confirmation Options -->
+            <div id="step-recurrence" class="mt-5 text-center" style="display: none;">
+                <h2 class="schedule-title">Opciones de Reserva</h2>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+                    <button type="button" id="btn-single-booking" class="btn btn-select-custom">
+                        Reservar Turno Único
+                    </button>
+                    <button type="button" id="btn-toggle-recurrent" class="btn btn-select-custom">
+                        Hacer Turno Fijo (Recurrente)
+                    </button>
+                </div>
+
+                <!-- Sub-menu with recurrence interval options -->
+                <div id="recurrence-options" class="mt-4" style="display: none; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 1.5rem;">
+                    <p class="mb-3" style="color: #c0c0c0;">Elegí el intervalo de repetición:</p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <button type="button" id="btn-recurrence-1" class="btn btn-select-custom btn-recurrence-opt" data-interval="1">
+                            Cada 1 semana (Semanal)
+                        </button>
+                        <button type="button" id="btn-recurrence-2" class="btn btn-select-custom btn-recurrence-opt" data-interval="2">
+                            Cada 2 semanas (Quincenal)
+                        </button>
+                    </div>
+                    <div id="recurrence-clash-msg" class="text-danger mt-3" style="display: none; font-size: 0.9rem;">
+                        * Este horario ya se encuentra ocupado en alguna de las fechas futuras necesarias.
+                    </div>
+                    <div class="mt-4">
+                        <button type="button" id="btn-confirm-recurrent" class="btn btn-select-custom" style="background-color: #d4af37; color: #000; display: none;">
+                            Confirmar Turno Recurrente
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

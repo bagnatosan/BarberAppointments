@@ -15,4 +15,5 @@ public class AppointmentDto
     public int SelectedHaircutId { get; set; } = 0;
 
     public List<Haircut> Haircuts { get; set; } = new();
+    public int IntervalWeeks { get; set; } = 0;
 }

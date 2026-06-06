@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Hairdresser>  Hairdressers { get; set; }
     
     public DbSet<Haircut> Haircuts { get; set; }
+    public DbSet<RecurrentSchedule>  RecurrentSchedules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
