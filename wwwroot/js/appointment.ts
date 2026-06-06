@@ -6,6 +6,9 @@ const stepCalendar = document.getElementById('step-calendar') as HTMLElement;
 const hoursContainer = document.getElementById('hours-container') as HTMLElement;
 const btnBarber = document.querySelectorAll('.btn-barber') as NodeListOf<HTMLButtonElement>;
 const btnService = document.querySelectorAll('.btn-service') as NodeListOf<HTMLButtonElement>;
+let selectedDate: string = '';
+let selectedTime: string = '';
+
 // Escucha del click en los barberos 2
 btnBarber.forEach(el => {
     el.addEventListener('click', () => {
@@ -54,6 +57,8 @@ flatpickr("#calendar-inline", {
     locale: "es",
     onChange: function (selectedDates: Date[], dateStr: string) {
         const hairdresserId = barberSelect.value;
+        
+        selectedDate = dateStr;
 
         if (hairdresserId && dateStr) {
             const step3Label = document.getElementById('step-3-label');
@@ -95,8 +100,13 @@ flatpickr("#calendar-inline", {
                         el.classList.remove('selected');    
                     })
                     button.classList.add('selected');
+                    
+                    selectedTime = time;
 
-                    ChooseRecurrence(time , hairdresserId , date);
+                    const showRecurrenceForm = document.getElementById('step-recurrence');
+                    if (showRecurrenceForm) {
+                        showRecurrenceForm.style.display = 'flex';
+                    }
                     
                 })
             });
@@ -106,16 +116,18 @@ flatpickr("#calendar-inline", {
         }
     }
 
-async function ChooseRecurrence(selectedTime: string, hairdresserId: string, date: string) {
-    const showRecurrenceForm = document.getElementById('step-recurrence');
-    if (showRecurrenceForm) {
-        showRecurrenceForm.style.display = 'flex';
-    }
+ 
 
     const btnSingleBooking = document.getElementById('btn-single-booking');
 
     if (btnSingleBooking) {
         btnSingleBooking.addEventListener('click', async (event) => {
+            
+            if(!selectedTime || !selectedDate)
+            {
+                alert('Por favor seleccione un dia y horario');
+                return;
+            }
 
             if (confirm("¿Estás seguro de reservar este turno?")) {
 
@@ -125,9 +137,9 @@ async function ChooseRecurrence(selectedTime: string, hairdresserId: string, dat
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        SelectedHairdresserId: hairdresserId,
+                        SelectedHairdresserId: barberSelect.value,
                         SelectedHaircutId: selectedHaircutInput.value,
-                        SelectedDate: date,
+                        SelectedDate: selectedDate,
                         SelectedTime: selectedTime
                     })
                 });
@@ -137,12 +149,12 @@ async function ChooseRecurrence(selectedTime: string, hairdresserId: string, dat
                     window.location.href = '/';
                 } else {
                     const badRequest = await insertPost.text();
-                    alert(badRequest);
+                    alert(badRequest);  
                 }
             }
         });
     } 
-}
+
 /*
 * async function LoadAvailableSlots(hairdresserId: string, date: string) {
     const slotsList = document.getElementById('slots-list');
