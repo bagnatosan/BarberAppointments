@@ -1,4 +1,3 @@
-"use strict";
 // User dropdown toggle
 document.addEventListener('click', function (e) {
     const toggle = document.querySelector('.user-menu-toggle');
@@ -13,3 +12,4 @@ document.addEventListener('click', function (e) {
         }
     }
 });
+//# sourceMappingURL=site.js.map
