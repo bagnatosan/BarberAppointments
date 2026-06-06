@@ -116,7 +116,7 @@ flatpickr("#calendar-inline", {
         }
     }
 
- 
+    //Turno individual
 
     const btnSingleBooking = document.getElementById('btn-single-booking');
 
@@ -155,60 +155,25 @@ flatpickr("#calendar-inline", {
         });
     } 
 
-/*
-* async function LoadAvailableSlots(hairdresserId: string, date: string) {
-    const slotsList = document.getElementById('slots-list');
-    if (!slotsList) return;
 
-    try {
-        const response = await fetch(`/Appointment/GetAvailableSlots?hairdresserId=${hairdresserId}&date=${date}`);
-        const data = await response.json();
+    
+    //Turnos fijos
 
-        slotsList.innerHTML = '';
-        data.forEach((time: string) => {
-            const now = new Date(); //js con new Date te da la fecha y hora actual
-            const slotDateTime = new Date (`${date}T${time}`);
-            let button = document.createElement('button');
-            button.className = 'btn btn-hour mt-2';
-            button.innerText = time;
+    const btnRecurrent = document.getElementById('btn-toggle-recurrent') as HTMLButtonElement;
+    
+    if (btnRecurrent) {
+        btnRecurrent.addEventListener('click', async (event) => {
+            const recurrenceOptions = document.getElementById('recurrence-options') as HTMLDivElement;
             
-            if(slotDateTime > now )
-            {
-                slotsList.appendChild(button);
-            }
+            recurrenceOptions.style.display = 'flex';
 
-            button.addEventListener('click', async (event) => {
-                if(confirm("¿Estás seguro de reservar este turno?")){
 
-                    const insertPost = await fetch(`/Appointment/Insert`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            SelectedHairdresserId: hairdresserId,
-                            SelectedHaircutId: selectedHaircutInput.value,
-                            SelectedDate: date,
-                            SelectedTime: time
-                        })
-                    });
-                    if (insertPost.ok) {
-                        alert("El turno se ha registrado correctamente");
-                        window.location.href = '/';
-                    }
-                    else {
-                        const badRequest = await insertPost.text();
-                        alert(badRequest);
-                    }
-                }
-            })
-        });
-
-    } catch (error) {
-        console.error('Error al cargar los horarios disponibles:', error);
+            const btnRecurrenceWeekly = document.getElementById('btn-recurrence-1') as HTMLButtonElement;
+            const btnRecurrenceBiWeekly = document.getElementById('btn-recurrence-2') as HTMLButtonElement;
+            
+            
+            //Logica de turnos por semana
+            
+            
+        })
     }
-}
-* */
-
-
-

@@ -104,6 +104,7 @@ function LoadAvailableSlots(hairdresserId, date) {
         }
     });
 }
+//Turno individual
 const btnSingleBooking = document.getElementById('btn-single-booking');
 if (btnSingleBooking) {
     btnSingleBooking.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
@@ -135,58 +136,15 @@ if (btnSingleBooking) {
         }
     }));
 }
-/*
-* async function LoadAvailableSlots(hairdresserId: string, date: string) {
-    const slotsList = document.getElementById('slots-list');
-    if (!slotsList) return;
-
-    try {
-        const response = await fetch(`/Appointment/GetAvailableSlots?hairdresserId=${hairdresserId}&date=${date}`);
-        const data = await response.json();
-
-        slotsList.innerHTML = '';
-        data.forEach((time: string) => {
-            const now = new Date(); //js con new Date te da la fecha y hora actual
-            const slotDateTime = new Date (`${date}T${time}`);
-            let button = document.createElement('button');
-            button.className = 'btn btn-hour mt-2';
-            button.innerText = time;
-            
-            if(slotDateTime > now )
-            {
-                slotsList.appendChild(button);
-            }
-
-            button.addEventListener('click', async (event) => {
-                if(confirm("¿Estás seguro de reservar este turno?")){
-
-                    const insertPost = await fetch(`/Appointment/Insert`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            SelectedHairdresserId: hairdresserId,
-                            SelectedHaircutId: selectedHaircutInput.value,
-                            SelectedDate: date,
-                            SelectedTime: time
-                        })
-                    });
-                    if (insertPost.ok) {
-                        alert("El turno se ha registrado correctamente");
-                        window.location.href = '/';
-                    }
-                    else {
-                        const badRequest = await insertPost.text();
-                        alert(badRequest);
-                    }
-                }
-            })
-        });
-
-    } catch (error) {
-        console.error('Error al cargar los horarios disponibles:', error);
-    }
+//Turnos fijos
+const btnRecurrent = document.getElementById('btn-toggle-recurrent');
+if (btnRecurrent) {
+    btnRecurrent.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
+        const recurrenceOptions = document.getElementById('recurrence-options');
+        recurrenceOptions.style.display = 'flex';
+        const btnRecurrenceWeekly = document.getElementById('btn-recurrence-1');
+        const btnRecurrenceBiWeekly = document.getElementById('btn-recurrence-2');
+        //Logica de turnos por semana
+    }));
 }
-* */
 //# sourceMappingURL=appointment.js.map
