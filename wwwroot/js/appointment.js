@@ -64,7 +64,6 @@ flatpickr("#calendar-inline", {
         }
     }
 });
-let selectedTime = '';
 function LoadAvailableSlots(hairdresserId, date) {
     return __awaiter(this, void 0, void 0, function* () {
         const slotsList = document.getElementById('slots-list');
@@ -80,18 +79,56 @@ function LoadAvailableSlots(hairdresserId, date) {
                 let button = document.createElement('button');
                 button.className = 'btn btn-hour mt-2';
                 button.innerText = time;
-                button.classList.remove('selected');
                 if (slotDateTime > now) {
                     slotsList.appendChild(button);
                 }
                 button.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
-                    const stepRecurrence = document.getElementById('step-recurrence');
+                    let buttonsReset = document.querySelectorAll('.btn-hour');
+                    buttonsReset.forEach(el => {
+                        el.classList.remove('selected');
+                    });
                     button.classList.add('selected');
+                    ChooseRecurrence(time, hairdresserId, date);
                 }));
             });
         }
         catch (error) {
             console.error('Error al cargar los horarios disponibles:', error);
+        }
+    });
+}
+function ChooseRecurrence(selectedTime, hairdresserId, date) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const showRecurrenceForm = document.getElementById('step-recurrence');
+        if (showRecurrenceForm) {
+            showRecurrenceForm.style.display = 'flex';
+        }
+        const btnSingleBooking = document.getElementById('btn-single-booking');
+        if (btnSingleBooking) {
+            btnSingleBooking.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
+                if (confirm("¿Estás seguro de reservar este turno?")) {
+                    const insertPost = yield fetch(`/Appointment/Insert`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            SelectedHairdresserId: hairdresserId,
+                            SelectedHaircutId: selectedHaircutInput.value,
+                            SelectedDate: date,
+                            SelectedTime: selectedTime
+                        })
+                    });
+                    if (insertPost.ok) {
+                        alert("El turno se ha registrado correctamente");
+                        window.location.href = '/';
+                    }
+                    else {
+                        const badRequest = yield insertPost.text();
+                        alert(badRequest);
+                    }
+                }
+            }));
         }
     });
 }
