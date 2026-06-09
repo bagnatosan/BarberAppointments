@@ -12,4 +12,5 @@ public interface IAppointmentService
 
     Task<List<Haircut>> GetHaircutsAsync();
     Task<bool> CancelAppointmentAsync(DateTime date, int userId);
+    Task<RecurrenceAvailabilityDto> CheckRecurrence(AppointmentDto appointmentDto);
 }

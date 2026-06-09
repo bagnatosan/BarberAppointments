@@ -101,8 +101,32 @@ public class AppointmentService : IAppointmentService
         }
     }
     
-    //Private
 
+    public async Task<RecurrenceAvailabilityDto> CheckRecurrence(AppointmentDto appointmentDto)
+    {
+        var userId = GetUserId(); 
+        var selectedTimeWithHour = MergeTime(appointmentDto);
+        var fechaT7 = selectedTimeWithHour.AddDays(7);
+        var fechaT14 = selectedTimeWithHour.AddDays(14);
+
+        var existRecurrenceWeekly = await _context.Appointments
+            .AnyAsync(a => a.Date == fechaT7
+                           && a.IsCanceled == false
+                           && a.HairdresserId == appointmentDto.SelectedHairdresserId);
+        
+        var existRecurrenceBiWeekly = await _context.Appointments
+            .AnyAsync(a => a.Date == fechaT14
+                           && a.IsCanceled == false
+                           && a.HairdresserId == appointmentDto.SelectedHairdresserId);
+        
+        return new RecurrenceAvailabilityDto
+        {
+            WeeklyAvailable = !existRecurrenceWeekly,
+            BiweeklyAvailable = !existRecurrenceBiWeekly
+        };
+    }
+
+    //Private
     
     private async Task<List<DateTime>> GetOccuppiedAppointmentsAsync(int hairdresserId, DateTime date)
     {

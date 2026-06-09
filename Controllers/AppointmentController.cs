@@ -71,4 +71,12 @@ public class AppointmentController : Controller
 
         return NotFound(new { message = "No se encontró ningún turno activo con esa fecha" });
     }
+
+    public async Task<IActionResult> ChechRecurrence([FromQuery]AppointmentDto appointmentDto)
+    {
+        var availability= await _appointmentService.CheckRecurrence(appointmentDto);
+
+        return Json(availability);
+
+    }
 }

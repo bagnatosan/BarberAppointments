@@ -741,3 +741,15 @@ span.flatpickr-weekday {
     outline: none;
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.4);
 }
+
+/* Recurrence availability status classes */
+.status-available {
+    color: #4caf50 !important;
+    font-weight: 600;
+}
+
+.status-occupied {
+    color: #dc3545 !important;
+    font-weight: 600;
+}
+

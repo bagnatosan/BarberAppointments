@@ -164,13 +164,68 @@ flatpickr("#calendar-inline", {
     if (btnRecurrent) {
         btnRecurrent.addEventListener('click', async (event) => {
             const recurrenceOptions = document.getElementById('recurrence-options') as HTMLDivElement;
+            const btnWeekly = document.getElementById('btn-recurrence-1') as HTMLButtonElement;
+            const weeklyStatus = document.getElementById('weekly-status') as HTMLElement;
+
+            const btnBiWeekly = document.getElementById('btn-recurrence-2') as HTMLButtonElement;
+            const biWeeklyStatus = document.getElementById('biweekly-status') as HTMLElement;
+
+            const url = `/Appointment/ChechRecurrence?SelectedHairdresserId=${barberSelect.value}&SelectedDate=${selectedDate}&SelectedTime=${selectedTime}`;
+
+            const response = await fetch(url, {
+                method: 'GET'
+            });
+            
+            const data = await response.json();
+            const availableWeekly = data.weeklyAvailable;
+            const availableBiWeekly = data.biweeklyAvailable;
+            
+            //Boton semanal
+            
+            if(availableWeekly)
+            {
+                btnWeekly.disabled = false;
+                
+                weeklyStatus.classList.remove('status-available', 'status-occupied');
+                
+                weeklyStatus.innerText = 'Disponible';
+                weeklyStatus.classList.add('status-available');
+            }
+            
+            else
+            {
+                btnWeekly.disabled = true;
+
+                weeklyStatus.classList.remove('status-available', 'status-occupied');
+
+                weeklyStatus.innerText = 'No Disponible';
+                weeklyStatus.classList.add('status-occupied');
+            }
+            
+            if(availableBiWeekly)
+            {
+                btnBiWeekly.disabled = false;
+                biWeeklyStatus.classList.remove('status-available', 'status-occupied');
+
+                biWeeklyStatus.innerText = 'Disponible';
+                biWeeklyStatus.classList.add('status-available');
+            }
+            
+            else
+            {
+                btnBiWeekly.disabled = true;
+                biWeeklyStatus.classList.remove('status-available', 'status-occupied');
+
+                biWeeklyStatus.innerText = 'No Disponible';
+                biWeeklyStatus.classList.add('status-occupied');
+            }
             
             recurrenceOptions.style.display = 'flex';
-
-
-            const btnRecurrenceWeekly = document.getElementById('btn-recurrence-1') as HTMLButtonElement;
-            const btnRecurrenceBiWeekly = document.getElementById('btn-recurrence-2') as HTMLButtonElement;
             
+            
+    
+            
+
             
             //Logica de turnos por semana
             
