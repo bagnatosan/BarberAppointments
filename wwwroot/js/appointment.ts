@@ -179,7 +179,7 @@ flatpickr("#calendar-inline", {
             const data = await response.json();
             const availableWeekly = data.weeklyAvailable;
             const availableBiWeekly = data.biweeklyAvailable;
-            
+            Text
             //Boton semanal
             
             if(availableWeekly)

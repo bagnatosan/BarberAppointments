@@ -18,4 +18,7 @@ public class AppointmentDto
     
     public bool Weekly { get; set; } = false;
     public bool BiWeekly { get; set; } = false;
+    
+    public Guid RecurrentSchedulesId { get; set; } = Guid.Empty;
+    public RecurrentSchedule? RecurrentSchedule { get; set; }
 }

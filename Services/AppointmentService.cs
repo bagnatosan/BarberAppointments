@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using System.Security.Claims;
 using Barber.Data;
 using Barber.Dto;
@@ -58,50 +59,6 @@ public class AppointmentService : IAppointmentService
         return GenerateTimeSlots(selectedDate, hourStart, hourEnd, occupiedAppointments);
     }
     
-    public async Task<bool> InsertAppointmentAsync(AppointmentDto appointmentdto)
-    {
-        DateTime mergedTime = MergeTime(appointmentdto);
-
-        var userId = GetUserId();
-        
-        if (userId == 0) return false;
-
-        var existingAppointment = await _context.Appointments.FirstOrDefaultAsync(a =>
-            a.HairdresserId == appointmentdto.SelectedHairdresserId && a.Date == mergedTime);
-
-        if (existingAppointment != null)
-        {
-            if (!existingAppointment.IsCanceled) return false;
-
-            existingAppointment.IsCanceled = false;
-            existingAppointment.UserId = userId;
-            existingAppointment.HaircutId = appointmentdto.SelectedHaircutId;
-        }
-        else
-        {
-            var appointment = new Appointment()
-            {
-                Date = mergedTime,
-                UserId = userId,
-                HairdresserId = appointmentdto.SelectedHairdresserId,
-                HaircutId = appointmentdto.SelectedHaircutId,
-                IsCanceled = false
-            };
-            _context.Appointments.Add(appointment);
-        }
-
-        try
-        {
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        catch (DbUpdateException)
-        {
-            return false;
-        }
-    }
-    
-
     public async Task<RecurrenceAvailabilityDto> CheckRecurrence(AppointmentDto appointmentDto)
     {
         var userId = GetUserId(); 
@@ -125,8 +82,104 @@ public class AppointmentService : IAppointmentService
             BiweeklyAvailable = !existRecurrenceBiWeekly
         };
     }
+    
+    public async Task<bool> InsertAppointmentAsync(AppointmentDto appointmentdto)
+    {
+        DateTime mergedTime = MergeTime(appointmentdto);
+
+        var userId = GetUserId();
+        
+        if (userId == 0) return false;
+        
+        var appointment = CreateOrRecycleAppointmentAsync(mergedTime, userId, appointmentdto.SelectedHairdresserId
+            , appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+        if (!await appointment)  return false;      //No se pudo registrar
+        
+        DateTime datePlusDays = DateTime.Now;
+
+        if (appointmentdto.BiWeekly)
+        {
+            datePlusDays = mergedTime.AddDays(14);
+            
+            var appointmentRecurrent = CreateOrRecycleAppointmentAsync(datePlusDays, userId,
+                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+            if (!await appointmentRecurrent) return false;
+        }
+        
+        if (appointmentdto.Weekly)
+        {
+            datePlusDays = mergedTime.AddDays(7);
+            
+            var appointmentRecurrent = CreateOrRecycleAppointmentAsync(datePlusDays, userId,
+                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+            if (!await appointmentRecurrent) return false;
+
+            datePlusDays = datePlusDays.AddDays(7);
+            
+            var appointmentRecurrentJustInCase = CreateOrRecycleAppointmentAsync(datePlusDays, userId,
+                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+            if(!await appointmentRecurrentJustInCase) return false;
+        }
+
+        
+        try
+        {
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+    }
+    
+
 
     //Private
+    
+    private async Task<bool> CreateOrRecycleAppointmentAsync(DateTime date , int userId , int hairdresserId , 
+        int haircutId , Guid? recurrentScheduleId )
+    {
+        var existingAppointment = await _context.Appointments.FirstOrDefaultAsync(a =>
+            a.HairdresserId == hairdresserId && a.Date == date);
+        
+
+        if (existingAppointment == null)
+        {
+            var appointment = new Appointment() 
+            {
+                Date = date,
+                UserId = userId,
+                HairdresserId = hairdresserId,
+                HaircutId = haircutId,
+                IsCanceled = false
+            };
+            _context.Appointments.Add(appointment);
+
+        }
+
+        else
+        {
+            if (!existingAppointment.IsCanceled) return false;
+
+            existingAppointment.IsCanceled = false;
+            existingAppointment.UserId = userId;
+            existingAppointment.HaircutId = haircutId;
+        }
+
+
+        try
+        {
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+
+
+    }
     
     private async Task<List<DateTime>> GetOccuppiedAppointmentsAsync(int hairdresserId, DateTime date)
     {

@@ -152,6 +152,7 @@ if (btnRecurrent) {
         const data = yield response.json();
         const availableWeekly = data.weeklyAvailable;
         const availableBiWeekly = data.biweeklyAvailable;
+        Text;
         //Boton semanal
         if (availableWeekly) {
             btnWeekly.disabled = false;
