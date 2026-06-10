@@ -90,9 +90,30 @@ public class AppointmentService : IAppointmentService
         var userId = GetUserId();
         
         if (userId == 0) return false;
+
+        Guid? IdRecurrent = null; 
+
+        if (appointmentdto.Weekly || appointmentdto.BiWeekly)   //Creacion de nuevo turno fijo
+        {
+            var recurrent = new RecurrentSchedule()
+            {
+                Id = Guid.NewGuid(),
+                DayOfWeek = mergedTime.DayOfWeek,
+                HairdresserId = appointmentdto.SelectedHairdresserId,
+                UserId = userId,
+                IsActive = true,
+                StartTime = mergedTime.TimeOfDay,
+                IntervalWeeks = appointmentdto.Weekly ? 1 : 2 //Operador ternario
+            };
+
+            IdRecurrent = recurrent.Id;
+            
+            _context.Add(recurrent);
+
+        }
         
         var appointment = CreateOrRecycleAppointmentAsync(mergedTime, userId, appointmentdto.SelectedHairdresserId
-            , appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+            , appointmentdto.SelectedHaircutId, IdRecurrent);
         if (!await appointment)  return false;      //No se pudo registrar
         
         DateTime datePlusDays = DateTime.Now;
@@ -102,7 +123,7 @@ public class AppointmentService : IAppointmentService
             datePlusDays = mergedTime.AddDays(14);
             
             var appointmentRecurrent = CreateOrRecycleAppointmentAsync(datePlusDays, userId,
-                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, IdRecurrent);
             if (!await appointmentRecurrent) return false;
         }
         
@@ -111,13 +132,13 @@ public class AppointmentService : IAppointmentService
             datePlusDays = mergedTime.AddDays(7);
             
             var appointmentRecurrent = CreateOrRecycleAppointmentAsync(datePlusDays, userId,
-                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, IdRecurrent);
             if (!await appointmentRecurrent) return false;
 
             datePlusDays = datePlusDays.AddDays(7);
             
             var appointmentRecurrentJustInCase = CreateOrRecycleAppointmentAsync(datePlusDays, userId,
-                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, appointmentdto.RecurrentSchedulesId);
+                appointmentdto.SelectedHairdresserId, appointmentdto.SelectedHaircutId, IdRecurrent);
             if(!await appointmentRecurrentJustInCase) return false;
         }
 
@@ -152,7 +173,8 @@ public class AppointmentService : IAppointmentService
                 UserId = userId,
                 HairdresserId = hairdresserId,
                 HaircutId = haircutId,
-                IsCanceled = false
+                IsCanceled = false,
+                RecurrentSchedulesId =  recurrentScheduleId
             };
             _context.Appointments.Add(appointment);
 
@@ -165,19 +187,11 @@ public class AppointmentService : IAppointmentService
             existingAppointment.IsCanceled = false;
             existingAppointment.UserId = userId;
             existingAppointment.HaircutId = haircutId;
+            existingAppointment.RecurrentSchedulesId = recurrentScheduleId;
         }
 
 
-        try
-        {
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        catch (DbUpdateException)
-        {
-            return false;
-        }
-
+        return true;
 
     }
     

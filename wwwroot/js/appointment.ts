@@ -8,6 +8,10 @@ const btnBarber = document.querySelectorAll('.btn-barber') as NodeListOf<HTMLBut
 const btnService = document.querySelectorAll('.btn-service') as NodeListOf<HTMLButtonElement>;
 let selectedDate: string = '';
 let selectedTime: string = '';
+let weeklyBool = false;
+let biWeeklyBool = false;
+const btnWeekly = document.getElementById('btn-recurrence-1') as HTMLButtonElement;
+const btnBiWeekly = document.getElementById('btn-recurrence-2') as HTMLButtonElement;
 
 // Escucha del click en los barberos 2
 btnBarber.forEach(el => {
@@ -164,10 +168,10 @@ flatpickr("#calendar-inline", {
     if (btnRecurrent) {
         btnRecurrent.addEventListener('click', async (event) => {
             const recurrenceOptions = document.getElementById('recurrence-options') as HTMLDivElement;
-            const btnWeekly = document.getElementById('btn-recurrence-1') as HTMLButtonElement;
+            
             const weeklyStatus = document.getElementById('weekly-status') as HTMLElement;
 
-            const btnBiWeekly = document.getElementById('btn-recurrence-2') as HTMLButtonElement;
+            
             const biWeeklyStatus = document.getElementById('biweekly-status') as HTMLElement;
 
             const url = `/Appointment/ChechRecurrence?SelectedHairdresserId=${barberSelect.value}&SelectedDate=${selectedDate}&SelectedTime=${selectedTime}`;
@@ -179,7 +183,7 @@ flatpickr("#calendar-inline", {
             const data = await response.json();
             const availableWeekly = data.weeklyAvailable;
             const availableBiWeekly = data.biweeklyAvailable;
-            Text
+            
             //Boton semanal
             
             if(availableWeekly)
@@ -221,14 +225,70 @@ flatpickr("#calendar-inline", {
             }
             
             recurrenceOptions.style.display = 'flex';
-            
-            
-    
-            
 
             
-            //Logica de turnos por semana
+            
+
+
+            
+                
+
             
             
         })
     }
+    
+    
+    
+    const btnConfirmRecurrent = document.getElementById('btn-confirm-recurrent') as HTMLButtonElement;
+    btnWeekly.addEventListener('click', async (event) => {
+        //reseteo
+        weeklyBool = false;
+        biWeeklyBool = false;
+        
+        weeklyBool = true;
+        btnConfirmRecurrent.style.display = 'block';
+    })
+    btnBiWeekly.addEventListener('click', async (event) => {
+        weeklyBool = false;
+        biWeeklyBool = false;
+        
+        biWeeklyBool = true;
+        btnConfirmRecurrent.style.display = 'block';
+    })
+
+    btnConfirmRecurrent.addEventListener('click', async (event) => {
+        const insertPost = await fetch(`/Appointment/Insert`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                SelectedHairdresserId: barberSelect.value,
+                SelectedHaircutId: selectedHaircutInput.value,
+                SelectedDate: selectedDate,
+                SelectedTime: selectedTime,
+                Weekly: weeklyBool,
+                BiWeekly: biWeeklyBool
+            })
+        });
+
+
+        if (insertPost.ok) {
+            alert("El turno se ha registrado correctamente");
+            window.location.href = '/';
+        } else {
+            const badRequest = await insertPost.text();
+            alert(badRequest);
+        }
+    })
+
+    /*
+
+
+    */
+
+
+
+
+        
