@@ -729,12 +729,22 @@ span.flatpickr-weekday {
     min-width: 160px;
 }
 
-.btn-select-custom:hover, .btn-select-custom.selected {
+.btn-select-custom:hover {
     background-color: #d4af37;
     color: #000;
     cursor: pointer;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-select-custom.selected {
+    background: linear-gradient(135deg, #d4af37 0%, #f9e295 100%);
+    color: #000;
+    border-color: #f9e295;
+    cursor: pointer;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.45);
+    font-weight: 700;
 }
 
 .btn-select-custom:focus {
@@ -751,5 +761,40 @@ span.flatpickr-weekday {
 .status-occupied {
     color: #dc3545 !important;
     font-weight: 600;
+}
+
+/* Responsive adjustments for select custom buttons on small devices */
+@media (max-width: 576px) {
+    .btn-select-custom {
+        width: 100%;
+        min-width: auto;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Center flatpickr inline calendar on mobile screen sizes */
+@media (max-width: 767px) {
+    #calendar-inline {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .flatpickr-calendar {
+        width: 307px !important;
+        margin: 0 auto !important;
+    }
+}
+
+/* Fix recurrence steps alignment when displayed as flex boxes */
+#step-recurrence {
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+#recurrence-options {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
 }
 
