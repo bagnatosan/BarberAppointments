@@ -33,7 +33,7 @@ public class AppointmentService : IAppointmentService
         return haircuts;
     }
 
-    public async Task<bool> CancelAppointmentAsync(DateTime date, int userId)
+    public async Task<bool> CancelAppointmentAsync(DateTime date, int userId, bool cancelRecurrent)
     {
         var appointment = await _context.Appointments
             .SingleOrDefaultAsync(a => a.Date == date && a.UserId == userId && a.IsCanceled == false);

@@ -36,6 +36,7 @@ turnoCards.forEach((tarjeta) => {
     const date = tarjeta.dataset['fecha'];
     const userId = tarjeta.dataset['userid'];
     const dataRecurrent = (_a = tarjeta.dataset['recurrent']) === null || _a === void 0 ? void 0 : _a.toLowerCase();
+    let deleteRecurrent;
     tarjeta.addEventListener('click', () => {
         if (cuadroCancelarNormal && dataRecurrent === "false") {
             cuadroCancelarNormal.style.display = 'block';
@@ -56,19 +57,20 @@ turnoCards.forEach((tarjeta) => {
             recurrentForm.style.display = 'none';
         });
     }
-    const oneAppointmentButtons = [btnSiNormal, btnConfirmOneAppointment];
-    oneAppointmentButtons.forEach(btn => {
-        if (btn) {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                CancelAppointment(date || '', userId || '');
-            });
-        }
-    });
+    if (btnSiNormal) {
+        ListenerBtnConfirmation(btnSiNormal, userId || '', date || '', false);
+    }
+    if (btnConfirmOneAppointment) {
+        ListenerBtnConfirmation(btnConfirmOneAppointment, userId || '', date || '', false);
+    }
+    if (btnConfirmRecurrentAppointments) {
+        ListenerBtnConfirmation(btnConfirmRecurrentAppointments, userId || '', date || '', true);
+    }
 });
-function CancelAppointment(date, userId) {
+function CancelAppointment(date, userId, deleteRecurrent) {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch(`/Appointment/CancelAppointment?date=${date}&userId=${userId}`, {
+        const response = yield fetch(`/Appointment/CancelAppointment?date=${date}&userId=${userId}
+    &deleteRecurrent=${deleteRecurrent}`, {
             method: 'POST',
         });
         const data = yield response.json();
@@ -79,6 +81,12 @@ function CancelAppointment(date, userId) {
         else {
             alert(data.message);
         }
+    });
+}
+function ListenerBtnConfirmation(btn, userId, date, deleteRecurrent) {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        CancelAppointment(date, userId, deleteRecurrent);
     });
 }
 //# sourceMappingURL=index.js.map

@@ -33,6 +33,8 @@ turnoCards.forEach((tarjeta) => {
     const date = tarjeta.dataset['fecha'];
     const userId = tarjeta.dataset['userid'];
     const dataRecurrent = tarjeta.dataset['recurrent']?.toLowerCase();
+    
+    let deleteRecurrent: boolean;
 
     tarjeta.addEventListener('click', () => {
         if (cuadroCancelarNormal && dataRecurrent === "false") {
@@ -56,25 +58,23 @@ turnoCards.forEach((tarjeta) => {
             recurrentForm.style.display = 'none';
         });
     }
-    
-    const oneAppointmentButtons = [btnSiNormal , btnConfirmOneAppointment]
 
-    oneAppointmentButtons.forEach(btn => {
-        if (btn)
-        {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                CancelAppointment(date || '', userId || '');
-            });
-        }
-    })
-    
-    
-    
+    if (btnSiNormal) {
+        ListenerBtnConfirmation(btnSiNormal, userId || '', date || '', false);
+    }
+
+    if (btnConfirmOneAppointment) {
+        ListenerBtnConfirmation(btnConfirmOneAppointment, userId || '', date || '', false);
+    }
+
+    if (btnConfirmRecurrentAppointments) {
+        ListenerBtnConfirmation(btnConfirmRecurrentAppointments, userId || '', date || '', true);
+    }
 });
 
-async function CancelAppointment(date: string, userId: string) {
-    const response = await fetch(`/Appointment/CancelAppointment?date=${date}&userId=${userId}`, {
+async function CancelAppointment(date: string, userId: string, deleteRecurrent: boolean) {
+    const response = await fetch(`/Appointment/CancelAppointment?date=${date}&userId=${userId}
+    &deleteRecurrent=${deleteRecurrent}`, {
         method: 'POST',
     });
     const data = await response.json();
@@ -87,3 +87,9 @@ async function CancelAppointment(date: string, userId: string) {
     }
 }
 
+function ListenerBtnConfirmation(btn: HTMLButtonElement, userId: string, date: string, deleteRecurrent: boolean) {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        CancelAppointment(date, userId, deleteRecurrent);
+    });
+}

@@ -61,11 +61,11 @@ public class AppointmentController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> CancelAppointment(DateTime date, int userId)
+    public async Task<IActionResult> CancelAppointment(DateTime date, int userId , bool cancelRecurrent)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        var isCanceled = await _appointmentService.CancelAppointmentAsync(date, userId);
+        var isCanceled = await _appointmentService.CancelAppointmentAsync(date, userId , cancelRecurrent);
 
         if (isCanceled) return Ok(new { message = "El turno fue cancelado correctamente" });
 
