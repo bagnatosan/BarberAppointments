@@ -39,7 +39,7 @@ public class AppointmentService : IAppointmentService
             .SingleOrDefaultAsync(a => a.Date == date && a.UserId == userId && a.IsCanceled == false);
 
         if (appointment == null) return false;
-
+        //aca
         appointment.IsCanceled = true;
         await _context.SaveChangesAsync();
         return true;
