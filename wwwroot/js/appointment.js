@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -112,7 +111,7 @@ function LoadAvailableSlots(hairdresserId, date) {
 //Turno individual
 const btnSingleBooking = document.getElementById('btn-single-booking');
 if (btnSingleBooking) {
-    btnSingleBooking.addEventListener('click', (event) => __awaiter(void 0, void 0, void 0, function* () {
+    btnSingleBooking.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
         if (!selectedTime || !selectedDate) {
             alert('Por favor seleccione un dia y horario');
             return;
@@ -144,7 +143,7 @@ if (btnSingleBooking) {
 //Turnos fijos
 const btnRecurrent = document.getElementById('btn-toggle-recurrent');
 if (btnRecurrent) {
-    btnRecurrent.addEventListener('click', (event) => __awaiter(void 0, void 0, void 0, function* () {
+    btnRecurrent.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
         const recurrenceOptions = document.getElementById('recurrence-options');
         const weeklyStatus = document.getElementById('weekly-status');
         const biWeeklyStatus = document.getElementById('biweekly-status');
@@ -184,20 +183,20 @@ if (btnRecurrent) {
     }));
 }
 const btnConfirmRecurrent = document.getElementById('btn-confirm-recurrent');
-btnWeekly.addEventListener('click', (event) => __awaiter(void 0, void 0, void 0, function* () {
+btnWeekly.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
     //reseteo
     weeklyBool = false;
     biWeeklyBool = false;
     weeklyBool = true;
     btnConfirmRecurrent.style.display = 'block';
 }));
-btnBiWeekly.addEventListener('click', (event) => __awaiter(void 0, void 0, void 0, function* () {
+btnBiWeekly.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
     weeklyBool = false;
     biWeeklyBool = false;
     biWeeklyBool = true;
     btnConfirmRecurrent.style.display = 'block';
 }));
-btnConfirmRecurrent.addEventListener('click', (event) => __awaiter(void 0, void 0, void 0, function* () {
+btnConfirmRecurrent.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
     const insertPost = yield fetch(`/Appointment/Insert`, {
         method: 'POST',
         headers: {
