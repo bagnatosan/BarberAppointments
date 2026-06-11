@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -24,28 +25,46 @@ if (btnAgendar) {
 //cancelar turno
 const turnoCards = document.querySelectorAll('.turno-card');
 turnoCards.forEach((tarjeta) => {
-    const cuadroCancelar = tarjeta.querySelector('.cancelar-confirmacion');
-    const btnSi = tarjeta.querySelector('.btn-confirmar-si');
-    const btnNo = tarjeta.querySelector('.btn-confirmar-no');
+    var _a;
+    const cuadroCancelarNormal = tarjeta.querySelector('.normal-confirm');
+    const btnSiNormal = cuadroCancelarNormal === null || cuadroCancelarNormal === void 0 ? void 0 : cuadroCancelarNormal.querySelector('.btn-confirmar-si');
+    const btnNoNormal = cuadroCancelarNormal === null || cuadroCancelarNormal === void 0 ? void 0 : cuadroCancelarNormal.querySelector('.btn-confirmar-no');
+    const recurrentForm = tarjeta.querySelector('.recurrent-confirm');
+    const btnConfirmOneAppointment = tarjeta.querySelector('.btn-solo-este');
+    const btnConfirmRecurrentAppointments = tarjeta.querySelector('.btn-todos-fijos');
+    const btnVolverRecurrent = recurrentForm === null || recurrentForm === void 0 ? void 0 : recurrentForm.querySelector('.btn-confirmar-no');
     const date = tarjeta.dataset['fecha'];
     const userId = tarjeta.dataset['userid'];
+    const dataRecurrent = (_a = tarjeta.dataset['recurrent']) === null || _a === void 0 ? void 0 : _a.toLowerCase();
     tarjeta.addEventListener('click', () => {
-        if (cuadroCancelar) {
-            cuadroCancelar.style.display = 'block';
+        if (cuadroCancelarNormal && dataRecurrent === "false") {
+            cuadroCancelarNormal.style.display = 'block';
+        }
+        else if (recurrentForm && dataRecurrent === "true") {
+            recurrentForm.style.display = 'block';
         }
     });
-    if (btnNo && cuadroCancelar) {
-        btnNo.addEventListener('click', (e) => {
+    if (btnNoNormal && cuadroCancelarNormal) {
+        btnNoNormal.addEventListener('click', (e) => {
             e.stopPropagation(); // frena burbujeo
-            cuadroCancelar.style.display = 'none';
+            cuadroCancelarNormal.style.display = 'none';
         });
     }
-    if (btnSi) {
-        btnSi.addEventListener('click', (e) => {
+    if (btnVolverRecurrent && recurrentForm) {
+        btnVolverRecurrent.addEventListener('click', (e) => {
             e.stopPropagation();
-            CancelAppointment(date || '', userId || '');
+            recurrentForm.style.display = 'none';
         });
     }
+    const oneAppointmentButtons = [btnSiNormal, btnConfirmOneAppointment];
+    oneAppointmentButtons.forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                CancelAppointment(date || '', userId || '');
+            });
+        }
+    });
 });
 function CancelAppointment(date, userId) {
     return __awaiter(this, void 0, void 0, function* () {

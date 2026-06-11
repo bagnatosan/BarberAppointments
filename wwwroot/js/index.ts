@@ -21,32 +21,56 @@ if (btnAgendar) {
 const turnoCards = document.querySelectorAll('.turno-card') as NodeListOf<HTMLDivElement>;
 
 turnoCards.forEach((tarjeta) => {
-    const cuadroCancelar = tarjeta.querySelector('.cancelar-confirmacion') as HTMLDivElement;
-    const btnSi = tarjeta.querySelector('.btn-confirmar-si') as HTMLButtonElement;
-    const btnNo = tarjeta.querySelector('.btn-confirmar-no') as HTMLButtonElement;
+    const cuadroCancelarNormal = tarjeta.querySelector('.normal-confirm') as HTMLDivElement;
+    const btnSiNormal = cuadroCancelarNormal?.querySelector('.btn-confirmar-si') as HTMLButtonElement;
+    const btnNoNormal = cuadroCancelarNormal?.querySelector('.btn-confirmar-no') as HTMLButtonElement;
+    
+    const recurrentForm = tarjeta.querySelector('.recurrent-confirm') as HTMLDivElement;
+    const btnConfirmOneAppointment = tarjeta.querySelector('.btn-solo-este') as HTMLButtonElement;
+    const btnConfirmRecurrentAppointments = tarjeta.querySelector('.btn-todos-fijos') as HTMLButtonElement;
+    const btnVolverRecurrent = recurrentForm?.querySelector('.btn-confirmar-no') as HTMLButtonElement;
 
     const date = tarjeta.dataset['fecha'];
     const userId = tarjeta.dataset['userid'];
+    const dataRecurrent = tarjeta.dataset['recurrent']?.toLowerCase();
 
     tarjeta.addEventListener('click', () => {
-        if (cuadroCancelar) {
-            cuadroCancelar.style.display = 'block';
+        if (cuadroCancelarNormal && dataRecurrent === "false") {
+            cuadroCancelarNormal.style.display = 'block';
+        }
+        else if (recurrentForm && dataRecurrent === "true") {
+            recurrentForm.style.display = 'block';
         }
     });
 
-    if (btnNo && cuadroCancelar) {
-        btnNo.addEventListener('click', (e) => {
+    if (btnNoNormal && cuadroCancelarNormal) {
+        btnNoNormal.addEventListener('click', (e) => {
             e.stopPropagation();        // frena burbujeo
-            cuadroCancelar.style.display = 'none';
+            cuadroCancelarNormal.style.display = 'none';
         });
     }
 
-    if (btnSi) {
-        btnSi.addEventListener('click', (e) => {
+    if (btnVolverRecurrent && recurrentForm) {
+        btnVolverRecurrent.addEventListener('click', (e) => {
             e.stopPropagation();
-            CancelAppointment(date || '', userId || '');
+            recurrentForm.style.display = 'none';
         });
     }
+    
+    const oneAppointmentButtons = [btnSiNormal , btnConfirmOneAppointment]
+
+    oneAppointmentButtons.forEach(btn => {
+        if (btn)
+        {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                CancelAppointment(date || '', userId || '');
+            });
+        }
+    })
+    
+    
+    
 });
 
 async function CancelAppointment(date: string, userId: string) {
@@ -62,3 +86,4 @@ async function CancelAppointment(date: string, userId: string) {
         alert(data.message);
     }
 }
+

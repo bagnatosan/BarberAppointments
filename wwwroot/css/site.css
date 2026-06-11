@@ -195,6 +195,24 @@ html {
     background-color: #5a6268;
 }
 
+.btn-confirmar-serie {
+    color: white;
+    border: none;
+    padding: 6px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #d9534f;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-confirmar-serie:hover {
+    background-color: #c9302c;
+    transform: translateY(-1px);
+}
+
 .no-turnos-alert {
     background: rgba(0, 0, 0, 0.6);
     border: 1.5px solid #d4af37;

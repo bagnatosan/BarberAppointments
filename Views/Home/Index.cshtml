@@ -1,5 +1,5 @@
 @using System.Security.Claims
-@model IEnumerable<DateTime>;
+@model Barber.Dto.RecurrenceAvailabilityDto
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -11,15 +11,16 @@
     <div class="hero-content">
         <img src="/img/caporale_logo.svg" alt="Caporale Barberia" class="hero-logo mb-5" />
         
-        @if (Model.Any() && User.IsInRole("Customer"))
+        @if (Model.Dates.Any() && User.IsInRole("Customer"))
         {
             <div class="proximos-turnos-container">
                 <div class="turnos-grid">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Dates)
                     {
                         <div class="turno-card"
                              data-fecha="@(item.ToString("yyyy-MM-ddTHH:mm:ss"))"
-                             data-userid="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
+                             data-userid="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value"
+                             data-recurrent ="@Model.IsActive">
                             <h5 class="turno-card-title">Turno Confirmado</h5>
                             <p class="turno-card-text">
                                 📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
@@ -30,11 +31,26 @@
                                     (pulse para cancelar)
                                 </span>
                             </div>
-                            <div class="cancelar-confirmacion">
+                            <!-- Confirmación para turno común (No Recurrente) -->
+                            <div class="cancelar-confirmacion normal-confirm">
                                 <p>¿Estás seguro?</p>
                                 <div class="cancelar-botones">
                                     <button class="btn-confirmar-si" data-date="@item.ToString("yyyy-MM-ddTHH:mm:ss")">Sí</button>
                                     <button class="btn-confirmar-no">No</button>
+                                </div>
+                            </div>
+
+                            <!-- Confirmación para turno fijo (Recurrente) -->
+                            <div class="cancelar-confirmacion recurrent-confirm">
+                                <p class="mb-2">Este turno es fijo. ¿Qué deseas hacer?</p>
+                                <div class="cancelar-botones flex-column gap-2">
+                                    <button class="btn-confirmar-si btn-solo-este w-100" data-date="@item.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                        Cancelar solo este turno
+                                    </button>
+                                    <button class="btn-confirmar-serie btn-todos-fijos w-100" data-date="@item.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                        Cancelar todos los turnos fijos
+                                    </button>
+                                    <button class="btn-confirmar-no w-100 mt-1">Volver</button>
                                 </div>
                             </div>
                         </div>

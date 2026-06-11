@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using Barber.Data;
+using Barber.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Barber.Models;
 using Microsoft.EntityFrameworkCore;
@@ -22,11 +23,23 @@ public class HomeController : Controller
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0");
         var appointments = await _context.Appointments
+            .AsNoTracking()
             .Where(u => u.UserId == userId && u.Date >= DateTime.Now && u.IsCanceled == false)
             .Select( u => u.Date)
             .ToListAsync();
         
-        return View(appointments);
+        var hasActiveRecurrence = await _context.RecurrentSchedules
+            .AnyAsync(u => u.UserId == userId && u.IsActive);
+
+
+        var viewModel = new RecurrenceAvailabilityDto()
+        {
+            Dates = appointments,
+            IsActive = hasActiveRecurrence
+        };
+            
+        
+        return View(viewModel);
     }
 
     public IActionResult Privacy()

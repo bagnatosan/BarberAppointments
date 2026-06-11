@@ -2,6 +2,12 @@ namespace Barber.Dto;
 
 public class RecurrenceAvailabilityDto
 {
-    public bool WeeklyAvailable  { get; set; } 
-    public bool BiweeklyAvailable { get; set; }
+    public List<DateTime> Dates { get; set; } = new List<DateTime>();
+
+    public int UserId { get; set; } = 0;
+
+    public bool IsActive { get; set; } = false;
+    
+    public bool WeeklyAvailable { get; set; } = false;
+    public bool BiweeklyAvailable { get; set; } = false;
 }
