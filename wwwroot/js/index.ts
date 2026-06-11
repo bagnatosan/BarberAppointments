@@ -74,16 +74,16 @@ turnoCards.forEach((tarjeta) => {
 
 async function CancelAppointment(date: string, userId: string, deleteRecurrent: boolean) {
     const response = await fetch(`/Appointment/CancelAppointment?date=${date}&userId=${userId}
-    &deleteRecurrent=${deleteRecurrent}`, {
+    &cancelRecurrent=${deleteRecurrent}`, {
         method: 'POST',
     });
     const data = await response.json();
 
     if (response.ok) {
-        alert(data.message);
+        deleteRecurrent ? alert("Turno recurrente eliminado satisfactoriamente") : alert(data.message);
         window.location.reload();
     } else {
-        alert(data.message);
+        deleteRecurrent ? alert("No se pudo eliminar turno recurrente satisfactoriamente") :  alert(data.message);
     }
 }
 

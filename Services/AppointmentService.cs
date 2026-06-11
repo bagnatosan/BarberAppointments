@@ -35,12 +35,36 @@ public class AppointmentService : IAppointmentService
 
     public async Task<bool> CancelAppointmentAsync(DateTime date, int userId, bool cancelRecurrent)
     {
-        var appointment = await _context.Appointments
-            .SingleOrDefaultAsync(a => a.Date == date && a.UserId == userId && a.IsCanceled == false);
+        if (!cancelRecurrent) //Cancelacion de turno no recurrente
+        {
+            var appointment = await _context.Appointments
+                .SingleOrDefaultAsync(a => a.Date == date && a.UserId == userId 
+                                                          && a.IsCanceled == false);
 
-        if (appointment == null) return false;
-        //aca
-        appointment.IsCanceled = true;
+            if (appointment == null) return false;
+        
+            appointment.IsCanceled = true;
+        }
+
+        else //Cancelacion de turnos recurrentes
+        {
+            var recurrentSchedule = await GetRecurrentScheduleById(userId);
+
+            if (recurrentSchedule == null) return false;
+
+            else
+            {
+                var appointments = await GetAppointmentByScheduleId(recurrentSchedule.Id);
+
+                foreach (var a in appointments)
+                {
+                    a.IsCanceled = true;
+                }
+
+                recurrentSchedule.IsActive = false;
+            }
+        }
+        
         await _context.SaveChangesAsync();
         return true;
     }
@@ -157,6 +181,25 @@ public class AppointmentService : IAppointmentService
 
 
     //Private
+
+    private async Task<List<Appointment>> GetAppointmentByScheduleId(Guid scheduleId)
+    {
+        var appointment = await _context.Appointments
+            .Where(u => u.RecurrentSchedulesId == scheduleId
+                        && u.IsCanceled == false
+                        && u.Date > DateTime.Now)
+            .ToListAsync();
+
+        return appointment;
+    }
+
+    private async Task<RecurrentSchedule?> GetRecurrentScheduleById(int userId)
+    {
+        var recurrentAppointment = await _context.RecurrentSchedules
+            .FirstOrDefaultAsync(u => u.UserId == userId && u.IsActive);
+
+        return recurrentAppointment;
+    }
     
     private async Task<bool> CreateOrRecycleAppointmentAsync(DateTime date , int userId , int hairdresserId , 
         int haircutId , Guid? recurrentScheduleId )
