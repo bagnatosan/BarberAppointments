@@ -17,12 +17,16 @@ const btnBarber = document.querySelectorAll('.btn-barber');
 const btnService = document.querySelectorAll('.btn-service');
 const showRecurrenceForm = document.getElementById('step-recurrence');
 const recurrenceOptions = document.getElementById('recurrence-options');
+const btnSingleBooking = document.getElementById('btn-single-booking');
+const btnRecurrent = document.getElementById('btn-toggle-recurrent');
+const btnWeekly = document.getElementById('btn-recurrence-1');
+const btnBiWeekly = document.getElementById('btn-recurrence-2');
+const btnConfirmRecurrent = document.getElementById('btn-confirm-recurrent');
+const bookingOptionsSeparator = document.getElementById('booking-options-separator');
 let selectedDate = '';
 let selectedTime = '';
 let weeklyBool = false;
 let biWeeklyBool = false;
-const btnWeekly = document.getElementById('btn-recurrence-1');
-const btnBiWeekly = document.getElementById('btn-recurrence-2');
 // Escucha del click en los barberos 2
 btnBarber.forEach(el => {
     el.addEventListener('click', () => {
@@ -113,41 +117,45 @@ function LoadAvailableSlots(hairdresserId, date) {
     });
 }
 //Turno individual
-const btnSingleBooking = document.getElementById('btn-single-booking');
 if (btnSingleBooking) {
     btnSingleBooking.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
         if (!selectedTime || !selectedDate) {
             alert('Por favor seleccione un dia y horario');
             return;
         }
-        if (confirm("¿Estás seguro de reservar este turno?")) {
-            const insertPost = yield fetch(`/Appointment/Insert`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    SelectedHairdresserId: barberSelect.value,
-                    SelectedHaircutId: selectedHaircutInput.value,
-                    SelectedDate: selectedDate,
-                    SelectedTime: selectedTime
-                })
-            });
-            if (insertPost.ok) {
-                alert("El turno se ha registrado correctamente");
-                window.location.href = '/';
-            }
-            else {
-                const badRequest = yield insertPost.text();
-                alert(badRequest);
-            }
+        // Visual feedback
+        if (btnRecurrent)
+            btnRecurrent.classList.remove('selected');
+        btnSingleBooking.classList.add('selected');
+        // Ocultar opciones de recurrencia si estaban abiertas
+        if (recurrenceOptions)
+            recurrenceOptions.style.display = 'none';
+        // Quitar clase selected a los botones de recurrencia
+        if (btnWeekly)
+            btnWeekly.classList.remove('selected');
+        if (btnBiWeekly)
+            btnBiWeekly.classList.remove('selected');
+        weeklyBool = false;
+        biWeeklyBool = false;
+        if (bookingOptionsSeparator)
+            bookingOptionsSeparator.style.display = 'block';
+        if (btnConfirmRecurrent) {
+            btnConfirmRecurrent.innerText = 'Confirmar Turno Único';
+            btnConfirmRecurrent.style.display = 'block';
         }
     }));
 }
 //Turnos fijos
-const btnRecurrent = document.getElementById('btn-toggle-recurrent');
 if (btnRecurrent) {
     btnRecurrent.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
+        // Visual feedback
+        if (btnSingleBooking)
+            btnSingleBooking.classList.remove('selected');
+        btnRecurrent.classList.add('selected');
+        if (btnConfirmRecurrent) {
+            btnConfirmRecurrent.innerText = 'Confirmar Turno Recurrente';
+            btnConfirmRecurrent.style.display = 'none';
+        }
         const weeklyStatus = document.getElementById('weekly-status');
         const biWeeklyStatus = document.getElementById('biweekly-status');
         const url = `/Appointment/ChechRecurrence?SelectedHairdresserId=${barberSelect.value}&SelectedDate=${selectedDate}&SelectedTime=${selectedTime}`;
@@ -182,47 +190,66 @@ if (btnRecurrent) {
             biWeeklyStatus.innerText = 'No Disponible';
             biWeeklyStatus.classList.add('status-occupied');
         }
+        if (bookingOptionsSeparator)
+            bookingOptionsSeparator.style.display = 'block';
         recurrenceOptions.style.display = 'flex';
     }));
 }
-const btnConfirmRecurrent = document.getElementById('btn-confirm-recurrent');
-btnWeekly.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
-    //reseteo
-    weeklyBool = false;
-    biWeeklyBool = false;
-    weeklyBool = true;
-    btnConfirmRecurrent.style.display = 'block';
-}));
-btnBiWeekly.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
-    weeklyBool = false;
-    biWeeklyBool = false;
-    biWeeklyBool = true;
-    btnConfirmRecurrent.style.display = 'block';
-}));
-btnConfirmRecurrent.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
-    const insertPost = yield fetch(`/Appointment/Insert`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            SelectedHairdresserId: barberSelect.value,
-            SelectedHaircutId: selectedHaircutInput.value,
-            SelectedDate: selectedDate,
-            SelectedTime: selectedTime,
-            Weekly: weeklyBool,
-            BiWeekly: biWeeklyBool
-        })
-    });
-    if (insertPost.ok) {
-        (weeklyBool || biWeeklyBool) ? alert("Turno recurrente registrado correctamente") : alert("El turno se ha registrado correctamente");
-        window.location.href = '/';
-    }
-    else {
-        const badRequest = yield insertPost.text();
-        alert(badRequest);
-    }
-}));
+if (btnWeekly) {
+    btnWeekly.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
+        //reseteo
+        weeklyBool = false;
+        biWeeklyBool = false;
+        weeklyBool = true;
+        if (btnConfirmRecurrent) {
+            btnConfirmRecurrent.innerText = 'Confirmar Turno Recurrente';
+            btnConfirmRecurrent.style.display = 'block';
+        }
+        if (btnBiWeekly)
+            btnBiWeekly.classList.remove('selected');
+        btnWeekly.classList.add('selected');
+    }));
+}
+if (btnBiWeekly) {
+    btnBiWeekly.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
+        weeklyBool = false;
+        biWeeklyBool = false;
+        biWeeklyBool = true;
+        if (btnConfirmRecurrent) {
+            btnConfirmRecurrent.innerText = 'Confirmar Turno Recurrente';
+            btnConfirmRecurrent.style.display = 'block';
+        }
+        if (btnWeekly)
+            btnWeekly.classList.remove('selected');
+        btnBiWeekly.classList.add('selected');
+    }));
+}
+if (btnConfirmRecurrent) {
+    btnConfirmRecurrent.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
+        const insertPost = yield fetch(`/Appointment/Insert`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                SelectedHairdresserId: barberSelect.value,
+                SelectedHaircutId: selectedHaircutInput.value,
+                SelectedDate: selectedDate,
+                SelectedTime: selectedTime,
+                Weekly: weeklyBool,
+                BiWeekly: biWeeklyBool
+            })
+        });
+        if (insertPost.ok) {
+            (weeklyBool || biWeeklyBool) ? alert("Turno recurrente registrado correctamente") : alert("El turno se ha registrado correctamente");
+            window.location.href = '/';
+        }
+        else {
+            const badRequest = yield insertPost.text();
+            alert(badRequest);
+        }
+    }));
+}
 function ResetButtons(step) {
     if (step == 1) {
         if (stepService)
@@ -235,9 +262,19 @@ function ResetButtons(step) {
             showRecurrenceForm.style.display = 'none'; //Boton unico (paso4)
         if (recurrenceOptions)
             recurrenceOptions.style.display = 'none'; //Boton Semanal/Quincenal (paso 4) 
+        if (bookingOptionsSeparator)
+            bookingOptionsSeparator.style.display = 'none';
         selectedDate = ''; //Paso 3
         selectedTime = ''; //Paso 4
         selectedHaircutInput.value = ''; //Paso 2
+        weeklyBool = false;
+        biWeeklyBool = false;
+        if (btnSingleBooking)
+            btnSingleBooking.classList.remove('selected');
+        if (btnRecurrent)
+            btnRecurrent.classList.remove('selected');
+        if (btnConfirmRecurrent)
+            btnConfirmRecurrent.style.display = 'none';
         document.querySelectorAll('.btn-hour').forEach(btn => btn.classList.remove('selected')); //Paso 4
         document.querySelectorAll('.btn-recurrence-opt').forEach(btn => btn.classList.remove('selected')); //Paso 4
         document.querySelectorAll('.btn-service').forEach(btn => btn.classList.remove('selected')); //Paso 2
@@ -251,8 +288,18 @@ function ResetButtons(step) {
             showRecurrenceForm.style.display = 'none'; //Boton unico (paso4)
         if (recurrenceOptions)
             recurrenceOptions.style.display = 'none'; //Boton Semanal/Quincenal (paso 4) 
+        if (bookingOptionsSeparator)
+            bookingOptionsSeparator.style.display = 'none';
         selectedDate = ''; //Paso 3
         selectedTime = ''; //Paso 4
+        weeklyBool = false;
+        biWeeklyBool = false;
+        if (btnSingleBooking)
+            btnSingleBooking.classList.remove('selected');
+        if (btnRecurrent)
+            btnRecurrent.classList.remove('selected');
+        if (btnConfirmRecurrent)
+            btnConfirmRecurrent.style.display = 'none';
         document.querySelectorAll('.btn-hour').forEach(btn => btn.classList.remove('selected')); //Paso 4
         document.querySelectorAll('.btn-recurrence-opt').forEach(btn => btn.classList.remove('selected')); //Paso 4
     }
@@ -263,7 +310,17 @@ function ResetButtons(step) {
             showRecurrenceForm.style.display = 'none'; //Boton unico (paso4)
         if (recurrenceOptions)
             recurrenceOptions.style.display = 'none'; //Boton Semanal/Quincenal (paso 4) 
+        if (bookingOptionsSeparator)
+            bookingOptionsSeparator.style.display = 'none';
         selectedTime = ''; //Paso 4
+        weeklyBool = false;
+        biWeeklyBool = false;
+        if (btnSingleBooking)
+            btnSingleBooking.classList.remove('selected');
+        if (btnRecurrent)
+            btnRecurrent.classList.remove('selected');
+        if (btnConfirmRecurrent)
+            btnConfirmRecurrent.style.display = 'none';
         document.querySelectorAll('.btn-hour').forEach(btn => btn.classList.remove('selected')); //Paso 4
         document.querySelectorAll('.btn-recurrence-opt').forEach(btn => btn.classList.remove('selected')); //Paso 4
     }

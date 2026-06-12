@@ -70,8 +70,11 @@
                     </button>
                 </div>
 
+                <!-- Linea separadora -->
+                <div id="booking-options-separator" class="mt-4" style="display: none; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 1.5rem; width: 100%;"></div>
+
                 <!-- Sub-menu with recurrence interval options -->
-                <div id="recurrence-options" class="mt-4" style="display: none; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 1.5rem;">
+                <div id="recurrence-options" class="mt-4" style="display: none;">
                     <p class="mb-3" style="color: #c0c0c0;">Elegí el intervalo de repetición:</p>
                     <div class="d-flex justify-content-center gap-4 flex-wrap">
                         <div class="d-flex flex-column align-items-center">
@@ -90,11 +93,11 @@
                     <div id="recurrence-clash-msg" class="text-danger mt-3" style="display: none; font-size: 0.9rem;">
                         * Este horario ya se encuentra ocupado en alguna de las fechas futuras necesarias.
                     </div>
-                    <div class="mt-4">
-                        <button type="button" id="btn-confirm-recurrent" class="btn btn-select-custom" style="background-color: #d4af37; color: #000; display: none;">
-                            Confirmar Turno Recurrente
-                        </button>
-                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="button" id="btn-confirm-recurrent" class="btn btn-select-custom" style="background-color: #d4af37; color: #000; display: none;">
+                        Confirmar Turno Recurrente
+                    </button>
                 </div>
             </div>
         </div>
@@ -104,79 +107,5 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
-    <script src="~/js/appointment.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnSingle = document.getElementById('btn-single-booking');
-            const btnRecurrent = document.getElementById('btn-toggle-recurrent');
-            const btnWeekly = document.getElementById('btn-recurrence-1');
-            const btnBiWeekly = document.getElementById('btn-recurrence-2');
-            const btnConfirm = document.getElementById('btn-confirm-recurrent');
-
-            if (btnSingle) {
-                btnSingle.addEventListener('click', () => {
-                    btnSingle.classList.add('selected');
-                    if (btnRecurrent) btnRecurrent.classList.remove('selected');
-                    if (btnWeekly) btnWeekly.classList.remove('selected');
-                    if (btnBiWeekly) btnBiWeekly.classList.remove('selected');
-                });
-            }
-
-            if (btnRecurrent) {
-                btnRecurrent.addEventListener('click', () => {
-                    btnRecurrent.classList.add('selected');
-                    if (btnSingle) btnSingle.classList.remove('selected');
-                });
-            }
-
-            if (btnWeekly) {
-                btnWeekly.addEventListener('click', () => {
-                    btnWeekly.classList.add('selected');
-                    if (btnBiWeekly) btnBiWeekly.classList.remove('selected');
-                });
-            }
-
-            if (btnBiWeekly) {
-                btnBiWeekly.addEventListener('click', () => {
-                    btnBiWeekly.classList.add('selected');
-                    if (btnWeekly) btnWeekly.classList.remove('selected');
-                });
-            }
-
-            const resetBookingOptions = () => {
-                if (btnSingle) btnSingle.classList.remove('selected');
-                if (btnRecurrent) btnRecurrent.classList.remove('selected');
-                if (btnWeekly) btnWeekly.classList.remove('selected');
-                if (btnBiWeekly) btnBiWeekly.classList.remove('selected');
-                if (btnConfirm) btnConfirm.style.display = 'none';
-            };
-
-            // Reset when selecting/changing other steps
-            document.querySelectorAll('.btn-barber').forEach(btn => {
-                btn.addEventListener('click', resetBookingOptions);
-            });
-
-            document.querySelectorAll('.btn-service').forEach(btn => {
-                btn.addEventListener('click', resetBookingOptions);
-            });
-
-            const calendarInline = document.getElementById('calendar-inline');
-            if (calendarInline) {
-                calendarInline.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('flatpickr-day')) {
-                        resetBookingOptions();
-                    }
-                });
-            }
-
-            const slotsList = document.getElementById('slots-list');
-            if (slotsList) {
-                slotsList.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('btn-hour')) {
-                        resetBookingOptions();
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="~/js/appointment.js" asp-append-version="true"></script>
 }
