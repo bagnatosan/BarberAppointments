@@ -15,6 +15,8 @@ const stepCalendar = document.getElementById('step-calendar');
 const hoursContainer = document.getElementById('hours-container');
 const btnBarber = document.querySelectorAll('.btn-barber');
 const btnService = document.querySelectorAll('.btn-service');
+const showRecurrenceForm = document.getElementById('step-recurrence');
+const recurrenceOptions = document.getElementById('recurrence-options');
 let selectedDate = '';
 let selectedTime = '';
 let weeklyBool = false;
@@ -24,6 +26,7 @@ const btnBiWeekly = document.getElementById('btn-recurrence-2');
 // Escucha del click en los barberos 2
 btnBarber.forEach(el => {
     el.addEventListener('click', () => {
+        ResetButtons(1);
         barberSelect.value = el.getAttribute('data-id') || '';
         // Mostrar el paso de servicios
         if (stepService) {
@@ -39,6 +42,7 @@ btnBarber.forEach(el => {
 // Escucha del click en los servicios 2.5
 btnService.forEach(el => {
     el.addEventListener('click', () => {
+        ResetButtons(2);
         selectedHaircutInput.value = el.getAttribute('data-id') || '';
         // Mostrar el calendario (Paso 3)
         if (stepCalendar) {
@@ -59,6 +63,7 @@ flatpickr("#calendar-inline", {
     maxDate: maxDate,
     locale: "es",
     onChange: function (selectedDates, dateStr) {
+        ResetButtons(3);
         const hairdresserId = barberSelect.value;
         selectedDate = dateStr;
         if (hairdresserId && dateStr) {
@@ -96,7 +101,6 @@ function LoadAvailableSlots(hairdresserId, date) {
                     });
                     button.classList.add('selected');
                     selectedTime = time;
-                    const showRecurrenceForm = document.getElementById('step-recurrence');
                     if (showRecurrenceForm) {
                         showRecurrenceForm.style.display = 'flex';
                     }
@@ -144,7 +148,6 @@ if (btnSingleBooking) {
 const btnRecurrent = document.getElementById('btn-toggle-recurrent');
 if (btnRecurrent) {
     btnRecurrent.addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
-        const recurrenceOptions = document.getElementById('recurrence-options');
         const weeklyStatus = document.getElementById('weekly-status');
         const biWeeklyStatus = document.getElementById('biweekly-status');
         const url = `/Appointment/ChechRecurrence?SelectedHairdresserId=${barberSelect.value}&SelectedDate=${selectedDate}&SelectedTime=${selectedTime}`;
@@ -220,4 +223,49 @@ btnConfirmRecurrent.addEventListener('click', (event) => __awaiter(this, void 0,
         alert(badRequest);
     }
 }));
+function ResetButtons(step) {
+    if (step == 1) {
+        if (stepService)
+            stepService.style.display = 'none'; //Elegir Corte (paso 2)
+        if (stepCalendar)
+            stepCalendar.style.display = 'none'; //Calendario (paso 3)
+        if (hoursContainer)
+            hoursContainer.style.display = 'none'; //Horarios disponibles (paso 4)
+        if (showRecurrenceForm)
+            showRecurrenceForm.style.display = 'none'; //Boton unico (paso4)
+        if (recurrenceOptions)
+            recurrenceOptions.style.display = 'none'; //Boton Semanal/Quincenal (paso 4) 
+        selectedDate = ''; //Paso 3
+        selectedTime = ''; //Paso 4
+        selectedHaircutInput.value = ''; //Paso 2
+        document.querySelectorAll('.btn-hour').forEach(btn => btn.classList.remove('selected')); //Paso 4
+        document.querySelectorAll('.btn-recurrence-opt').forEach(btn => btn.classList.remove('selected')); //Paso 4
+        document.querySelectorAll('.btn-service').forEach(btn => btn.classList.remove('selected')); //Paso 2
+    }
+    else if (step == 2) {
+        if (stepCalendar)
+            stepCalendar.style.display = 'none'; //Calendario (paso 3)
+        if (hoursContainer)
+            hoursContainer.style.display = 'none'; //Horarios disponibles (paso 4)
+        if (showRecurrenceForm)
+            showRecurrenceForm.style.display = 'none'; //Boton unico (paso4)
+        if (recurrenceOptions)
+            recurrenceOptions.style.display = 'none'; //Boton Semanal/Quincenal (paso 4) 
+        selectedDate = ''; //Paso 3
+        selectedTime = ''; //Paso 4
+        document.querySelectorAll('.btn-hour').forEach(btn => btn.classList.remove('selected')); //Paso 4
+        document.querySelectorAll('.btn-recurrence-opt').forEach(btn => btn.classList.remove('selected')); //Paso 4
+    }
+    else if (step == 3) {
+        if (hoursContainer)
+            hoursContainer.style.display = 'none'; //Horarios disponibles (paso 4)
+        if (showRecurrenceForm)
+            showRecurrenceForm.style.display = 'none'; //Boton unico (paso4)
+        if (recurrenceOptions)
+            recurrenceOptions.style.display = 'none'; //Boton Semanal/Quincenal (paso 4) 
+        selectedTime = ''; //Paso 4
+        document.querySelectorAll('.btn-hour').forEach(btn => btn.classList.remove('selected')); //Paso 4
+        document.querySelectorAll('.btn-recurrence-opt').forEach(btn => btn.classList.remove('selected')); //Paso 4
+    }
+}
 //# sourceMappingURL=appointment.js.map

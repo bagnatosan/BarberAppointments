@@ -6,6 +6,9 @@ const stepCalendar = document.getElementById('step-calendar') as HTMLElement;
 const hoursContainer = document.getElementById('hours-container') as HTMLElement;
 const btnBarber = document.querySelectorAll('.btn-barber') as NodeListOf<HTMLButtonElement>;
 const btnService = document.querySelectorAll('.btn-service') as NodeListOf<HTMLButtonElement>;
+const showRecurrenceForm = document.getElementById('step-recurrence');
+const recurrenceOptions = document.getElementById('recurrence-options') as HTMLDivElement;
+
 let selectedDate: string = '';
 let selectedTime: string = '';
 let weeklyBool = false;
@@ -16,6 +19,7 @@ const btnBiWeekly = document.getElementById('btn-recurrence-2') as HTMLButtonEle
 // Escucha del click en los barberos 2
 btnBarber.forEach(el => {
     el.addEventListener('click', () => {
+        ResetButtons(1);
         barberSelect.value = el.getAttribute('data-id') || '';
         
         // Mostrar el paso de servicios
@@ -34,6 +38,7 @@ btnBarber.forEach(el => {
 // Escucha del click en los servicios 2.5
 btnService.forEach(el => {
     el.addEventListener('click', () => {
+        ResetButtons(2);
         selectedHaircutInput.value = el.getAttribute('data-id') || '';
         
         // Mostrar el calendario (Paso 3)
@@ -60,6 +65,7 @@ flatpickr("#calendar-inline", {
     maxDate: maxDate,
     locale: "es",
     onChange: function (selectedDates: Date[], dateStr: string) {
+        ResetButtons(3);
         const hairdresserId = barberSelect.value;
         
         selectedDate = dateStr;
@@ -107,7 +113,6 @@ flatpickr("#calendar-inline", {
                     
                     selectedTime = time;
 
-                    const showRecurrenceForm = document.getElementById('step-recurrence');
                     if (showRecurrenceForm) {
                         showRecurrenceForm.style.display = 'flex';
                     }
@@ -167,7 +172,6 @@ flatpickr("#calendar-inline", {
     
     if (btnRecurrent) {
         btnRecurrent.addEventListener('click', async (event) => {
-            const recurrenceOptions = document.getElementById('recurrence-options') as HTMLDivElement;
             
             const weeklyStatus = document.getElementById('weekly-status') as HTMLElement;
 
@@ -225,15 +229,6 @@ flatpickr("#calendar-inline", {
             }
             
             recurrenceOptions.style.display = 'flex';
-
-            
-            
-
-
-            
-                
-
-            
             
         })
     }
@@ -282,3 +277,61 @@ flatpickr("#calendar-inline", {
             alert(badRequest);
         }
     })
+
+function ResetButtons (step: number) {
+        if (step == 1)
+        {
+            if(stepService) stepService.style.display = 'none';           //Elegir Corte (paso 2)
+            if(stepCalendar) stepCalendar.style.display = 'none';        //Calendario (paso 3)
+            if(hoursContainer) hoursContainer.style.display = 'none';      //Horarios disponibles (paso 4)
+            if(showRecurrenceForm) showRecurrenceForm.style.display = 'none';//Boton unico (paso4)
+            if(recurrenceOptions) recurrenceOptions.style.display = 'none';//Boton Semanal/Quincenal (paso 4) 
+            
+            selectedDate = '';              //Paso 3
+            selectedTime = '';              //Paso 4
+            selectedHaircutInput.value = ''; //Paso 2
+
+            document.querySelectorAll('.btn-hour').forEach
+            (btn => btn.classList.remove('selected'));  //Paso 4
+
+            document.querySelectorAll('.btn-recurrence-opt').forEach
+            (btn => btn.classList.remove('selected')); //Paso 4
+
+            document.querySelectorAll('.btn-service').forEach( 
+                btn => btn.classList.remove('selected')); //Paso 2
+        }
+        
+        else if(step == 2)
+        {
+            if(stepCalendar) stepCalendar.style.display = 'none';        //Calendario (paso 3)
+            if(hoursContainer) hoursContainer.style.display = 'none';      //Horarios disponibles (paso 4)
+            if(showRecurrenceForm) showRecurrenceForm.style.display = 'none';//Boton unico (paso4)
+            if(recurrenceOptions) recurrenceOptions.style.display = 'none';//Boton Semanal/Quincenal (paso 4) 
+
+            selectedDate = '';              //Paso 3
+            selectedTime = '';              //Paso 4
+
+            document.querySelectorAll('.btn-hour').forEach
+            (btn => btn.classList.remove('selected'));  //Paso 4
+
+            document.querySelectorAll('.btn-recurrence-opt').forEach
+            (btn => btn.classList.remove('selected')); //Paso 4
+
+        }
+        
+        else if(step == 3)
+        {
+            if(hoursContainer) hoursContainer.style.display = 'none';      //Horarios disponibles (paso 4)
+            if(showRecurrenceForm) showRecurrenceForm.style.display = 'none';//Boton unico (paso4)
+            if(recurrenceOptions) recurrenceOptions.style.display = 'none';//Boton Semanal/Quincenal (paso 4) 
+
+            selectedTime = '';              //Paso 4
+
+            document.querySelectorAll('.btn-hour').forEach
+            (btn => btn.classList.remove('selected'));  //Paso 4
+
+            document.querySelectorAll('.btn-recurrence-opt').forEach
+            (btn => btn.classList.remove('selected')); //Paso 4
+
+        }
+}
