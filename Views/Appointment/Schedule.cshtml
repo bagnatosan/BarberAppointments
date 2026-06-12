@@ -105,4 +105,78 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
     <script src="~/js/appointment.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnSingle = document.getElementById('btn-single-booking');
+            const btnRecurrent = document.getElementById('btn-toggle-recurrent');
+            const btnWeekly = document.getElementById('btn-recurrence-1');
+            const btnBiWeekly = document.getElementById('btn-recurrence-2');
+            const btnConfirm = document.getElementById('btn-confirm-recurrent');
+
+            if (btnSingle) {
+                btnSingle.addEventListener('click', () => {
+                    btnSingle.classList.add('selected');
+                    if (btnRecurrent) btnRecurrent.classList.remove('selected');
+                    if (btnWeekly) btnWeekly.classList.remove('selected');
+                    if (btnBiWeekly) btnBiWeekly.classList.remove('selected');
+                });
+            }
+
+            if (btnRecurrent) {
+                btnRecurrent.addEventListener('click', () => {
+                    btnRecurrent.classList.add('selected');
+                    if (btnSingle) btnSingle.classList.remove('selected');
+                });
+            }
+
+            if (btnWeekly) {
+                btnWeekly.addEventListener('click', () => {
+                    btnWeekly.classList.add('selected');
+                    if (btnBiWeekly) btnBiWeekly.classList.remove('selected');
+                });
+            }
+
+            if (btnBiWeekly) {
+                btnBiWeekly.addEventListener('click', () => {
+                    btnBiWeekly.classList.add('selected');
+                    if (btnWeekly) btnWeekly.classList.remove('selected');
+                });
+            }
+
+            const resetBookingOptions = () => {
+                if (btnSingle) btnSingle.classList.remove('selected');
+                if (btnRecurrent) btnRecurrent.classList.remove('selected');
+                if (btnWeekly) btnWeekly.classList.remove('selected');
+                if (btnBiWeekly) btnBiWeekly.classList.remove('selected');
+                if (btnConfirm) btnConfirm.style.display = 'none';
+            };
+
+            // Reset when selecting/changing other steps
+            document.querySelectorAll('.btn-barber').forEach(btn => {
+                btn.addEventListener('click', resetBookingOptions);
+            });
+
+            document.querySelectorAll('.btn-service').forEach(btn => {
+                btn.addEventListener('click', resetBookingOptions);
+            });
+
+            const calendarInline = document.getElementById('calendar-inline');
+            if (calendarInline) {
+                calendarInline.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('flatpickr-day')) {
+                        resetBookingOptions();
+                    }
+                });
+            }
+
+            const slotsList = document.getElementById('slots-list');
+            if (slotsList) {
+                slotsList.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('btn-hour')) {
+                        resetBookingOptions();
+                    }
+                });
+            }
+        });
+    </script>
 }
