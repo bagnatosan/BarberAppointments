@@ -6,7 +6,7 @@
 
 
 <!-- Hero -->
-<section class="hero-section full-bleed">
+<section class="hero-section full-bleed @(Model.Dates.Any() && User.IsInRole("Customer") ? "has-appointments" : "")">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <img src="/img/caporale_logo.svg" alt="Caporale Barberia" class="hero-logo mb-5" />

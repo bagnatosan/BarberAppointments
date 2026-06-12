@@ -816,3 +816,16 @@ span.flatpickr-weekday {
     width: 100%;
 }
 
+/* Adjustments when user has appointments to prevent content overflow/cutoff */
+.hero-section.has-appointments {
+    position: relative !important;
+    min-height: auto !important;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.hero-section.has-appointments .hero-logo {
+    width: min(220px, 50vw);
+    margin-bottom: 1.5rem !important;
+}
+
