@@ -36,6 +36,10 @@ btnBarber.forEach(el => {
         if (stepService) {
             stepService.style.display = 'block';
         }
+        stepService.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+        });
         // Resetear selección visual de barberos
         btnBarber.forEach(e => {
             e.classList.remove('selected');
@@ -52,6 +56,10 @@ btnService.forEach(el => {
         if (stepCalendar) {
             stepCalendar.style.display = 'flex';
         }
+        stepCalendar.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+        });
         // Resetear selección visual de servicios
         btnService.forEach(e => {
             e.classList.remove('selected');
@@ -76,6 +84,9 @@ flatpickr("#calendar-inline", {
                 step3Label.style.display = 'block';
             }
             hoursContainer.style.display = 'block';
+            if (hoursContainer) {
+                hoursContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             LoadAvailableSlots(hairdresserId, dateStr);
         }
     }
@@ -107,6 +118,7 @@ function LoadAvailableSlots(hairdresserId, date) {
                     selectedTime = time;
                     if (showRecurrenceForm) {
                         showRecurrenceForm.style.display = 'flex';
+                        showRecurrenceForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 }));
             });
@@ -142,6 +154,7 @@ if (btnSingleBooking) {
         if (btnConfirmRecurrent) {
             btnConfirmRecurrent.innerText = 'Confirmar Turno Único';
             btnConfirmRecurrent.style.display = 'block';
+            btnConfirmRecurrent.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }));
 }
@@ -193,6 +206,9 @@ if (btnRecurrent) {
         if (bookingOptionsSeparator)
             bookingOptionsSeparator.style.display = 'block';
         recurrenceOptions.style.display = 'flex';
+        if (recurrenceOptions) {
+            recurrenceOptions.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }));
 }
 if (btnWeekly) {
@@ -204,6 +220,7 @@ if (btnWeekly) {
         if (btnConfirmRecurrent) {
             btnConfirmRecurrent.innerText = 'Confirmar Turno Recurrente';
             btnConfirmRecurrent.style.display = 'block';
+            btnConfirmRecurrent.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         if (btnBiWeekly)
             btnBiWeekly.classList.remove('selected');
@@ -218,6 +235,7 @@ if (btnBiWeekly) {
         if (btnConfirmRecurrent) {
             btnConfirmRecurrent.innerText = 'Confirmar Turno Recurrente';
             btnConfirmRecurrent.style.display = 'block';
+            btnConfirmRecurrent.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         if (btnWeekly)
             btnWeekly.classList.remove('selected');
