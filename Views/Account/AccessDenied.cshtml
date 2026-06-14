@@ -1,18 +1,51 @@
-
-
 @{
-    Layout = null;
+    ViewData["Title"] = "Acceso Denegado";
 }
 
-<!DOCTYPE html>
+<div class="access-denied-wrapper flex-grow-1 d-flex align-items-center justify-content-center">
+    <div class="access-denied-card text-center">
+        <!-- Animated Barber Scissors and Hair Scene -->
+        <div class="animation-container">
+            <svg width="220" height="220" viewBox="0 0 200 200" class="barber-scissors-scene">
+                <!-- Hair strands falling -->
+                <g class="hair-strands">
+                    <path class="hair hair-1" d="M 85,115 Q 90,135 85,155" stroke="#d4af37" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <path class="hair hair-2" d="M 100,120 Q 105,140 98,160" stroke="#d4af37" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <path class="hair hair-3" d="M 115,115 Q 110,133 117,153" stroke="#d4af37" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                </g>
+                <!-- Scissor body -->
+                <g class="scissors-group">
+                    <!-- Top blade & bottom loop (rotates around 100,100) -->
+                    <g class="blade-top">
+                        <!-- Blade -->
+                        <path d="M 100,100 L 155,88 C 145,97 120,100 100,100 Z" fill="#e0e0e0" />
+                        <!-- Handle connector & Loop -->
+                        <path d="M 100,100 L 70,110 C 65,115 50,110 50,95 C 50,80 65,75 75,85 C 80,90 90,95 100,100 Z" fill="none" stroke="#d4af37" stroke-width="4" stroke-linecap="round" />
+                    </g>
+                    <!-- Bottom blade & top loop (rotates around 100,100) -->
+                    <g class="blade-bottom">
+                        <!-- Blade -->
+                        <path d="M 100,100 L 155,112 C 145,103 120,100 100,100 Z" fill="#b0b0b0" />
+                        <!-- Handle connector & Loop -->
+                        <path d="M 100,100 L 70,90 C 65,85 50,90 50,105 C 50,120 65,125 75,115 C 80,110 90,105 100,100 Z" fill="none" stroke="#d4af37" stroke-width="4" stroke-linecap="round" />
+                    </g>
+                    <!-- Pivot screw -->
+                    <circle cx="100" cy="100" r="4" fill="#121212" stroke="#d4af37" stroke-width="2" />
+                </g>
+            </svg>
+        </div>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
+        <h2 class="error-code">403</h2>
+        <h3 class="error-title">Acceso Denegado</h3>
+        <div class="gold-divider"></div>
+        <p class="error-message">
+            No tienes los permisos necesarios para acceder a esta sección. 
+        </p>
+        
+        <div class="mt-5">
+            <a asp-controller="Home" asp-action="Index" class="btn-agendar">
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
 </div>
-</body>
-</html>
