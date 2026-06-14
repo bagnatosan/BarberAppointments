@@ -1,8 +1,10 @@
 using Barber.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Barber.Controllers;
 
+[Authorize(Roles = "hairdresser")]
 public class HairdresserController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -12,10 +14,9 @@ public class HairdresserController : Controller
         _context = context; 
     }
 
-    public IActionResult Index()    //interface of action result
+    public IActionResult Dashboard()    //interface of action result
     {
-        var hairdresser = _context.Hairdressers.ToList();
-        return View(hairdresser);
+        return View();
     }
     
 }

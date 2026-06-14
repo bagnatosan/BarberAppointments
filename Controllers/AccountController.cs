@@ -15,6 +15,12 @@ public class AccountController : Controller
     {
         _userService = userService;
     }
+
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
     
     [HttpPost]
     public async Task<IActionResult> Register(User user)

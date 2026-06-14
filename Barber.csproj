@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Booking\SelectHairdresser.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Hairdresser\Index.cshtml" />
     </ItemGroup>
 
 </Project>
