@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IUserService , UserService>();
 builder.Services.AddScoped<IAppointmentService , AppointmentService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddHostedService<AppointmentGenerator>();
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
