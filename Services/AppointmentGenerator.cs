@@ -17,7 +17,7 @@ public class AppointmentGenerator : BackgroundService
         {
             using (var scoped =  _serviceScopeFactory.CreateScope() )
             {
-                var context = scoped.ServiceProvider.GetRequiredKeyedService<ApplicationDbContext>();
+                var context = scoped.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             }
             
             
