@@ -10,8 +10,17 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <img src="/img/caporale_logo.svg" alt="Caporale Barberia" class="hero-logo mb-5" />
+        @if(!Model.Dates.Any() || !@Model.HasAppointmentRegular && User.IsInRole("Customer"))
+        {
+        <div>
+            <a class="btn-agendar" id="btnAgendar"
+               asp-controller="Appointment" asp-action="Schedule">
+                Agendar Turno
+            </a>
+        </div>
+        }
         
-        @if (Model.Dates.Any() && User.IsInRole("Customer"))
+        @if(@Model.HasActiveRecurrence)
         {
             <div class="proximos-turnos-container">
                 <div class="turnos-grid">
@@ -58,6 +67,7 @@
                 </div>
             </div>
         }
+        
         else if (User.IsInRole("admin"))
         {
             <div>
@@ -67,15 +77,8 @@
                 </a>
             </div>
         }
-        else
-        {
-            <div>
-                <a class="btn-agendar" id="btnAgendar"
-                   asp-controller="Appointment" asp-action="Schedule">
-                    Agendar Turno
-                </a>
-            </div>
-        }
+        
+        
     </div>
 </section>
 
