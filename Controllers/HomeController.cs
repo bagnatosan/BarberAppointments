@@ -30,12 +30,17 @@ public class HomeController : Controller
         
         var hasActiveRecurrence = await _context.RecurrentSchedules
             .AnyAsync(u => u.UserId == userId && u.IsActive);
+        
+        var hasAppointmentRegular = await  _context.Appointments
+            .AnyAsync( a => a.RecurrentSchedulesId == null && a.IsCanceled == false 
+            && a.UserId == userId && a.Date > DateTime.Now);
 
 
         var viewModel = new RecurrenceAvailabilityDto()
         {
             Dates = appointments,
-            IsActive = hasActiveRecurrence
+            HasActiveRecurrence = hasActiveRecurrence,
+            HasAppointmentRegular =  hasAppointmentRegular
         };
             
         

@@ -6,7 +6,9 @@ public class RecurrenceAvailabilityDto
 
     public int UserId { get; set; } = 0;
 
-    public bool IsActive { get; set; } = false;
+    public bool HasActiveRecurrence { get; set; } = false;
+    
+    public bool HasAppointmentRegular  { get; set; } = false;
     
     public bool WeeklyAvailable { get; set; } = false;
     public bool BiweeklyAvailable { get; set; } = false;

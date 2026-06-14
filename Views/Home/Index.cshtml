@@ -20,7 +20,7 @@
                         <div class="turno-card"
                              data-fecha="@(item.ToString("yyyy-MM-ddTHH:mm:ss"))"
                              data-userid="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value"
-                             data-recurrent ="@Model.IsActive">
+                             data-recurrent ="@Model.HasActiveRecurrence">
                             <h5 class="turno-card-title">Turno Confirmado</h5>
                             <p class="turno-card-text">
                                 📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
