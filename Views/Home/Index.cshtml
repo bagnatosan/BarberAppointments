@@ -6,11 +6,11 @@
 
 
 <!-- Hero -->
-<section class="hero-section full-bleed @(Model.Dates.Any() && User.IsInRole("Customer") ? "has-appointments" : "")">
+<section class="hero-section full-bleed @(Model.Appointments.Any() && User.IsInRole("Customer") ? "has-appointments" : "")">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <img src="/img/caporale_logo.svg" alt="Caporale Barberia" class="hero-logo mb-5" />
-        @if(!Model.Dates.Any() || !@Model.HasAppointmentRegular && User.IsInRole("Customer"))
+        @if(!Model.Appointments.Any() || !@Model.HasAppointmentRegular && User.IsInRole("Customer"))
         {
         <div>
             <a class="btn-agendar" id="btnAgendar"
@@ -20,20 +20,20 @@
         </div>
         }
         
-        @if(@Model.HasActiveRecurrence)
+        @if(@Model.HasActiveRecurrence || @Model.HasAppointmentRegular)
         {
             <div class="proximos-turnos-container">
                 <div class="turnos-grid">
-                    @foreach (var item in Model.Dates)
+                    @foreach (var item in Model.Appointments)
                     {
                         <div class="turno-card"
-                             data-fecha="@(item.ToString("yyyy-MM-ddTHH:mm:ss"))"
+                             data-fecha="@(item.Date.ToString("yyyy-MM-ddTHH:mm:ss"))"
                              data-userid="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value"
-                             data-recurrent ="@Model.HasActiveRecurrence">
+                             data-recurrent =@(item.RecurrentSchedulesId == null ? "false" : "true") >
                             <h5 class="turno-card-title">Turno Confirmado</h5>
                             <p class="turno-card-text">
-                                📅 <strong>Fecha:</strong> @item.ToString("dd/MM/yyyy") <br />
-                                ⏰ <strong>Hora:</strong> @item.ToString("HH:mm") hs
+                                📅 <strong>Fecha:</strong> @item.Date.ToString("dd/MM/yyyy") <br />
+                                ⏰ <strong>Hora:</strong> @item.Date.ToString("HH:mm") hs
                             </p>
                             <div class="cancelar-trigger-container">
                                 <span class="btn-cancelar-trigger">
@@ -44,7 +44,7 @@
                             <div class="cancelar-confirmacion normal-confirm">
                                 <p>¿Estás seguro?</p>
                                 <div class="cancelar-botones">
-                                    <button class="btn-confirmar-si" data-date="@item.ToString("yyyy-MM-ddTHH:mm:ss")">Sí</button>
+                                    <button class="btn-confirmar-si" data-date="@item.Date.ToString("yyyy-MM-ddTHH:mm:ss")">Sí</button>
                                     <button class="btn-confirmar-no">No</button>
                                 </div>
                             </div>
@@ -53,10 +53,10 @@
                             <div class="cancelar-confirmacion recurrent-confirm">
                                 <p class="mb-2">Este turno es fijo. ¿Qué deseas hacer?</p>
                                 <div class="cancelar-botones flex-column gap-2">
-                                    <button class="btn-confirmar-si btn-solo-este w-100" data-date="@item.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                    <button class="btn-confirmar-si btn-solo-este w-100" data-date="@item.Date.ToString("yyyy-MM-ddTHH:mm:ss")">
                                         Cancelar solo este turno
                                     </button>
-                                    <button class="btn-confirmar-serie btn-todos-fijos w-100" data-date="@item.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                    <button class="btn-confirmar-serie btn-todos-fijos w-100" data-date="@item.Date.ToString("yyyy-MM-ddTHH:mm:ss")">
                                         Cancelar todos los turnos fijos
                                     </button>
                                     <button class="btn-confirmar-no w-100 mt-1">Volver</button>

@@ -25,7 +25,6 @@ public class HomeController : Controller
         var appointments = await _context.Appointments
             .AsNoTracking()
             .Where(u => u.UserId == userId && u.Date >= DateTime.Now && u.IsCanceled == false)
-            .Select( u => u.Date)
             .ToListAsync();
         
         var hasActiveRecurrence = await _context.RecurrentSchedules
@@ -38,7 +37,7 @@ public class HomeController : Controller
 
         var viewModel = new RecurrenceAvailabilityDto()
         {
-            Dates = appointments,
+            Appointments = appointments,
             HasActiveRecurrence = hasActiveRecurrence,
             HasAppointmentRegular =  hasAppointmentRegular
         };

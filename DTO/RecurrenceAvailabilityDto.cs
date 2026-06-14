@@ -1,8 +1,10 @@
+using Barber.Models;
+
 namespace Barber.Dto;
 
 public class RecurrenceAvailabilityDto
 {
-    public List<DateTime> Dates { get; set; } = new List<DateTime>();
+    public List<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     public int UserId { get; set; } = 0;
 
