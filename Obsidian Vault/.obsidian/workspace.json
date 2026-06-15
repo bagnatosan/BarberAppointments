@@ -1,0 +1,204 @@
+{
+  "main": {
+    "id": "ebfe26b5fe8112d6",
+    "type": "split",
+    "children": [
+      {
+        "id": "3d5f029c90b251e5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8c2bd32627c21f11",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "02_Architecture/Arquitectura y Modelos.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Arquitectura y Modelos"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "74f7fa09a0df4749",
+    "type": "split",
+    "children": [
+      {
+        "id": "2dc364e9044ca37f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d727cc31004c5ae7",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "076fe30b60647d5f",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:background-services",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "00ba168e94845d24",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "38d4a28c06e3b6c2",
+    "type": "split",
+    "children": [
+      {
+        "id": "a87744dc27842740",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "252637ed8186116a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes"
+            }
+          },
+          {
+            "id": "c906e6dde43ac6de",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "02_Architecture/Arquitectura y Modelos.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes de Arquitectura y Modelos"
+            }
+          },
+          {
+            "id": "045db42a1a4ae642",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "b1f96cedf491950f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas las propiedades"
+            }
+          },
+          {
+            "id": "bbe39ab911634e62",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Esquema"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false,
+      "obsidian-kanban:Create new board": false
+    }
+  },
+  "active": "8c2bd32627c21f11",
+  "lastOpenFiles": [
+    "02_Architecture/Background Services y Procesos.md",
+    "02_Architecture/Arquitectura y Modelos.md",
+    "01_Specs/MVP y Estado Actual.md",
+    "## specs.md",
+    "Sin nombre",
+    "03_Tasks/Tablero Kanban de Cierre.md",
+    "03_Tasks",
+    "02_Architecture",
+    "01_Specs",
+    "Untitled Kanban.md",
+    "cree un enlace.md",
+    "Bienvenido.md",
+    "Sin título.canvas",
+    "Sin título 1.canvas",
+    "2026-06-15.md",
+    "dfdfdf.md"
+  ]
+}
