@@ -30,6 +30,11 @@ Documentación del ciclo de vida y diseño técnico de las tareas y servicios en
 
 ---
 
+## Dashboard peluqueros
+
+- Tener en cuenta que al actualizar precio se actualizan el precio de todos los servicios anteriores, alterando la facturación
+
+
 ## 🔗 Enlaces de Interés (Obsidian)
 - [[MVP y Estado Actual]]
 - [[Arquitectura y Modelos]]
