@@ -30,35 +30,60 @@ public class AppointmentGenerator : BackgroundService
                     var endDate = currentDate.AddDays(30);
                     
                     var lastAppointment = await context.Appointments
+                        .AsNoTracking()
                         .Where(a => a.RecurrentSchedulesId == i.Id)
                         .OrderByDescending(a => a.Date)
                         .FirstOrDefaultAsync();
+
+                    var appointments = await context.Appointments
+                        .Where(a => a.Date.Date > DateTime.Now.Date)
+                        .ToListAsync();
 
                     if (lastAppointment != null)
                     {
                         bool wasCreated = false;
                         
-                        while (currentDate != endDate && wasCreated)    //reseteo de horas
+                        while (currentDate != endDate && !wasCreated)    //reseteo de horas
                         {
                             var timeInterval = lastAppointment.Date - currentDate.Date;
                             var differenceBetweenDays = timeInterval.Days;
                             wasCreated = false;
+
                             
                             var differenceBetweenWeeks = differenceBetweenDays / 7;
                             if (differenceBetweenWeeks % i.IntervalWeeks == 0)
                             {
-                                var appointment = new Appointment()
+                                foreach (var a in appointments)
                                 {
-                                    Date = currentDate.Add(i.StartTime),
-                                    HaircutId = lastAppointment.HaircutId,
-                                    HairdresserId = i.HairdresserId,
-                                    IsCanceled = false,
-                                    RecurrentSchedulesId = i.Id,
-                                    UserId = i.UserId
-                                };
+                                    if (currentDate.Add(i.StartTime) == a.Date) //todo esto esta mal
+                                    {
+                                        if (a.IsCanceled)
+                                        {
+                                            a.IsCanceled = false;
+                                            a.UserId = i.UserId;
+                                            //agregar haircutid
+                                            a.HairdresserId = i.HairdresserId;
+                                            a.RecurrentSchedulesId = i.Id;
+                                        }
+                                        else 
+                                        {
+                                            var appointment = new Appointment()
+                                            {
+                                                Date = currentDate.Add(i.StartTime),
+                                                HaircutId = lastAppointment.HaircutId,
+                                                HairdresserId = i.HairdresserId,
+                                                IsCanceled = false,
+                                                RecurrentSchedulesId = i.Id,
+                                                UserId = i.UserId
+                                            };
                                 
-                                context.Add(appointment);
-                                await context.SaveChangesAsync();
+                                            context.Add(appointment);
+                                        }
+                                        
+                                                            
+                                    }
+                                }
+                                
                                 
                                 wasCreated = true;
                             }
@@ -67,6 +92,7 @@ public class AppointmentGenerator : BackgroundService
                     }
 
                 }
+                await context.SaveChangesAsync();
 
 
             }
