@@ -1,0 +1,29 @@
+/* Cambiar el fondo de la primera columna */
+.kanban-plugin__lane-wrapper:nth-of-type(1) .kanban-plugin__lane {
+  background-color: #FFCDD2 !important; /* Rojo pastel */
+}
+
+/* Cambiar el fondo de la segunda columna */
+.kanban-plugin__lane-wrapper:nth-of-type(2) .kanban-plugin__lane {
+  background-color: #FFF9C4 !important; /* Amarillo pastel */
+}
+
+/* Cambiar el fondo de la tercera columna */
+.kanban-plugin__lane-wrapper:nth-of-type(3) .kanban-plugin__lane {
+  background-color: #C8E6C9 !important; /* Verde pastel */
+}
+
+/* Cambiar el fondo de la cuarta columna */
+.kanban-plugin__lane-wrapper:nth-of-type(4) .kanban-plugin__lane {
+  background-color: #FFF3E0 !important; /* Naranja claro */
+}
+
+/* Poner en negro el texto de los títulos de columna, contadores y botones de "+ Add a card" */
+.kanban-plugin__lane-header-wrapper *,
+.kanban-plugin__list-header-wrapper *,
+.kanban-plugin__lane button,
+.kanban-plugin__list button,
+.kanban-plugin__add-item-button,
+.kanban-plugin__placeholder {
+  color: #000000 !important;
+}

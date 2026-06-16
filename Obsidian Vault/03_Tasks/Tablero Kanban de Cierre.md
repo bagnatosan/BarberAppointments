@@ -6,6 +6,8 @@ kanban-plugin: board
 
 ## To Do
 
+- [ ] Insertar turno a traves de un `Background Service`
+- [ ] Modificar logica `Task.Delay` para que se ejecute a una hora determinada
 - [ ] Configurar logs de producción en `Program.cs` y `appsettings.json` para capturar excepciones en Background Services.
 - [ ] Revisar inyección de dependencias en Background Services (asegurar el uso correcto de `IServiceScopeFactory` al resolver contextos efímeros como `BarberContext`).
 - [ ] Escribir pruebas unitarias críticas para el flujo de reciclado en `InsertAppointmentAsync` y prevención de conflictos de índice único en SQLite.

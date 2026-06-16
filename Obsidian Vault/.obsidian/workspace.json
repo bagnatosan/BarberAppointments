@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:background-services",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -155,17 +155,16 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "02_Architecture/Background Services y Procesos.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de Background Services y Procesos"
+              "title": "Esquema"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -186,9 +185,11 @@
   "active": "8c2bd32627c21f11",
   "lastOpenFiles": [
     "01_Specs/MVP y Estado Actual.md",
-    "03_Tasks/Tablero Kanban de Cierre.md",
     "02_Architecture/Arquitectura y Modelos.md",
     "02_Architecture/Background Services y Procesos.md",
+    "03_Tasks/Tablero Kanban de Cierre.md",
+    "Guia_Obsidian_Markdown.html",
+    "Guia_Obsidian_Markdown.md",
     "## specs.md",
     "Sin nombre",
     "03_Tasks",

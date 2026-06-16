@@ -1,3 +1,7 @@
 {
-  "cssTheme": "AnuPpuccin"
+  "cssTheme": "AnuPpuccin",
+  "theme": "obsidian",
+  "enabledCssSnippets": [
+    "kanban_custom"
+  ]
 }
